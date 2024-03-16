@@ -4,7 +4,7 @@ import { SquarePen } from "lucide-react";
 
 import { IMovieBase } from "@/types/movie-list";
 
-import { Card, CardContent } from "./card";
+import { Card, CardContent } from "../card";
 
 export type IFilmCardProps = IMovieBase;
 

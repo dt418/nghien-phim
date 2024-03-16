@@ -13,24 +13,10 @@ import {
 
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import { getFilmBySlug } from "@/lib/fetcher";
 import { type IMovieResponse } from "@/types/movie";
 
-async function getFilmBySlug(slug: string | string[]) {
-  const res = await fetch(`https://phim.nguonc.com/api/film/${slug}`);
-  // The return value is *not* serialized
-  // You can return Date, Map, Set, etc.
-
-  console.log("res", res);
-
-  if (!res.ok) {
-    // This will activate the closest `error.js` Error Boundary
-    throw new Error("Failed to fetch data");
-  }
-
-  return res.json();
-}
-
-interface TFilmDetailParams {
+interface IFilmDetailParams {
   params: {
     slug: string | string[];
   };
@@ -47,7 +33,7 @@ export async function generateMetadata(
   const slug = params.slug;
 
   // fetch data
-  const film: IMovieResponse = await getFilmBySlug(slug);
+  const film = await getFilmBySlug(slug);
 
   // optionally access and extend (rather than replace) parent metadata
   const previousImages = (await parent).openGraph?.images || [];
@@ -60,7 +46,7 @@ export async function generateMetadata(
     },
   };
 }
-export default async function FilmDetail({ params }: TFilmDetailParams) {
+export default async function FilmDetail({ params }: IFilmDetailParams) {
   const { slug } = params;
   const res: IMovieResponse = await getFilmBySlug(slug);
   const { movie } = res;
@@ -141,7 +127,6 @@ export default async function FilmDetail({ params }: TFilmDetailParams) {
                                 allow="autoplay; fullscreen"
                                 className="min-w-full min-h-auto md:min-h-[calc(100vh-100px)]"
                               />
-                              {/* <VideoPlayer src={item.m3u8} /> */}
                             </div>
                           </div>
                         </DialogContent>

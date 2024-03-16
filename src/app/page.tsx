@@ -1,31 +1,6 @@
-import { FilmCard, IFilmCardProps } from "@/components/ui/film-card";
-import {
-  Pagination,
-  PaginationContent,
-  PaginationFirst,
-  PaginationItem,
-  PaginationLast,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
-} from "@/components/ui/pagination";
-import { type IMovieListResponse } from "@/types/movie-list";
-
-async function getFilms(page: number): Promise<IMovieListResponse> {
-  const res = await fetch(
-    `https://phim.nguonc.com/api/films/phim-moi-cap-nhat?page=${page}`,
-    { cache: "no-store" }
-  );
-  // The return value is *not* serialized
-  // You can return Date, Map, Set, etc.
-
-  if (!res.ok) {
-    // This will activate the closest `error.js` Error Boundary
-    throw new Error("Failed to fetch data");
-  }
-
-  return res.json();
-}
+import { FilmCard, IFilmCardProps } from "@/components/ui/film/film.card";
+import { FilmPagination } from "@/components/ui/film/film.pagination";
+import { getFilms } from "@/lib/fetcher";
 
 type THomePageProps = {
   params?: { slug: string };
@@ -66,73 +41,7 @@ export default async function Home({ searchParams }: THomePageProps) {
           );
         })}
       </ul>
-      <Pagination>
-        <PaginationContent>
-          {currentPage > 1 && (
-            <>
-              <PaginationItem>
-                <PaginationFirst
-                  href={`/?page=${1}`}
-                  tabIndex={currentPage <= 1 ? -1 : undefined}
-                  className={
-                    currentPage <= 1
-                      ? "pointer-events-none opacity-50"
-                      : undefined
-                  }
-                />
-              </PaginationItem>
-              <PaginationItem>
-                <PaginationPrevious
-                  href={`/?page=${page - 1}`}
-                  tabIndex={currentPage <= 1 ? -1 : undefined}
-                  className={
-                    currentPage <= 1
-                      ? "pointer-events-none opacity-50"
-                      : undefined
-                  }
-                />
-              </PaginationItem>
-            </>
-          )}
-          {pageList.map((pageItem) => (
-            <PaginationItem key={pageItem}>
-              <PaginationLink
-                href={`/?page=${pageItem}`}
-                tabIndex={currentPage <= 1 ? -1 : undefined}
-                isActive={pageItem === currentPage}
-              >
-                {pageItem}
-              </PaginationLink>
-            </PaginationItem>
-          ))}
-          {currentPage < totalPage && (
-            <>
-              <PaginationItem>
-                <PaginationNext
-                  href={`/?page=${page + 1}`}
-                  tabIndex={currentPage === totalPage ? -1 : undefined}
-                  className={
-                    currentPage === totalPage
-                      ? "pointer-events-none opacity-50"
-                      : undefined
-                  }
-                />
-              </PaginationItem>
-              <PaginationItem>
-                <PaginationLast
-                  href={`/?page=${totalPage}`}
-                  tabIndex={currentPage <= 1 ? -1 : undefined}
-                  className={
-                    currentPage >= totalPage
-                      ? "pointer-events-none opacity-50"
-                      : undefined
-                  }
-                />
-              </PaginationItem>
-            </>
-          )}
-        </PaginationContent>
-      </Pagination>
+      <FilmPagination currentPage={currentPage} pageList={pageList} totalPage={totalPage}/>
     </main>
   );
 }
