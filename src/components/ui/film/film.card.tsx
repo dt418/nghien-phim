@@ -6,9 +6,7 @@ import { IMovieBase } from "@/types/movie-list";
 
 import { Card, CardContent } from "../card";
 
-export type IFilmCardProps = IMovieBase;
-
-export const FilmCard = (props: IFilmCardProps) => {
+export const FilmCard = (props: IMovieBase) => {
   const { name, slug, thumb_url, modified, original_name } = props;
   const filmLink = `film/${slug}`;
   return (
@@ -32,7 +30,7 @@ export const FilmCard = (props: IFilmCardProps) => {
           </p>
           <p className="flex text-sm text-card-foreground font-light">
             <SquarePen className="mr-1 h-4 w-4" />
-            Ngày cập nhật: {new Date(modified).toLocaleDateString("vi-VN")}
+            Cập nhật: {new Date(modified).toLocaleDateString("vi-VN")}
           </p>
         </CardContent>
       </Card>

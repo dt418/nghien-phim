@@ -1,6 +1,8 @@
-import { FilmCard, IFilmCardProps } from "@/components/ui/film/film.card";
+import { FilmCard } from "@/components/ui/film/film.card";
+import { FilmCarousel } from "@/components/ui/film/film.carousel";
 import { FilmPagination } from "@/components/ui/film/film.pagination";
 import { getFilms } from "@/lib/fetcher";
+import { IMovieBase } from "@/types/movie-list";
 
 type THomePageProps = {
   params?: { slug: string };
@@ -32,8 +34,9 @@ export default async function Home({ searchParams }: THomePageProps) {
 
   return (
     <main className="container space-y-4">
-      <ul className="grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5">
-        {items?.map((filmItem: IFilmCardProps) => {
+      <FilmCarousel filmList={items}/>
+      <ul className="grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 place-items-center">
+        {items?.map((filmItem: IMovieBase) => {
           return (
             <li key={filmItem.slug}>
               <FilmCard {...filmItem} />
@@ -41,7 +44,11 @@ export default async function Home({ searchParams }: THomePageProps) {
           );
         })}
       </ul>
-      <FilmPagination currentPage={currentPage} pageList={pageList} totalPage={totalPage}/>
+      <FilmPagination
+        currentPage={currentPage}
+        pageList={pageList}
+        totalPage={totalPage}
+      />
     </main>
   );
 }
