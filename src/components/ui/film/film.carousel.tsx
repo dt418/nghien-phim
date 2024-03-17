@@ -33,7 +33,7 @@ export function FilmCarousel({ filmList = [] }: TFilmCarouselProps) {
         {filmList?.map((filmItem) => (
           <CarouselItem
             key={filmItem.slug}
-            className="pl-1 basis-1/1 md:basis-1/3 lg:basis-1/4"
+            className="pl-1 basis-5/6 sm:basis-1/2 md:basis-1/3 lg:basis-1/4"
           >
             <div className="p-1">
               <FilmCard {...filmItem} key={filmItem.slug} />
