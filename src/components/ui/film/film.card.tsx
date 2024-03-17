@@ -12,9 +12,9 @@ export const FilmCard = (props: IMovieBase) => {
   return (
     <Link className="font-semibold" href={filmLink} title={name}>
       <Card className="w-full max-w-sm rounded-lg border shadow-sm">
-        <div className="relative group overflow-hidden aspect-[2/3]">
+        <div className="relative group overflow-hidden aspect-[2/3] rounded-lg">
           <Image
-            className="object-cover rounded-t-lg transition-all group-hover:scale-105"
+            className="object-cover rounded-t-lg transition-all scale-100 group-hover:scale-105"
             alt="Film poster"
             width={400}
             height={600}
