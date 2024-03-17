@@ -20,38 +20,53 @@ import { type IMovieResponse } from "@/types/movie";
 interface IFilmDetailParams {
   params: {
     slug: string | string[];
+    server: string | string[];
+    ep: string | string[];
   };
   searchParams: Record<string, string | string[] | undefined>;
 }
 
 type Props = {
-  params: { slug: string };
+  params: {
+    slug: string | string[];
+    server: string | string[];
+    ep: string | string[];
+  };
   searchParams: Record<string, string | string[] | undefined>;
 };
 export async function generateMetadata(
   { params }: Props,
   parent: ResolvingMetadata
 ): Promise<Metadata> {
-  const slug = params.slug;
-
+  const { slug, server, ep } = params;
+  console.log("params", params);
   // fetch data
   const film = await getFilmBySlug(slug);
-
   // optionally access and extend (rather than replace) parent metadata
   const previousImages = (await parent).openGraph?.images || [];
 
+  const currentServer = film?.movie?.episodes?.filter(
+    (sv) => slugify(sv?.server_name, { locale: "vi", lower: true }) === server
+  );
+  const currentEp = currentServer[0]?.items?.filter((e) => e?.slug === ep) || [];
   return {
-    title: film.movie.name,
-    description: film.movie.description,
+    title: `Xem phim ${film?.movie?.name} - Tập ${currentEp[0]?.name}`,
+    description: film?.movie?.description,
     openGraph: {
-      images: [film.movie.thumb_url, ...previousImages],
+      images: [film?.movie?.thumb_url, ...previousImages],
     },
   };
 }
 export default async function FilmDetail({ params }: IFilmDetailParams) {
-  const { slug } = params;
+  const { slug, server, ep } = params;
   const res: IMovieResponse = await getFilmBySlug(slug);
   const { movie } = res;
+
+  const currentServer = movie?.episodes?.filter(
+    (sv) => slugify(sv?.server_name, { locale: "vi", lower: true }) === server
+  );
+  const currentEp = currentServer[0]?.items?.filter((e) => e?.slug === ep) || [];
+
   return (
     <div className="flex flex-col gap-4">
       <div className="flex flex-col sm:flex-row gap-4">
@@ -60,7 +75,7 @@ export default async function FilmDetail({ params }: IFilmDetailParams) {
           alt={movie.name}
           width={400}
           height={600}
-          className="flex w-full md:w-1/4 rounded-lg aspect-[2/3] object-cover"
+          className="w-full md:w-1/4 rounded-lg aspect-[2/3] object-cover"
         />
         <div className="detail flex flex-col w-full md:w-auto">
           <h1 className="text-lg font-bold">{movie.name}</h1>
@@ -111,6 +126,14 @@ export default async function FilmDetail({ params }: IFilmDetailParams) {
           </div>
         </div>
       </div>
+      <iframe
+        src={currentEp[0].embed}
+        width="100%"
+        height="auto"
+        allowFullScreen
+        allow="autoplay; fullscreen"
+        className="min-w-full min-h-auto md:min-h-[calc(100vh-100px)] aspect-video"
+      />
       <div className="flex flex-col md:flex-row gap-4 mt-4">
         <div className="flex flex-col w-full">
           <h2 className="text-lg font-semibold">Xem phim</h2>

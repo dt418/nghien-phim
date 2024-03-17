@@ -15,7 +15,7 @@ export const FilmCard = (props: IMovieBase) => {
         <div className="relative group overflow-hidden aspect-[2/3] rounded-lg">
           <Image
             className="object-cover rounded-t-lg transition-all scale-100 group-hover:scale-105"
-            alt="Film poster"
+            alt={name || original_name}
             width={400}
             height={600}
             style={{
