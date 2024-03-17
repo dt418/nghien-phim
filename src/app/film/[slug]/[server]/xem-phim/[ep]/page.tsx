@@ -71,39 +71,39 @@ export default async function FilmDetail({ params }: IFilmDetailParams) {
     <div className="flex flex-col gap-4">
       <div className="flex flex-col sm:flex-row gap-4">
         <Image
-          src={movie.thumb_url}
-          alt={movie.name}
+          src={movie?.thumb_url}
+          alt={movie?.name}
           width={400}
           height={600}
           className="w-full md:w-1/4 rounded-lg aspect-[2/3] object-cover"
         />
         <div className="detail flex flex-col w-full md:w-auto">
-          <h1 className="text-lg font-bold">{movie.name}</h1>
+          <h1 className="text-lg font-bold">{movie?.name}</h1>
           <div className="flex flex-col">
             <div className="inline-flex text-sm font-light gap-2">
               <UsersRound className="w-4 h-4 flex-shrink-0" />
-              Diễn viên: {movie.casts || "Đang cập nhật"}
+              Diễn viên: {movie?.casts || "Đang cập nhật"}
             </div>
             <div className="inline-flex text-sm font-light gap-2">
               <GalleryVerticalEnd className="w-4 h-4 flex-shrink-0" />
-              Số tập: {movie.total_episodes || "Đang cập nhật"}
+              Số tập: {movie?.total_episodes || "Đang cập nhật"}
             </div>
             <div className="inline-flex text-sm font-light gap-2">
               <Check className="w-4 h-4 flex-shrink-0" />
-              Trạng thái: {movie.current_episode || "Đang cập nhật"}
+              Trạng thái: {movie?.current_episode || "Đang cập nhật"}
             </div>
             <div className="inline-flex text-sm font-light gap-2">
               <Clock className="w-4 h-4 flex-shrink-0" />
-              Thời lượng: {movie.time || "Đang cập nhật"}
+              Thời lượng: {movie?.time || "Đang cập nhật"}
             </div>
             <div className="inline-flex text-sm font-light gap-2">
               <CalendarDays className="w-4 h-4 flex-shrink-0" /> Năm phát hành:{" "}
-              {movie.category[3]?.list?.map((item) => item.name).join(", ") ||
+              {movie?.category[3]?.list?.map((item) => item?.name)?.join(", ") ||
                 "Đang cập nhật"}
             </div>
             <div className="inline-flex text-sm font-light gap-2">
               <Monitor className="w-4 h-4 flex-shrink-0" /> Chất lượng:{" "}
-              {movie.quality || "Đang cập nhật"}
+              {movie?.quality || "Đang cập nhật"}
             </div>
             <div className="inline-flex text-sm font-light gap-2">
               <LibraryBig className="w-4 h-4 flex-shrink-0" />
@@ -121,13 +121,13 @@ export default async function FilmDetail({ params }: IFilmDetailParams) {
             <h2 className="text-lg font-semibold">Nội dung phim</h2>
             <div
               className="text-sm text-light"
-              dangerouslySetInnerHTML={{ __html: movie.description }}
+              dangerouslySetInnerHTML={{ __html: movie?.description }}
             ></div>
           </div>
         </div>
       </div>
       <iframe
-        src={currentEp[0].embed}
+        src={currentEp[0]?.embed}
         width="100%"
         height="auto"
         allowFullScreen

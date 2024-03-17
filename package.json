@@ -24,6 +24,7 @@
     "next-themes": "^0.3.0",
     "react": "^18",
     "react-dom": "^18",
+    "sharp": "^0.33.2",
     "slugify": "^1.6.6",
     "tailwind-merge": "^2.2.1",
     "tailwindcss-animate": "^1.0.7"
