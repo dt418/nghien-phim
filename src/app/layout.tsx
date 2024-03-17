@@ -27,7 +27,7 @@ export default function RootLayout({ children }: PropsWithChildren) {
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={cn("bg-background font-sans antialiased", fontSans.variable)}
+        className={cn("text-foreground bg-background font-sans antialiased", fontSans.variable)}
       >
         <ThemeProvider
           attribute="class"
