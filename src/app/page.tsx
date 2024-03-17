@@ -2,6 +2,7 @@ import { FilmCard } from "@/components/ui/film/film.card";
 import { FilmCarousel } from "@/components/ui/film/film.carousel";
 import { FilmPagination } from "@/components/ui/film/film.pagination";
 import { getFilms } from "@/lib/fetcher";
+import { calculatePageList } from "@/lib/pagination";
 import { IMovieBase } from "@/types/movie-list";
 
 type THomePageProps = {
@@ -10,31 +11,21 @@ type THomePageProps = {
 };
 
 export default async function Home({ searchParams }: THomePageProps) {
-  const page =
-    typeof searchParams.page === "string" ? Number(searchParams.page) : 1;
-  const { items, paginate } = await getFilms(page);
+  const pageParam =
+    typeof searchParams.page === "string" && Number(searchParams.page) > 0
+      ? Number(searchParams.page)
+      : 1;
+  const { items, paginate } = await getFilms(pageParam);
   const totalPage = paginate.total_page;
   const PAGE_TO_DISPLAY = 2;
-
   let currentPage = 1;
-  if (Number(searchParams.page) > 1) {
-    currentPage = Number(searchParams.page);
+  if (Number(pageParam) > 1) {
+    currentPage = Number(pageParam);
   }
-  const pageList: number[] = [];
-
-  for (
-    let i = currentPage - PAGE_TO_DISPLAY;
-    i < currentPage + PAGE_TO_DISPLAY;
-    i++
-  ) {
-    if (i < 1) continue;
-    if (i > totalPage) break;
-    pageList.push(i);
-  }
-
+  const pageList = calculatePageList(currentPage, PAGE_TO_DISPLAY, totalPage);
   return (
     <main className="container space-y-4">
-      <FilmCarousel filmList={items}/>
+      <FilmCarousel filmList={items} />
       <ul className="grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 place-items-center">
         {items?.map((filmItem: IMovieBase) => {
           return (
