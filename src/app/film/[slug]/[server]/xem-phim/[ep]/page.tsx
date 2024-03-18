@@ -132,7 +132,7 @@ export default async function FilmDetail({ params }: IFilmDetailParams) {
         height="auto"
         allowFullScreen
         allow="autoplay; fullscreen"
-        className="min-w-full min-h-auto md:min-h-[calc(100vh-100px)] aspect-video"
+        className="min-w-full min-h-auto aspect-video"
       />
       <div className="flex flex-col md:flex-row gap-4 mt-4">
         <div className="flex flex-col w-full">
