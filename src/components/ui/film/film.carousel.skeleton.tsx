@@ -3,8 +3,6 @@
 import React from "react";
 import Autoplay from "embla-carousel-autoplay";
 
-import { IMovieBase } from "@/types/movie-list";
-
 import {
   Carousel,
   CarouselContent,
@@ -13,12 +11,9 @@ import {
   CarouselPrevious,
 } from "../carousel";
 
-import { FilmCard } from "./film.card";
+import { FilmCardSkeleton } from "./film.card.skeleton";
 
-type TFilmCarouselProps = {
-  items: IMovieBase[] | [];
-};
-export function FilmCarousel({ items = [] }: TFilmCarouselProps) {
+export function FilmCarouselSkeleton() {
   return (
     <Carousel
       className="w-full"
@@ -30,13 +25,13 @@ export function FilmCarousel({ items = [] }: TFilmCarouselProps) {
       ]}
     >
       <CarouselContent className="-ml-1">
-        {items?.map((filmItem) => (
+        {Array.from({length: 10}).map((_, index) => (
           <CarouselItem
-            key={filmItem.slug}
+            key={index}
             className="pl-1 basis-11/12 sm:basis-1/2 md:basis-1/4 lg:basis-1/5"
           >
             <div className="p-1">
-              <FilmCard {...filmItem} key={filmItem.slug} />
+              <FilmCardSkeleton />
             </div>
           </CarouselItem>
         ))}
