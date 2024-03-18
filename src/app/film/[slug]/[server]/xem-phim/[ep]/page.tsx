@@ -48,12 +48,16 @@ export async function generateMetadata(
   const currentServer = film?.movie?.episodes?.filter(
     (sv) => slugify(sv?.server_name, { locale: "vi", lower: true }) === server
   );
-  const currentEp = currentServer[0]?.items?.filter((e) => e?.slug === ep) || [];
+  const currentEp =
+    currentServer[0]?.items?.filter((e) => e?.slug === ep) || [];
   return {
     title: `Xem phim ${film?.movie?.name} - Tập ${currentEp[0]?.name}`,
     description: film?.movie?.description,
     openGraph: {
-      images: [film?.movie?.thumb_url, ...previousImages],
+      images: [
+        film?.movie?.poster_url || film?.movie?.thumb_url,
+        ...previousImages,
+      ],
     },
   };
 }
@@ -65,7 +69,8 @@ export default async function FilmDetail({ params }: IFilmDetailParams) {
   const currentServer = movie?.episodes?.filter(
     (sv) => slugify(sv?.server_name, { locale: "vi", lower: true }) === server
   );
-  const currentEp = currentServer[0]?.items?.filter((e) => e?.slug === ep) || [];
+  const currentEp =
+    currentServer[0]?.items?.filter((e) => e?.slug === ep) || [];
 
   return (
     <div className="flex flex-col gap-4">
@@ -98,8 +103,9 @@ export default async function FilmDetail({ params }: IFilmDetailParams) {
             </div>
             <div className="inline-flex text-sm font-light gap-2">
               <CalendarDays className="w-4 h-4 flex-shrink-0" /> Năm phát hành:{" "}
-              {movie?.category[3]?.list?.map((item) => item?.name)?.join(", ") ||
-                "Đang cập nhật"}
+              {movie?.category[3]?.list
+                ?.map((item) => item?.name)
+                ?.join(", ") || "Đang cập nhật"}
             </div>
             <div className="inline-flex text-sm font-light gap-2">
               <Monitor className="w-4 h-4 flex-shrink-0" /> Chất lượng:{" "}
@@ -108,12 +114,12 @@ export default async function FilmDetail({ params }: IFilmDetailParams) {
             <div className="inline-flex text-sm font-light gap-2">
               <LibraryBig className="w-4 h-4 flex-shrink-0" />
               Thể loại:{" "}
-              {movie.category[2]?.list?.map((item) => item.name).join(", ") ||
+              {movie?.category[2]?.list?.map((item) => item.name).join(", ") ||
                 "Đang cập nhật"}
             </div>
             <div className="inline-flex text-sm font-light gap-2">
               <Globe className="w-4 h-4 flex-shrink-0" /> Quốc gia:{" "}
-              {movie.category[4]?.list.map((ct) => ct.name).join(", ") ||
+              {movie?.category[4]?.list?.map((ct) => ct?.name)?.join(", ") ||
                 "Đang cập nhật"}
             </div>
           </div>
@@ -139,19 +145,22 @@ export default async function FilmDetail({ params }: IFilmDetailParams) {
           <h2 className="text-lg font-semibold">Xem phim</h2>
           <ul>
             {movie.episodes.map((ep) => (
-              <li key={ep.server_name}>
-                <p>{ep.server_name}</p>
+              <li key={ep?.server_name}>
+                <p>{ep?.server_name}</p>
                 <ul className="grid grid-cols-4 sm:grid-cols-8 md:grid-cols-12 gap-2 mt-2">
-                  {ep.items.reverse().map((item) => (
-                    <li key={item.slug}>
+                  {ep?.items?.reverse()?.map((item) => (
+                    <li key={item?.slug}>
                       <Button asChild variant="outline" className="w-full">
                         <Link
-                          href={`/film/${movie.slug}/${slugify(ep.server_name, {
-                            locale: "vi",
-                            lower: true,
-                          })}/xem-phim/${item.slug}`}
+                          href={`/film/${movie.slug}/${slugify(
+                            ep?.server_name,
+                            {
+                              locale: "vi",
+                              lower: true,
+                            }
+                          )}/xem-phim/${item?.slug}`}
                         >
-                          {item.name}
+                          {item?.name}
                         </Link>
                       </Button>
                     </li>
