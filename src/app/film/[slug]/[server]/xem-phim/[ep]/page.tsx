@@ -134,6 +134,7 @@ export default async function FilmDetail({ params }: IFilmDetailParams) {
       </div>
       <iframe
         src={currentEp[0]?.embed}
+        title={`Xem phim ${movie?.name} Tập ${currentEp[0]?.name}`}
         width="100%"
         height="auto"
         allowFullScreen
