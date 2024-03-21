@@ -16,8 +16,8 @@ export const FilmCard = (props: IMovieBase) => {
           <Image
             className="object-cover rounded-t-lg transition-all scale-100 group-hover:scale-105"
             alt={name || original_name}
-            width={400}
-            height={600}
+            width={300}
+            height={450}
             style={{
               aspectRatio: "2/3",
               objectFit: "cover",

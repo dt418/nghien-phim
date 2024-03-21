@@ -31,9 +31,7 @@ export function FilmCarousel({ items = [], title }: TFilmCarouselProps) {
         className="w-full"
         opts={{ loop: true }}
         plugins={[
-          Autoplay({
-            delay: 2000,
-          }),
+          Autoplay(),
         ]}
       >
         <CarouselContent className="-ml-1">

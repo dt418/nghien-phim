@@ -12,16 +12,18 @@ import "./globals.css";
 const fontSans = FontSans({
   subsets: ["latin"],
   variable: "--font-sans",
+  adjustFontFallback: true,
+  display: "optional",
   weight: ["300", "400", "500", "700"],
-  fallback: ["Arial", "Helvetica", "sans-serif"],
 });
 
 export const metadata: Metadata = {
   title: {
-    template: "%s | Nghienphim.online",
-    default: "Danh sách phim mới nhất | Nghienphim.online",
+    absolute: "",
+    template: "%s | nghienphim.tv",
+    default: "Danh sách phim mới nhất | nghienphim.tv",
   },
-  description: "Nghienphim.online | Web xem phim miễn phí tốc độc cao",
+  description: "nghienphim.tv | Web xem phim miễn phí tốc độc cao",
 };
 
 export default function RootLayout({ children }: PropsWithChildren) {
