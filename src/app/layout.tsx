@@ -12,8 +12,6 @@ import "./globals.css";
 const fontSans = FontSans({
   subsets: ["latin"],
   variable: "--font-sans",
-  adjustFontFallback: true,
-  display: "optional",
   weight: ["300", "400", "500", "700"],
 });
 
