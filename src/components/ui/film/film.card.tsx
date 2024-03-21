@@ -25,12 +25,12 @@ export const FilmCard = (props: IMovieBase) => {
             src={thumb_url}
           />
           <div className="absolute inset-0 flex items-center justify-center gap-2 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity">
-            <PlayIcon className="w-16 h-16 scale-0 opacity-0 transition-all group-hover:scale-100 group-hover:opacity-100 bg-green-500 bg-opacity-75 rounded-full p-4" />
+            <PlayIcon className="w-16 h-16 scale-50 opacity-0 transition-all group-hover:scale-100 group-hover:opacity-100 bg-background bg-opacity-50 rounded-full p-4" />
           </div>
         </div>
         <CardContent className="p-4">
-          <h3 className="text-lg font-bold line-clamp-1">{name}</h3>
-          <p className="text-sm text-card-foreground line-clamp-1 font-light">
+          <h3 className="text-[15px] font-medium capitalize pt-1 block truncate line-clamp-1">{name}</h3>
+          <p className="text-sm truncate line-clamp-1 font-light">
             {original_name}
           </p>
         </CardContent>

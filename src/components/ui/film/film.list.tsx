@@ -7,9 +7,9 @@ import { FilmCard } from "./film.card";
 interface IFilmListProps {
   items: IMovieBase[];
 }
-export default function FilmList({ items }: IFilmListProps) {
+export function FilmList({ items }: IFilmListProps) {
   return (
-    <ul className="w-full grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 place-items-center">
+    <ul className="w-full grid grid-cols-2 gap-x-3 md:gap-x-4 gap-y-4 sm:md:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-4">
       {items?.map((filmItem: IMovieBase) => {
         return (
           <li key={filmItem.slug} className="w-full">

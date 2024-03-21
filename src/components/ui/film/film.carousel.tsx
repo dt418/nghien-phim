@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { Fragment } from "react";
 import Autoplay from "embla-carousel-autoplay";
 
 import { IMovieBase } from "@/types/movie-list";
@@ -17,32 +17,40 @@ import { FilmCard } from "./film.card";
 
 type TFilmCarouselProps = {
   items: IMovieBase[] | [];
+  title?: string;
 };
-export function FilmCarousel({ items = [] }: TFilmCarouselProps) {
+export function FilmCarousel({ items = [], title }: TFilmCarouselProps) {
   return (
-    <Carousel
-      className="w-full"
-      opts={{ loop: true }}
-      plugins={[
-        Autoplay({
-          delay: 2000,
-        }),
-      ]}
-    >
-      <CarouselContent className="-ml-1">
-        {items?.map((filmItem) => (
-          <CarouselItem
-            key={filmItem.slug}
-            className="pl-1 basis-11/12 sm:basis-1/2 md:basis-1/4 lg:basis-1/5"
-          >
-            <div className="p-1">
-              <FilmCard {...filmItem} key={filmItem.slug} />
-            </div>
-          </CarouselItem>
-        ))}
-      </CarouselContent>
-      <CarouselPrevious />
-      <CarouselNext />
-    </Carousel>
+    <Fragment>
+      {title ? (
+        <h2 className="text-md font-medium text-gray-200 uppercase pl-2 border-l-[3px] border-solid border-[#da966e]">
+          {title}
+        </h2>
+      ) : null}
+      <Carousel
+        className="w-full"
+        opts={{ loop: true }}
+        plugins={[
+          Autoplay({
+            delay: 2000,
+          }),
+        ]}
+      >
+        <CarouselContent className="-ml-1">
+          {items?.map((filmItem) => (
+            <CarouselItem
+              key={filmItem.slug}
+              className="pl-1 basis-1/2 sm:basis-1/3 md:basis-1/4 lg:basis-1/6"
+            >
+              <div className="p-1">
+                <FilmCard {...filmItem} key={filmItem.slug} />
+              </div>
+            </CarouselItem>
+          ))}
+        </CarouselContent>
+        <CarouselPrevious />
+        <CarouselNext />
+      </Carousel>
+    </Fragment>
   );
 }
