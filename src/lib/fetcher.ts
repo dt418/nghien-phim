@@ -27,13 +27,17 @@ export async function getFilms(page: number): Promise<IMovieListResponse> {
 export async function getFilmBySlug(
   slug: string | string[]
 ): Promise<IMovieResponse> {
-  const res = await fetch(`https://phim.nguonc.com/api/film/${slug}`);
+  try {
+    const res = await fetch(`https://phim.nguonc.com/api/film/${slug}`);
 
-  if (!res.ok) {
-    // This will activate the closest `error.js` Error Boundary
-    throw new Error("Failed to fetch film item");
+    if (!res.ok) {
+      // This will activate the closest `error.js` Error Boundary
+      throw new Error("Failed to fetch film item");
+    }
+
+    const data: IMovieResponse = await res.json();
+    return data;
+  } catch (error) {
+    throw new Error(`Error fetching film list: ${error}`);
   }
-
-  const data: IMovieResponse = await res.json();
-  return data;
 }
