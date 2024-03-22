@@ -15,6 +15,7 @@ import slugify from "slugify";
 
 import { Button } from "@/components/ui/button";
 import { getFilmBySlug } from "@/lib/fetcher";
+import { textTruncate } from "@/lib/utils";
 import { type IMovieResponse } from "@/types/movie";
 
 interface IFilmDetailParams {
@@ -42,7 +43,7 @@ export async function generateMetadata(
 
   return {
     title: film?.movie?.name,
-    description: film?.movie?.description,
+    description: textTruncate(film?.movie?.description),
     openGraph: {
       images: [
         film?.movie?.poster_url || film?.movie?.thumb_url,
