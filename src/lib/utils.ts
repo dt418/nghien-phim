@@ -14,8 +14,8 @@ export function textTruncate(str: string, length = 160, ending = "...") {
   if (ending == null) {
     ending = "...";
   }
-  if (str.length > length) {
-    return str?.substring(0, length - ending.length) + ending;
+  if (typeof str === "string" && str.length > length) {
+    return str.substring(0, length - ending.length) + ending;
   } else {
     return str;
   }

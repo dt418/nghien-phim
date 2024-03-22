@@ -39,7 +39,7 @@ export default async function Home({ searchParams }: THomePageProps) {
           />
         </div>
         <div className="hidden sm:block sm:col-span-3 col-span-12">
-          <TopView />
+          <TopView topViewData={items} />
         </div>
       </section>
     </main>

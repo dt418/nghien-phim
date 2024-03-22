@@ -8,7 +8,7 @@ import { Card, CardContent } from "../card";
 
 export const FilmCard = (props: IMovieBase) => {
   const { name, slug, thumb_url, original_name } = props;
-  const filmLink = `/film/${slug}`;
+  const filmLink = `/phim/${slug}`;
   return (
     <Link className="font-semibold" href={filmLink} title={name}>
       <Card className="w-full max-w-sm rounded-lg border shadow-sm">
