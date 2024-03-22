@@ -16,21 +16,10 @@ import slugify from "slugify";
 import { Button } from "@/components/ui/button";
 import { getFilmBySlug } from "@/lib/fetcher";
 import { textTruncate } from "@/lib/utils";
-import { type IMovieResponse } from "@/types/movie";
+import { IFilmDetailPageProps, type IMovieResponse } from "@/types/movie";
 
-interface IFilmDetailParams {
-  params: {
-    slug: string | string[];
-  };
-  searchParams: Record<string, string | string[] | undefined>;
-}
-
-type Props = {
-  params: { slug: string };
-  searchParams: Record<string, string | string[] | undefined>;
-};
 export async function generateMetadata(
-  { params }: Props,
+  { params }: IFilmDetailPageProps,
   parent: ResolvingMetadata
 ): Promise<Metadata> {
   const slug = params.slug;
@@ -60,7 +49,7 @@ export async function generateMetadata(
     },
   };
 }
-export default async function FilmDetail({ params }: IFilmDetailParams) {
+export default async function FilmDetail({ params }: IFilmDetailPageProps) {
   const { slug } = params;
   const res: IMovieResponse = await getFilmBySlug(slug);
   const { movie } = res;

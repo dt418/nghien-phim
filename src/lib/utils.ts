@@ -1,4 +1,5 @@
 import { type ClassValue, clsx } from "clsx";
+import slugify from "slugify";
 import { twMerge } from "tailwind-merge";
 
 export function cn(...inputs: ClassValue[]) {
@@ -6,7 +7,6 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export function textTruncate(str: string, length = 160, ending = "...") {
-  
   if (length == null) {
     length = 100;
   }
@@ -24,15 +24,19 @@ export function textTruncate(str: string, length = 160, ending = "...") {
 const IS_SERVER = typeof window === "undefined";
 
 /**
- * 
+ *
  * @param path The relative path start with '/'
- * @example 
+ * @example
  * getURL('/about')
  * @returns Full path with host name
  */
-export default function getURL(path: string) {
+export function getURL(path: string) {
   const baseURL = IS_SERVER
     ? process.env.NEXT_SITE_URL!
     : window.location.origin;
   return new URL(path, baseURL).toString();
+}
+
+export function stringToSlug(str: string) {
+  return slugify(str, { locale: "vi", lower: true });
 }

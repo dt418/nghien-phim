@@ -5,16 +5,12 @@ import { TopView } from "@/components/ui/film/film.top-view";
 import { Separator } from "@/components/ui/separator";
 import { getFilms } from "@/lib/fetcher";
 import { calculatePageList } from "@/lib/pagination";
-
-type THomePageProps = {
-  params?: { slug: string };
-  searchParams: Record<string, string | string[] | undefined>;
-};
+import { THomePageProps } from "@/types/movie-list";
 
 export default async function Home({ searchParams }: THomePageProps) {
   const pageParam =
-    typeof searchParams.page === "string" && Number(searchParams.page) > 0
-      ? Number(searchParams.page)
+    typeof searchParams?.page === "string" && Number(searchParams?.page) > 0
+      ? Number(searchParams?.page)
       : 1;
   const { items, paginate } = await getFilms(pageParam);
   const totalPage = paginate.total_page;

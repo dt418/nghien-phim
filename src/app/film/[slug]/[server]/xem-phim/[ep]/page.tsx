@@ -11,11 +11,10 @@ import {
   Monitor,
   UsersRound,
 } from "lucide-react";
-import slugify from "slugify";
 
 import { Button } from "@/components/ui/button";
 import { getFilmBySlug } from "@/lib/fetcher";
-import { textTruncate } from "@/lib/utils";
+import { stringToSlug, textTruncate } from "@/lib/utils";
 import { type IMovieResponse } from "@/types/movie";
 
 interface IFilmDetailParams {
@@ -47,7 +46,7 @@ export async function generateMetadata(
   const previousImages = (await parent).openGraph?.images || [];
 
   const currentServer = film?.movie?.episodes?.filter(
-    (sv) => slugify(sv?.server_name, { locale: "vi", lower: true }) === server
+    (sv) => stringToSlug(sv?.server_name) === server
   );
   const currentEp =
     currentServer[0]?.items?.filter((e) => e?.slug === ep) || [];
@@ -76,7 +75,7 @@ export default async function FilmDetail({ params }: IFilmDetailParams) {
   const { movie } = res;
 
   const currentServer = movie?.episodes?.filter(
-    (sv) => slugify(sv?.server_name, { locale: "vi", lower: true }) === server
+    (sv) => stringToSlug(sv?.server_name) === server
   );
   const currentEp =
     currentServer[0]?.items?.filter((e) => e?.slug === ep) || [];
@@ -162,12 +161,8 @@ export default async function FilmDetail({ params }: IFilmDetailParams) {
                     <li key={item?.slug}>
                       <Button asChild variant="outline" className="w-full">
                         <Link
-                          href={`/film/${movie.slug}/${slugify(
-                            ep?.server_name,
-                            {
-                              locale: "vi",
-                              lower: true,
-                            }
+                          href={`/film/${movie.slug}/${stringToSlug(
+                            ep?.server_name
                           )}/xem-phim/${item?.slug}`}
                         >
                           {item?.name}

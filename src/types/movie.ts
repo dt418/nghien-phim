@@ -63,3 +63,10 @@ export interface IServerData {
   embed: string;
   m3u8: string;
 }
+
+export interface IFilmDetailPageProps {
+  params: {
+    slug: string | string[];
+  };
+  searchParams: Record<string, string | string[] | undefined>;
+}

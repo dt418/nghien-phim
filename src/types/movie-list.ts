@@ -19,3 +19,8 @@ export interface IPagination {
   total_items: number;
   items_per_page: number;
 }
+
+export type THomePageProps = {
+  params?: { slug: string };
+  searchParams: Record<string, string | string[] | undefined>;
+};
