@@ -45,6 +45,14 @@ export async function generateMetadata(
     title: film?.movie?.name,
     description: textTruncate(film?.movie?.description),
     openGraph: {
+      description: textTruncate(film?.movie?.description),
+      images: [
+        film?.movie?.poster_url || film?.movie?.thumb_url,
+        ...previousImages,
+      ],
+    },
+    twitter: {
+      description: textTruncate(film?.movie?.description),
       images: [
         film?.movie?.poster_url || film?.movie?.thumb_url,
         ...previousImages,

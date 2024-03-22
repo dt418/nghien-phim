@@ -55,6 +55,14 @@ export async function generateMetadata(
     title: `Xem phim ${film?.movie?.name} - Tập ${currentEp[0]?.name}`,
     description: textTruncate(film?.movie?.description),
     openGraph: {
+      description: textTruncate(film?.movie?.description),
+      images: [
+        film?.movie?.poster_url || film?.movie?.thumb_url,
+        ...previousImages,
+      ],
+    },
+    twitter: {
+      description: textTruncate(film?.movie?.description),
       images: [
         film?.movie?.poster_url || film?.movie?.thumb_url,
         ...previousImages,
