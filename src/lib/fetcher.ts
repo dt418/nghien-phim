@@ -38,6 +38,6 @@ export async function getFilmBySlug(
     const data: IMovieResponse = await res.json();
     return data;
   } catch (error) {
-    throw new Error(`Error fetching film list: ${error}`);
+    throw new Error(`Error fetching film by slug: ${error}`);
   }
 }
