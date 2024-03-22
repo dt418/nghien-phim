@@ -8,11 +8,11 @@ import { Card, CardContent } from "../card";
 
 export const FilmCard = (props: IMovieBase) => {
   const { name, slug, thumb_url, original_name } = props;
-  const filmLink = `film/${slug}`;
+  const filmLink = `/film/${slug}`;
   return (
     <Link className="font-semibold" href={filmLink} title={name}>
       <Card className="w-full max-w-sm rounded-lg border shadow-sm">
-        <div className="relative group overflow-hidden aspect-[2/3] rounded-lg">
+        <div className="relative group overflow-hidden aspect-[2/3] rounded-t-lg">
           <Image
             className="object-cover rounded-t-lg transition-all scale-100 group-hover:scale-105"
             alt={name || original_name}
