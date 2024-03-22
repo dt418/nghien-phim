@@ -20,3 +20,19 @@ export function textTruncate(str: string, length = 160, ending = "...") {
     return str;
   }
 }
+
+const IS_SERVER = typeof window === "undefined";
+
+/**
+ * 
+ * @param path The relative path start with '/'
+ * @example 
+ * getURL('/about')
+ * @returns Full path with host name
+ */
+export default function getURL(path: string) {
+  const baseURL = IS_SERVER
+    ? process.env.NEXT_SITE_URL!
+    : window.location.origin;
+  return new URL(path, baseURL).toString();
+}
