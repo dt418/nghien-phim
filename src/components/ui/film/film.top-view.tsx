@@ -10,7 +10,7 @@ export const TopView = () => {
         <span className="uppercase text-md font-medium border-b border-border w-full block pb-2">
           Top Xem Nhiều
         </span>
-        <Tabs defaultValue="ngay" className="w-full">
+        <Tabs defaultValue="ngay" className="w-full mt-2">
           <TabsList className="w-full">
             <TabsTrigger value="ngay">Ngày</TabsTrigger>
             <TabsTrigger value="thang">Tháng</TabsTrigger>
