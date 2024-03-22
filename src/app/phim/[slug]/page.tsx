@@ -16,7 +16,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { getFilmBySlug } from "@/lib/fetcher";
 import { stringToSlug, textTruncate } from "@/lib/utils";
-import { IFilmDetailPageProps, type IMovieResponse } from "@/types/movie";
+import { IFilmDetailPageProps } from "@/types/movie";
 
 export async function generateMetadata(
   { params }: IFilmDetailPageProps,
@@ -32,18 +32,18 @@ export async function generateMetadata(
 
   return {
     title: film?.movie?.name,
-    description: textTruncate(film?.movie?.description),
+    description: textTruncate(String(film?.movie?.description)),
     openGraph: {
-      description: textTruncate(film?.movie?.description),
+      description: textTruncate(String(film?.movie?.description)),
       images: [
-        film?.movie?.poster_url || film?.movie?.thumb_url,
+        String(film?.movie?.poster_url || film?.movie?.thumb_url),
         ...previousImages,
       ],
     },
     twitter: {
-      description: textTruncate(film?.movie?.description),
+      description: textTruncate(String(film?.movie?.description)),
       images: [
-        film?.movie?.poster_url || film?.movie?.thumb_url,
+        String(film?.movie?.poster_url || film?.movie?.thumb_url),
         ...previousImages,
       ],
     },
@@ -51,7 +51,7 @@ export async function generateMetadata(
 }
 export default async function FilmDetail({ params }: IFilmDetailPageProps) {
   const { slug } = params;
-  const res: IMovieResponse = await getFilmBySlug(slug);
+  const res = await getFilmBySlug(slug);
   if(!res) {
     notFound()
   }

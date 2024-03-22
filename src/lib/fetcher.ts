@@ -3,7 +3,9 @@
 import { IMovieResponse } from "@/types/movie";
 import { IMovieListResponse } from "@/types/movie-list";
 
-export async function getFilms(page: number): Promise<IMovieListResponse> {
+export async function getFilms(
+  page: number
+): Promise<IMovieListResponse | undefined> {
   try {
     const res = await fetch(
       `https://phim.nguonc.com/api/films/phim-moi-cap-nhat?page=${page}`,
@@ -14,30 +16,34 @@ export async function getFilms(page: number): Promise<IMovieListResponse> {
     );
 
     if (!res.ok) {
-      throw new Error(`Failed to fetch film list. Status: ${res.status}`);
+      console.error(`Failed to fetch film list. Status: ${res.status}`);
+      return undefined;
     }
 
     const data = await res.json();
     return data;
   } catch (error) {
-    throw new Error(`Error fetching film list: ${error}`);
+    console.error(`Error fetching film list: ${error}`);
+    return undefined;
   }
 }
 
 export async function getFilmBySlug(
   slug: string | string[]
-): Promise<IMovieResponse> {
+): Promise<IMovieResponse | undefined> {
   try {
     const res = await fetch(`https://phim.nguonc.com/api/film/${slug}`);
 
     if (!res.ok) {
       // This will activate the closest `error.js` Error Boundary
-      throw new Error("Failed to fetch film item");
+      console.error("Failed to fetch film item");
+      return undefined;
     }
 
     const data: IMovieResponse = await res.json();
     return data;
   } catch (error) {
-    throw new Error(`Error fetching film by slug: ${error}`);
+    console.error(`Error fetching film by slug: ${error}`);
+    return undefined;
   }
 }

@@ -16,7 +16,6 @@ import {
 import { Button } from "@/components/ui/button";
 import { getFilmBySlug } from "@/lib/fetcher";
 import { stringToSlug, textTruncate } from "@/lib/utils";
-import { type IMovieResponse } from "@/types/movie";
 
 interface IFilmDetailParams {
   params: {
@@ -49,25 +48,26 @@ export async function generateMetadata(
     (sv) => stringToSlug(sv?.server_name) === server
   );
   const currentEp =
-    currentServer[0]?.items?.filter((e) => e?.slug === ep) || [];
+    (currentServer && currentServer[0]?.items?.filter((e) => e?.slug === ep)) ||
+    [];
 
   if (currentEp.length === 0) {
     notFound();
   }
   return {
     title: `Xem phim ${film?.movie?.name} - Tập ${currentEp[0]?.name}`,
-    description: textTruncate(film?.movie?.description),
+    description: textTruncate(String(film?.movie?.description)),
     openGraph: {
-      description: textTruncate(film?.movie?.description),
+      description: textTruncate(String(film?.movie?.description)),
       images: [
-        film?.movie?.poster_url || film?.movie?.thumb_url,
+        String(film?.movie?.poster_url || film?.movie?.thumb_url),
         ...previousImages,
       ],
     },
     twitter: {
-      description: textTruncate(film?.movie?.description),
+      description: textTruncate(String(film?.movie?.description)),
       images: [
-        film?.movie?.poster_url || film?.movie?.thumb_url,
+        String(film?.movie?.poster_url || film?.movie?.thumb_url),
         ...previousImages,
       ],
     },
@@ -75,7 +75,10 @@ export async function generateMetadata(
 }
 export default async function FilmDetail({ params }: IFilmDetailParams) {
   const { slug, server, ep } = params;
-  const res: IMovieResponse = await getFilmBySlug(slug);
+  const res = await getFilmBySlug(slug);
+  if(!res){
+    notFound()
+  }
   const { movie } = res;
 
   const currentServer = movie?.episodes?.filter(

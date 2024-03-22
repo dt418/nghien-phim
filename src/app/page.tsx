@@ -1,3 +1,5 @@
+import { notFound } from "next/navigation";
+
 import { FilmCarousel } from "@/components/ui/film/film.carousel";
 import { FilmList } from "@/components/ui/film/film.list";
 import { FilmPagination } from "@/components/ui/film/film.pagination";
@@ -12,7 +14,13 @@ export default async function Home({ searchParams }: THomePageProps) {
     typeof searchParams?.page === "string" && Number(searchParams?.page) > 0
       ? Number(searchParams?.page)
       : 1;
-  const { items, paginate } = await getFilms(pageParam);
+  const films = await getFilms(pageParam);
+  
+  if(!films){
+    notFound()
+  }
+
+  const {items, paginate } = films;
   const totalPage = paginate.total_page;
   const PAGE_TO_DISPLAY = 2;
   let currentPage = 1;
