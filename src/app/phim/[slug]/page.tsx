@@ -24,6 +24,7 @@ import { ReportView } from "./view";
 const redis = Redis.fromEnv();
 export const revalidate = 0;
 
+// generate meta data
 export async function generateMetadata(
   { params }: IFilmDetailPageProps,
   parent: ResolvingMetadata
@@ -33,7 +34,7 @@ export async function generateMetadata(
   // fetch data
   const film = await getFilmBySlug(slug);
   if (!film) {
-    notFound();
+    return notFound();
   }
 
   // optionally access and extend (rather than replace) parent metadata
@@ -58,12 +59,13 @@ export async function generateMetadata(
     },
   };
 }
+
 export default async function FilmDetail({ params }: IFilmDetailPageProps) {
   const { slug } = params;
   const res = await getFilmBySlug(slug);
-  
+
   if (!res) {
-    notFound();
+    return notFound();
   }
   const views =
     (await redis.get<number>(["pageviews", "films", params.slug].join(":"))) ??

@@ -2,14 +2,11 @@ import { notFound } from "next/navigation";
 import { Redis } from "@upstash/redis";
 
 import { FilmCarousel } from "@/components/ui/film/film.carousel";
-// import CustomPagination from "@/components/ui/film/film.custom-pagination";
 import { FilmList } from "@/components/ui/film/film.list";
 import { FilmPagination } from "@/components/ui/film/film.pagination";
-// import { FilmPagination } from "@/components/ui/film/film.pagination";
 import { TopView } from "@/components/ui/film/film.top-view";
 import { Separator } from "@/components/ui/separator";
 import { getFilms } from "@/lib/fetcher";
-// import { calculatePageList } from "@/lib/pagination";
 import { THomePageProps } from "@/types/movie-list";
 
 const redis = Redis.fromEnv();

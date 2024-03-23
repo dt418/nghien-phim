@@ -34,6 +34,7 @@ type Props = {
   };
   searchParams: Record<string, string | string[] | undefined>;
 };
+
 export async function generateMetadata(
   { params }: Props,
   parent: ResolvingMetadata
@@ -52,7 +53,7 @@ export async function generateMetadata(
     [];
 
   if (currentEp.length === 0) {
-    notFound();
+    return notFound();
   }
   return {
     title: `Xem phim ${film?.movie?.name} - Tập ${currentEp[0]?.name}`,
@@ -73,11 +74,13 @@ export async function generateMetadata(
     },
   };
 }
+
+
 export default async function FilmDetail({ params }: IFilmDetailParams) {
   const { slug, server, ep } = params;
   const res = await getFilmBySlug(slug);
   if(!res){
-    notFound()
+    return notFound()
   }
   const { movie } = res;
 
@@ -87,7 +90,7 @@ export default async function FilmDetail({ params }: IFilmDetailParams) {
   const currentEp =
     currentServer[0]?.items?.filter((e) => e?.slug === ep) || [];
   if (currentEp.length === 0) {
-    notFound();
+    return notFound();
   }
   return (
     <div className="flex flex-col gap-4">
