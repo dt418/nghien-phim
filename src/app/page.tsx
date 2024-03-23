@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import { Redis } from '@upstash/redis';
 
 import { FilmCarousel } from "@/components/ui/film/film.carousel";
 import { FilmList } from "@/components/ui/film/film.list";
@@ -8,6 +9,9 @@ import { Separator } from "@/components/ui/separator";
 import { getFilms } from "@/lib/fetcher";
 import { calculatePageList } from "@/lib/pagination";
 import { THomePageProps } from "@/types/movie-list";
+
+const redis = Redis.fromEnv();
+export const revalidate = 0;
 
 export default async function Home({ searchParams }: THomePageProps) {
   const pageParam =
@@ -28,6 +32,19 @@ export default async function Home({ searchParams }: THomePageProps) {
     currentPage = Number(pageParam);
   }
   const pageList = calculatePageList(currentPage, PAGE_TO_DISPLAY, totalPage);
+
+  const views = (
+    await redis.mget<number[]>(
+      ...items.map((film) => ['pageviews', 'films', film.slug].join(':')),
+    )
+  ).reduce(
+    (acc, v, i) => {
+      acc[items[i].slug] = v ?? 0;
+      return acc;
+    },
+    {} as Record<string, number>,
+  );
+
   return (
     <main className="container space-y-4">
       <FilmCarousel items={items} title="Thịnh hành" />
@@ -47,7 +64,7 @@ export default async function Home({ searchParams }: THomePageProps) {
           />
         </div>
         <div className="hidden sm:block sm:col-span-3 col-span-12">
-          <TopView topViewData={items} />
+          <TopView topViewData={items} views={views}/>
         </div>
       </section>
     </main>

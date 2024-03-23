@@ -2,6 +2,7 @@ import { type Metadata, type ResolvingMetadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { Redis } from "@upstash/redis";
 import {
   CalendarDays,
   Check,
@@ -18,6 +19,11 @@ import { getFilmBySlug } from "@/lib/fetcher";
 import { stringToSlug, textTruncate } from "@/lib/utils";
 import { IFilmDetailPageProps } from "@/types/movie";
 
+import { ReportView } from "./view";
+
+const redis = Redis.fromEnv();
+export const revalidate = 0;
+
 export async function generateMetadata(
   { params }: IFilmDetailPageProps,
   parent: ResolvingMetadata
@@ -26,6 +32,9 @@ export async function generateMetadata(
 
   // fetch data
   const film = await getFilmBySlug(slug);
+  if (!film) {
+    notFound();
+  }
 
   // optionally access and extend (rather than replace) parent metadata
   const previousImages = (await parent).openGraph?.images || [];
@@ -52,12 +61,18 @@ export async function generateMetadata(
 export default async function FilmDetail({ params }: IFilmDetailPageProps) {
   const { slug } = params;
   const res = await getFilmBySlug(slug);
-  if(!res) {
-    notFound()
+  
+  if (!res) {
+    notFound();
   }
+  const views =
+    (await redis.get<number>(["pageviews", "films", params.slug].join(":"))) ??
+    0;
+
   const { movie } = res;
   return (
     <div className="flex flex-col gap-4">
+      <ReportView slug={movie?.slug} />
       <div className="flex flex-col sm:flex-row gap-4">
         <Image
           src={movie?.thumb_url}
@@ -69,6 +84,13 @@ export default async function FilmDetail({ params }: IFilmDetailPageProps) {
         <div className="detail flex flex-col w-full md:w-auto">
           <h1 className="text-lg font-bold">{movie?.name}</h1>
           <div className="flex flex-col">
+            <div className="inline-flex text-sm font-light gap-2">
+              <UsersRound className="w-4 h-4 flex-shrink-0" />
+              Lượt xem:{" "}
+              {Intl.NumberFormat("vi-VN", { notation: "compact" }).format(
+                views
+              ) || "Đang cập nhật"}
+            </div>
             <div className="inline-flex text-sm font-light gap-2">
               <UsersRound className="w-4 h-4 flex-shrink-0" />
               Diễn viên: {movie?.casts || "Đang cập nhật"}

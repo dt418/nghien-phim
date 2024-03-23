@@ -7,9 +7,11 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "../tabs";
 
 interface ITopViewProps {
   topViewData: IMovieBase[];
+  views: Record<string,number>
 }
 export const TopView = (props: ITopViewProps) => {
-  const { topViewData } = props;
+  const { topViewData, views } = props;
+  
   return (
     <aside className="flex flex-wrap">
       <div className="w-full">
@@ -47,7 +49,7 @@ export const TopView = (props: ITopViewProps) => {
                             <span className="block truncate capitalize">
                               {filmItem.name}
                             </span>
-                            <span className="text-xs">0 lượt xem</span>
+                            <span className="text-xs">{views[filmItem.slug]} lượt xem</span>
                           </div>
                         </Link>
                       );
@@ -83,7 +85,7 @@ export const TopView = (props: ITopViewProps) => {
                             <span className="block truncate capitalize">
                               {filmItem.name}
                             </span>
-                            <span className="text-xs">0 lượt xem</span>
+                            <span className="text-xs">{views[filmItem.slug]} lượt xem</span>
                           </div>
                         </Link>
                       );
@@ -119,7 +121,7 @@ export const TopView = (props: ITopViewProps) => {
                             <span className="block truncate capitalize">
                               {filmItem.name}
                             </span>
-                            <span className="text-xs">0 lượt xem</span>
+                            <span className="text-xs">{views[filmItem.slug]} lượt xem</span>
                           </div>
                         </Link>
                       );
