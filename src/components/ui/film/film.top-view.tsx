@@ -40,7 +40,7 @@ export const TopView = (props: ITopViewProps) => {
                         >
                           <div className="col-span-2">
                             <div className="font-medium text-md hover:shadow-lg">
-                              <span className="leading-7 text-xs bg-[#a5695fd4] w-7 h-7 inline-block rounded-full text-center">
+                              <span className="leading-7 text-xs bg-tertiary w-7 h-7 inline-block rounded-full text-center">
                                 {index + 1}
                               </span>
                             </div>
@@ -72,11 +72,11 @@ export const TopView = (props: ITopViewProps) => {
                           key={filmItem.slug}
                           href={`/phim/${filmItem.slug}`}
                           title={filmItem.name}
-                          className="grid items-center grid-cols-12 pb-2 over:shadow-xl transform group hover:opacity-80 hover:scale-105 duration-300 gapx-3"
+                          className="grid items-center grid-cols-12 pb-2 over:shadow-xl transform group hover:opacity-80 hover:scale-105 duration-300 gap-x-3"
                         >
                           <div className="col-span-2">
                             <div className="font-medium text-md hover:shadow-lg">
-                              <span className="leading-7 text-xs bg-[#a5695fd4] w-7 h-7 inline-block rounded-full text-center">
+                              <span className="leading-7 text-xs bg-tertiary w-7 h-7 inline-block rounded-full text-center">
                                 {index + 1}
                               </span>
                             </div>
@@ -112,7 +112,7 @@ export const TopView = (props: ITopViewProps) => {
                         >
                           <div className="col-span-2">
                             <div className="font-medium text-md hover:shadow-lg">
-                              <span className="leading-7 text-xs bg-[#a5695fd4] w-7 h-7 inline-block rounded-full text-center">
+                              <span className="leading-7 text-xs bg-tertiary w-7 h-7 inline-block rounded-full text-center">
                                 {index + 1}
                               </span>
                             </div>
