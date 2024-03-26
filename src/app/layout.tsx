@@ -17,7 +17,6 @@ const fontSans = FontSans({
 
 export const metadata: Metadata = {
   title: {
-    absolute: "",
     template: "%s | nghienphim.tv",
     default: "Danh sách phim mới nhất | nghienphim.tv",
   },
@@ -35,7 +34,7 @@ export default function RootLayout({ children }: PropsWithChildren) {
       >
         <ThemeProvider
           attribute="class"
-          defaultTheme="system"
+          defaultTheme="dark"
           enableSystem
           disableTransitionOnChange
         >

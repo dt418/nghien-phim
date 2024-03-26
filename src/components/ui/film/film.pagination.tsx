@@ -1,3 +1,5 @@
+import { calculatePageList } from "@/lib/pagination";
+
 import {
   Pagination,
   PaginationContent,
@@ -11,15 +13,12 @@ import {
 
 export type IFilmCardProps = {
   currentPage: number;
-  pageList: number[];
   totalPage: number;
 };
 
-export const FilmPagination = ({
-  pageList,
-  currentPage,
-  totalPage,
-}: IFilmCardProps) => {
+export const FilmPagination = ({ currentPage, totalPage }: IFilmCardProps) => {
+  const PAGE_TO_DISPLAY = 2;
+  const pageList = calculatePageList(currentPage, PAGE_TO_DISPLAY, totalPage);
   return (
     <Pagination>
       <PaginationContent>
@@ -27,7 +26,7 @@ export const FilmPagination = ({
           <>
             <PaginationItem>
               <PaginationFirst
-                href={`/?page=${1}`}
+                href={`/`}
                 tabIndex={currentPage <= 1 ? -1 : undefined}
                 className={
                   currentPage <= 1
