@@ -16,7 +16,7 @@ import {
 
 import { Button } from "@/components/ui/button";
 import { getFilmBySlug } from "@/lib/fetcher";
-import { stringToSlug, textTruncate } from "@/lib/utils";
+import { stringToSlug, textTruncate } from "@/lib/stringUtils";
 import { IFilmDetailPageProps } from "@/types/movie";
 
 import { ReportView } from "./view";
@@ -86,45 +86,45 @@ export default async function FilmDetail({ params }: IFilmDetailPageProps) {
         <div className="detail flex flex-col w-full md:w-auto">
           <h1 className="text-lg font-bold">{movie?.name}</h1>
           <div className="flex flex-col">
-            <div className="inline-flex text-sm font-light gap-2">
+            <div className="inline-flex text-sm font-normal gap-2">
               <UsersRound className="w-4 h-4 flex-shrink-0" />
               Lượt xem:{" "}
               {Intl.NumberFormat("vi-VN", { notation: "compact" }).format(
                 views
               ) || "Đang cập nhật"}
             </div>
-            <div className="inline-flex text-sm font-light gap-2">
+            <div className="inline-flex text-sm font-normal gap-2">
               <UsersRound className="w-4 h-4 flex-shrink-0" />
               Diễn viên: {movie?.casts || "Đang cập nhật"}
             </div>
-            <div className="inline-flex text-sm font-light gap-2">
+            <div className="inline-flex text-sm font-normal gap-2">
               <GalleryVerticalEnd className="w-4 h-4 flex-shrink-0" />
               Số tập: {movie?.total_episodes || "Đang cập nhật"}
             </div>
-            <div className="inline-flex text-sm font-light gap-2">
+            <div className="inline-flex text-sm font-normal gap-2">
               <Check className="w-4 h-4 flex-shrink-0" />
               Trạng thái: {movie?.current_episode || "Đang cập nhật"}
             </div>
-            <div className="inline-flex text-sm font-light gap-2">
+            <div className="inline-flex text-sm font-normal gap-2">
               <Clock className="w-4 h-4 flex-shrink-0" />
               Thời lượng: {movie?.time || "Đang cập nhật"}
             </div>
-            <div className="inline-flex text-sm font-light gap-2">
+            <div className="inline-flex text-sm font-normal gap-2">
               <CalendarDays className="w-4 h-4 flex-shrink-0" /> Năm phát hành:{" "}
               {movie?.category[3]?.list?.map((item) => item.name).join(", ") ||
                 "Đang cập nhật"}
             </div>
-            <div className="inline-flex text-sm font-light gap-2">
+            <div className="inline-flex text-sm font-normal gap-2">
               <Monitor className="w-4 h-4 flex-shrink-0" /> Chất lượng:{" "}
               {movie?.quality || "Đang cập nhật"}
             </div>
-            <div className="inline-flex text-sm font-light gap-2">
+            <div className="inline-flex text-sm font-normal gap-2">
               <LibraryBig className="w-4 h-4 flex-shrink-0" />
               Thể loại:{" "}
               {movie?.category[2]?.list?.map((item) => item?.name).join(", ") ||
                 "Đang cập nhật"}
             </div>
-            <div className="inline-flex text-sm font-light gap-2">
+            <div className="inline-flex text-sm font-normal gap-2">
               <Globe className="w-4 h-4 flex-shrink-0" /> Quốc gia:{" "}
               {movie?.category[4]?.list.map((ct) => ct?.name).join(", ") ||
                 "Đang cập nhật"}
@@ -133,7 +133,7 @@ export default async function FilmDetail({ params }: IFilmDetailPageProps) {
           <div className="flex flex-col w-full md:w-auto gap-2 mt-4">
             <h2 className="text-lg font-semibold">Nội dung phim</h2>
             <div
-              className="text-sm text-light"
+              className="text-sm font-normal text"
               dangerouslySetInnerHTML={{ __html: movie?.description }}
             ></div>
           </div>

@@ -19,7 +19,7 @@ export const FilmCardSkeleton = () => {
       </div>
       <CardContent className="p-4">
         <h3 className="h-4 bg-foreground rounded-full w-2/3 mb-3 animate-pulse text-lg font-bold line-clamp-1"></h3>
-        <p className="text-sm text-card-foreground line-clamp-1 font-light h-2 bg-muted-foreground rounded-full mb-2.5 animate-pulse"></p>
+        <p className="text-sm text-card-foreground line-clamp-1 font-normal h-2 bg-muted-foreground rounded-full mb-2.5 animate-pulse"></p>
       </CardContent>
     </Card>
   );

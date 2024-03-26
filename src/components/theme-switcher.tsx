@@ -14,7 +14,6 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 export function ThemeSwitcher() {
-  
   const { setTheme, themes, theme } = useTheme();
 
   return (
