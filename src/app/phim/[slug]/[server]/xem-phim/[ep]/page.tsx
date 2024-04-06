@@ -176,7 +176,7 @@ export default async function FilmDetail({ params }: IFilmDetailParams) {
                         variant={
                           item?.slug?.split("-")[1] === currentEp[0]?.name
                             ? "secondary"
-                            : "outline"
+                            : "ghost"
                         }
                         className={cn("w-full")}
                       >
