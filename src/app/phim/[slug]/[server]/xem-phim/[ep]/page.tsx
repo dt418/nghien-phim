@@ -92,6 +92,7 @@ export default async function FilmDetail({ params }: IFilmDetailParams) {
   if (currentEp.length === 0) {
     return notFound();
   }
+  
   return (
     <div className="flex flex-col gap-4">
       <div className="flex flex-col sm:flex-row gap-4">
@@ -174,6 +175,7 @@ export default async function FilmDetail({ params }: IFilmDetailParams) {
                       <Button
                         asChild
                         variant={
+                          server === stringToSlug(ep.server_name) &&
                           item?.slug?.split("-")[1] === currentEp[0]?.name
                             ? "secondary"
                             : "ghost"
