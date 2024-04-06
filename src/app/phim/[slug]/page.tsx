@@ -149,7 +149,7 @@ export default async function FilmDetail({ params }: IFilmDetailPageProps) {
                 <ul className="grid grid-cols-4 sm:grid-cols-8 md:grid-cols-12 gap-2 mt-2">
                   {ep?.items?.reverse()?.map((item) => (
                     <li key={item.slug}>
-                      <Button asChild variant="outline" className="w-full">
+                      <Button asChild variant="ghost" className="w-full">
                         <Link
                           href={`/phim/${movie?.slug}/${stringToSlug(
                             ep?.server_name
