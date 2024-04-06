@@ -16,6 +16,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { getFilmBySlug } from "@/lib/fetcher";
 import { stringToSlug, textTruncate } from "@/lib/stringUtils";
+import { cn } from "@/lib/utils";
 
 interface IFilmDetailParams {
   params: {
@@ -75,12 +76,11 @@ export async function generateMetadata(
   };
 }
 
-
 export default async function FilmDetail({ params }: IFilmDetailParams) {
   const { slug, server, ep } = params;
   const res = await getFilmBySlug(slug);
-  if(!res){
-    return notFound()
+  if (!res) {
+    return notFound();
   }
   const { movie } = res;
 
@@ -171,7 +171,15 @@ export default async function FilmDetail({ params }: IFilmDetailParams) {
                 <ul className="grid grid-cols-4 sm:grid-cols-8 md:grid-cols-12 gap-2 mt-2">
                   {ep?.items?.reverse()?.map((item) => (
                     <li key={item?.slug}>
-                      <Button asChild variant="outline" className="w-full">
+                      <Button
+                        asChild
+                        variant={
+                          item?.slug?.split("-")[1] === currentEp[0]?.name
+                            ? "secondary"
+                            : "outline"
+                        }
+                        className={cn("w-full")}
+                      >
                         <Link
                           href={`/phim/${movie.slug}/${stringToSlug(
                             ep?.server_name
