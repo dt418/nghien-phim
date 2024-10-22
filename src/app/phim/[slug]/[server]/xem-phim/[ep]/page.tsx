@@ -54,7 +54,7 @@ export async function generateMetadata(
     [];
 
   if (currentEp.length === 0) {
-    return notFound();
+    notFound();
   }
   return {
     title: `Xem phim ${film?.movie?.name} - Tập ${currentEp[0]?.name}`,
@@ -80,7 +80,7 @@ export default async function FilmDetail({ params }: IFilmDetailParams) {
   const { slug, server, ep } = params;
   const res = await getFilmBySlug(slug);
   if (!res) {
-    return notFound();
+    notFound();
   }
   const { movie } = res;
 
@@ -90,7 +90,7 @@ export default async function FilmDetail({ params }: IFilmDetailParams) {
   const currentEp =
     currentServer[0]?.items?.filter((e) => e?.slug === ep) || [];
   if (currentEp.length === 0) {
-    return notFound();
+    notFound();
   }
   
   return (
