@@ -34,7 +34,7 @@ export async function generateMetadata(
   // fetch data
   const film = await getFilmBySlug(slug);
   if (!film) {
-    return notFound();
+    notFound();
   }
 
   // optionally access and extend (rather than replace) parent metadata
@@ -65,7 +65,7 @@ export default async function FilmDetail({ params }: IFilmDetailPageProps) {
   const res = await getFilmBySlug(slug);
 
   if (!res) {
-    return notFound();
+    notFound();
   }
   const views =
     (await redis.get<number>(["pageviews", "films", params.slug].join(":"))) ??

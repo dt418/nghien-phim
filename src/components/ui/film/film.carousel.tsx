@@ -23,7 +23,7 @@ export function FilmCarousel({ items = [], title }: TFilmCarouselProps) {
   return (
     <Fragment>
       {title ? (
-        <h2 className="text-md font-medium uppercase pl-2 border-l-[3px] border-solid border-primary text-primary">
+        <h2 className="text-md font-medium uppercase pl-2 border-l-[3px] border-solid border-primary text-primary text-gradient-to-t text-gradient">
           {title}
         </h2>
       ) : null}
