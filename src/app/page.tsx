@@ -39,9 +39,9 @@ export default async function Home({ searchParams }: THomePageProps) {
       <FilmCarousel items={items} title="Thịnh hành" />
       <Separator />
       <section className="grid grid-cols-12 gap-x-6 gap-y-4">
-        <div className="flex flex-col sm:col-span-9 col-span-12 gap-2">
+        <div className="flex flex-col md:col-span-9 col-span-12 gap-2">
           <div className="flex gap-3 pb-2">
-            <h2 className="text-[14px] font-medium cursor-pointer transition-all ease-linear duration-100 rounded-sm px-3 py-1 uppercase block bg-accent text-primary">
+            <h2 className="text-[14px] font-medium cursor-pointer transition-all ease-linear duration-100 rounded-sm px-3 py-1 uppercase block bg-gradient text-foreground">
               PHIM BỘ MỚI
             </h2>
           </div>
@@ -51,7 +51,7 @@ export default async function Home({ searchParams }: THomePageProps) {
             totalPage={paginate.total_page}
           />
         </div>
-        <div className="hidden sm:block sm:col-span-3 col-span-12">
+        <div className="hidden md:block md:col-span-3 col-span-12">
           <TopView topViewData={items} views={views} />
         </div>
       </section>

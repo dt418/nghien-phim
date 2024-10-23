@@ -23,7 +23,7 @@ export function FilmCarousel({ items = [], title }: TFilmCarouselProps) {
   return (
     <Fragment>
       {title ? (
-        <h2 className="text-md font-medium uppercase pl-2 border-l-[3px] border-solid border-primary text-primary">
+        <h2 className="text-md font-medium uppercase pl-2 border-l-[3px] border-solid border-primary text-primary text-gradient-to-t text-gradient">
           {title}
         </h2>
       ) : null}
@@ -38,7 +38,7 @@ export function FilmCarousel({ items = [], title }: TFilmCarouselProps) {
           {items?.map((filmItem) => (
             <CarouselItem
               key={filmItem.slug}
-              className="pl-1 basis-1/2 sm:basis-1/3 md:basis-1/4 lg:basis-1/6"
+              className="pl-1 basis-1/2 sm:basis-1/3 md:basis-1/4"
             >
               <div className="p-1">
                 <FilmCard {...filmItem} key={filmItem.slug} />
