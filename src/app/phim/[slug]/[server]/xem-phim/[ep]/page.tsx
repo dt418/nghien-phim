@@ -33,12 +33,14 @@ type Props = {
     server: string | string[];
     ep: string | string[];
   }>;
-  searchParams: Record<string, string | string[] | undefined>;
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
 };
 
-export async function generateMetadata(props: Props, parent: ResolvingMetadata): Promise<Metadata> {
-  const params = await props.params;
-  const { slug, server, ep } = params;
+export async function generateMetadata(
+  { params }: Props,
+  parent: ResolvingMetadata
+): Promise<Metadata> {
+  const { slug, server, ep } = await params;
   // fetch data
   const film = await getFilmBySlug(slug);
   // optionally access and extend (rather than replace) parent metadata
@@ -74,9 +76,8 @@ export async function generateMetadata(props: Props, parent: ResolvingMetadata):
   };
 }
 
-export default async function FilmDetail(props: IFilmDetailParams) {
-  const params = await props.params;
-  const { slug, server, ep } = params;
+export default async function FilmDetail({ params }: IFilmDetailParams) {
+  const { slug, server, ep } = await params;
   const res = await getFilmBySlug(slug);
   if (!res) {
     notFound();
