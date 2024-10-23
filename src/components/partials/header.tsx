@@ -1,4 +1,3 @@
-"use client";
 
 import * as React from "react";
 import Link from "next/link";
@@ -8,7 +7,6 @@ import {
   NavigationMenuItem,
   NavigationMenuLink,
   NavigationMenuList,
-  navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
 import { cn } from "@/lib/utils";
 
@@ -20,8 +18,8 @@ export const Menu = () => {
       <NavigationMenuList>
         <NavigationMenuItem>
           <Link href="/" legacyBehavior passHref>
-            <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-              Home
+            <NavigationMenuLink className="text-gradient uppercase text-2xl font-bold">
+              <span>Nghiện Phim</span>
             </NavigationMenuLink>
           </Link>
         </NavigationMenuItem>

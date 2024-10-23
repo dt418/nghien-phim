@@ -41,7 +41,7 @@ export default async function Home({ searchParams }: THomePageProps) {
       <section className="grid grid-cols-12 gap-x-6 gap-y-4">
         <div className="flex flex-col sm:col-span-9 col-span-12 gap-2">
           <div className="flex gap-3 pb-2">
-            <h2 className="text-[14px] font-medium cursor-pointer transition-all ease-linear duration-100 rounded-sm px-3 py-1 uppercase block bg-accent text-primary">
+            <h2 className="text-[14px] font-medium cursor-pointer transition-all ease-linear duration-100 rounded-sm px-3 py-1 uppercase block bg-gradient text-foreground">
               PHIM BỘ MỚI
             </h2>
           </div>

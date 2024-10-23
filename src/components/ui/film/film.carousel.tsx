@@ -1,8 +1,8 @@
 "use client";
 
 import React, { Fragment } from "react";
-import Autoplay from "embla-carousel-autoplay";
 
+// import Autoplay from "embla-carousel-autoplay";
 import { IMovieBase } from "@/types/movie-list";
 
 import {
@@ -31,14 +31,14 @@ export function FilmCarousel({ items = [], title }: TFilmCarouselProps) {
         className="w-full"
         opts={{ loop: true }}
         plugins={[
-          Autoplay(),
+          // Autoplay(),
         ]}
       >
         <CarouselContent className="-ml-1">
           {items?.map((filmItem) => (
             <CarouselItem
               key={filmItem.slug}
-              className="pl-1 basis-1/2 sm:basis-1/3 md:basis-1/4 lg:basis-1/6"
+              className="pl-1 basis-1/2 sm:basis-1/3 md:basis-1/4"
             >
               <div className="p-1">
                 <FilmCard {...filmItem} key={filmItem.slug} />
