@@ -20,5 +20,5 @@ jobs:
         with:
           context: .
           push: true
-          tags: danhthanh418/nghien-phim:latest
+          tags: dt418/nghien-phim:latest
           
