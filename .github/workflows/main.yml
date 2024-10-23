@@ -18,7 +18,7 @@ jobs:
       - name: build and push docker image to registry
         uses: docker/build-push-action@v5
         with:
-          context: DockerFileFolder/
+          context: .
           push: true
-          tags: black1512/demo1:latest
+          tags: danhthanh418/nghien-phim:latest
           
