@@ -49,7 +49,7 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground antialiased font-be;
   }
   .bg-gradient {
     @apply bg-gradient-to-tl from-[#16a085] to-[#f4d03f];

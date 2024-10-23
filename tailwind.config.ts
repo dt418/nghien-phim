@@ -1,5 +1,6 @@
 import typography from "@tailwindcss/typography";
 import type { Config } from "tailwindcss";
+import { fontFamily } from "tailwindcss/defaultTheme";
 import pluginAnimate from "tailwindcss-animate";
 
 const config = {
@@ -20,6 +21,10 @@ const config = {
       },
     },
     extend: {
+      fontFamily: {
+        be: ["var(--font-be)", ...fontFamily.sans],
+        serif: [...fontFamily.serif],
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",

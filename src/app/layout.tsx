@@ -1,18 +1,19 @@
 import { type PropsWithChildren } from "react";
 import type { Metadata } from "next";
-import { Roboto as FontSans } from "next/font/google";
+import { Be_Vietnam_Pro } from "next/font/google";
 
 import Footer from "@/components/partials/footer";
 import { Header } from "@/components/partials/header";
-import { cn } from "@/lib/utils";
 import { ThemeProvider } from "@/providers/theme";
 
 import "./globals.css";
 
-const fontSans = FontSans({
+const fontBeVietnamPro = Be_Vietnam_Pro({
   subsets: ["latin"],
-  variable: "--font-sans",
-  weight: ["300", "400", "500", "700"],
+  variable: "--font-be",
+  weight: ["400", "500", "600", "700", "800", "900"],
+  display: "swap",
+  preload: true, // <--- add this
 });
 
 export const metadata: Metadata = {
@@ -26,12 +27,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: PropsWithChildren) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body
-        className={cn(
-          "text-foreground bg-background font-sans antialiased",
-          fontSans.variable
-        )}
-      >
+      <body className={fontBeVietnamPro.variable}>
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"
@@ -48,4 +44,5 @@ export default function RootLayout({ children }: PropsWithChildren) {
   );
 }
 
-export { fontSans };
+export { fontBeVietnamPro };
+
