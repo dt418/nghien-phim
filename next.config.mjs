@@ -9,7 +9,6 @@ const nextConfig = {
     ],
   },
   reactStrictMode: true,
-  swcMinify: true,
   transpilePackages: ["lucide-react"],
 };
 

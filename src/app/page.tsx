@@ -13,10 +13,9 @@ const redis = Redis.fromEnv();
 export const revalidate = 0;
 
 export default async function Home({ searchParams }: THomePageProps) {
+  const { page } = await searchParams;
   const pageParam =
-    typeof searchParams?.page === "string" && Number(searchParams?.page) > 0
-      ? Number(searchParams?.page)
-      : 1;
+    typeof page === "string" && Number(page) > 0 ? Number(page) : 1;
   const films = await getFilms(pageParam);
 
   if (!films) {

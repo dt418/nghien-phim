@@ -19,27 +19,25 @@ import { stringToSlug, textTruncate } from "@/lib/stringUtils";
 import { cn } from "@/lib/utils";
 
 interface IFilmDetailParams {
-  params: {
+  params: Promise<{
     slug: string | string[];
     server: string | string[];
     ep: string | string[];
-  };
-  searchParams: Record<string, string | string[] | undefined>;
+  }>;
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
 }
 
 type Props = {
-  params: {
+  params: Promise<{
     slug: string | string[];
     server: string | string[];
     ep: string | string[];
-  };
+  }>;
   searchParams: Record<string, string | string[] | undefined>;
 };
 
-export async function generateMetadata(
-  { params }: Props,
-  parent: ResolvingMetadata
-): Promise<Metadata> {
+export async function generateMetadata(props: Props, parent: ResolvingMetadata): Promise<Metadata> {
+  const params = await props.params;
   const { slug, server, ep } = params;
   // fetch data
   const film = await getFilmBySlug(slug);
@@ -76,7 +74,8 @@ export async function generateMetadata(
   };
 }
 
-export default async function FilmDetail({ params }: IFilmDetailParams) {
+export default async function FilmDetail(props: IFilmDetailParams) {
+  const params = await props.params;
   const { slug, server, ep } = params;
   const res = await getFilmBySlug(slug);
   if (!res) {
@@ -92,7 +91,7 @@ export default async function FilmDetail({ params }: IFilmDetailParams) {
   if (currentEp.length === 0) {
     notFound();
   }
-  
+
   return (
     <div className="flex flex-col gap-4">
       <div className="flex flex-col sm:flex-row gap-4">

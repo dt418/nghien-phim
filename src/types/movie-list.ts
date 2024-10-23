@@ -21,6 +21,6 @@ export interface IPagination {
 }
 
 export type THomePageProps = {
-  params?: { slug: string };
-  searchParams: Record<string, string | string[] | undefined>;
+  params: Promise<{ slug: string }>;
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
 };

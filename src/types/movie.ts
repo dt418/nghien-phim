@@ -65,8 +65,8 @@ export interface IServerData {
 }
 
 export interface IFilmDetailPageProps {
-  params: {
+  params: Promise<{
     slug: string | string[];
-  };
-  searchParams: Record<string, string | string[] | undefined>;
+  }>;
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
 }

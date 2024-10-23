@@ -29,8 +29,7 @@ export async function generateMetadata(
   { params }: IFilmDetailPageProps,
   parent: ResolvingMetadata
 ): Promise<Metadata> {
-  const slug = params.slug;
-
+  const { slug } = await params;
   // fetch data
   const film = await getFilmBySlug(slug);
   if (!film) {
@@ -59,17 +58,18 @@ export async function generateMetadata(
     },
   };
 }
-
 export default async function FilmDetail({ params }: IFilmDetailPageProps) {
-  const { slug } = params;
+  const slug = (await params)?.slug;
+  if (!slug) {
+    notFound();
+  }
   const res = await getFilmBySlug(slug);
 
   if (!res) {
     notFound();
   }
   const views =
-    (await redis.get<number>(["pageviews", "films", params.slug].join(":"))) ??
-    0;
+    (await redis.get<number>(["pageviews", "films", slug].join(":"))) ?? 0;
 
   const { movie } = res;
   return (
