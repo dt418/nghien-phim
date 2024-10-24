@@ -1,0 +1,17 @@
+version: "3.8"
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: deps # Build from the 'deps' stage for development
+    ports:
+      - "3000:3000" # Map port 3000 on the host to port 3000 in the container
+    environment:
+      NODE_ENV: development
+      NEXT_TELEMETRY_DISABLED: 1
+      PORT: 3000
+    volumes:
+      - .:/app # Mount the current directory into the /app directory in the container
+      - /app/node_modules # Prevents overriding node_modules in the container
+    command: ["bun", "run", "next", "dev"] # Override CMD to ensure it runs in dev mode
