@@ -36,7 +36,7 @@ type Props = {
   searchParams: Promise<Record<string, string | string[] | undefined>>;
 };
 
-export const revalidate = 60*30;  // seconds
+export const revalidate = 300;  // seconds
 
 export async function generateMetadata(
   { params }: Props,

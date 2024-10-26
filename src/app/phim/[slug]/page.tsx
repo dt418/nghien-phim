@@ -21,7 +21,7 @@ import { IFilmDetailPageProps } from "@/types/movie";
 
 import { ReportView } from "./view";
 
-export const revalidate = 60*30;  // seconds
+export const revalidate = 300;  // seconds
 
 const redis = Redis.fromEnv();
 // generate meta data
