@@ -6,12 +6,16 @@ import { IMovieBase } from "@/types/movie-list";
 
 import { Card, CardContent } from "../card";
 
+interface IFilmCardProps extends IMovieBase {
+  isPriority?: boolean;
+}
 export const FilmCard = ({
   name,
   slug,
   thumb_url,
   original_name,
-}: IMovieBase) => {
+  isPriority = false,
+}: IFilmCardProps) => {
   const filmLink = `/phim/${slug}`;
   return (
     <Link className="font-semibold" href={filmLink} title={name}>
@@ -26,7 +30,8 @@ export const FilmCard = ({
             }}
             src={thumb_url}
             fill
-            sizes="(max-width: 768px) 100vw, 400px"
+            priority={isPriority}
+            sizes="(min-width: 1480px) 209px, (min-width: 1040px) 14.29vw, (min-width: 780px) calc(25vw - 29px), (min-width: 640px) calc(33.33vw - 34px), calc(50vw - 44px)"
           />
           <div className="absolute inset-0 z-10 flex items-center justify-center gap-2 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity">
             <PlayIcon className="w-16 h-16 scale-50 opacity-0 group-hover:scale-100 group-hover:opacity-100 bg-accent bg-opacity-50 rounded-full p-4 text-primary" />

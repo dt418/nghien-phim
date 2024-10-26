@@ -3,6 +3,7 @@
 import React, { Fragment } from "react";
 import Autoplay from "embla-carousel-autoplay";
 
+import { useMediaQuery } from "@/hooks/use-media";
 import { IMovieBase } from "@/types/movie-list";
 
 import {
@@ -20,6 +21,7 @@ type TFilmCarouselProps = {
   title?: string;
 };
 export function FilmCarousel({ items = [], title }: TFilmCarouselProps) {
+  const isAllMobile = useMediaQuery("(max-width: 768px)");
   return (
     <Fragment>
       {title ? (
@@ -30,18 +32,16 @@ export function FilmCarousel({ items = [], title }: TFilmCarouselProps) {
       <Carousel
         className="w-full"
         opts={{ loop: true }}
-        plugins={[
-          Autoplay(),
-        ]}
+        plugins={isAllMobile ? [] : [Autoplay({ delay: 1500 })]}
       >
         <CarouselContent className="-ml-1">
           {items?.map((filmItem) => (
             <CarouselItem
               key={filmItem.slug}
-              className="pl-1 basis-1/2 sm:basis-1/3 md:basis-1/4"
+              className="pl-1 basis-1/2 sm:basis-1/3 md:basis-1/6"
             >
               <div className="p-1">
-                <FilmCard {...filmItem} key={filmItem.slug} />
+                <FilmCard {...filmItem} key={filmItem.slug} isPriority />
               </div>
             </CarouselItem>
           ))}
