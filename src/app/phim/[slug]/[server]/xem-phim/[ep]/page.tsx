@@ -37,7 +37,7 @@ type Props = {
 };
 
 export const dynamic = "force-static";
-export const revalidate = 0;
+export const revalidate = 3600;
 
 export async function generateMetadata(
   { params }: Props,
