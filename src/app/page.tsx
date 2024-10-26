@@ -9,10 +9,7 @@ import { Separator } from "@/components/ui/separator";
 import { getFilms } from "@/lib/fetcher";
 import { THomePageProps } from "@/types/movie-list";
 
-export const fetchCache = 'force-no-store'
-export const revalidate = 0 // seconds
-export const dynamic = 'force-dynamic'
-export const runtime = 'edge';
+export const revalidate = 60*30; // seconds
 
 const redis = Redis.fromEnv();
 
