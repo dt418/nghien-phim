@@ -3,6 +3,8 @@ import { Redis } from "@upstash/redis";
 import { ipAddress } from "@vercel/functions";
 
 const redis = Redis.fromEnv();
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 export async function POST(req: NextRequest): Promise<NextResponse> {
   if (req.method !== "POST") {

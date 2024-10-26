@@ -36,6 +36,9 @@ type Props = {
   searchParams: Promise<Record<string, string | string[] | undefined>>;
 };
 
+export const dynamic = "force-static";
+export const revalidate = 3600;
+
 export async function generateMetadata(
   { params }: Props,
   parent: ResolvingMetadata
