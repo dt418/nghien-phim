@@ -25,9 +25,8 @@ export const FilmCard = ({
               objectFit: "cover",
             }}
             src={thumb_url}
-            width={450}
-            height={600}
-            quality={85}
+            fill
+            sizes="(max-width: 768px) 100vw, 400px"
           />
           <div className="absolute inset-0 z-10 flex items-center justify-center gap-2 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity">
             <PlayIcon className="w-16 h-16 scale-50 opacity-0 group-hover:scale-100 group-hover:opacity-100 bg-accent bg-opacity-50 rounded-full p-4 text-primary" />
