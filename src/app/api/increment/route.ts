@@ -4,8 +4,6 @@ import { ipAddress } from "@vercel/functions";
 
 const redis = Redis.fromEnv();
 
-export const runtime = "edge";
-
 export async function POST(req: NextRequest): Promise<NextResponse> {
   if (req.method !== "POST") {
     return new NextResponse("use POST", { status: 405 });

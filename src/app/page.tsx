@@ -9,8 +9,6 @@ import { Separator } from "@/components/ui/separator";
 import { getFilms } from "@/lib/fetcher";
 import { THomePageProps } from "@/types/movie-list";
 
-export const revalidate = 60*30; // seconds
-
 const redis = Redis.fromEnv();
 
 export default async function Home({ searchParams }: THomePageProps) {
