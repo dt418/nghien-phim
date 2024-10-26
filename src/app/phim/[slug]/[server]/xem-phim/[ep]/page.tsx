@@ -36,6 +36,8 @@ type Props = {
   searchParams: Promise<Record<string, string | string[] | undefined>>;
 };
 
+export const runtime = 'edge';
+
 export async function generateMetadata(
   { params }: Props,
   parent: ResolvingMetadata
@@ -75,6 +77,7 @@ export async function generateMetadata(
     },
   };
 }
+
 
 export default async function FilmDetail({ params }: IFilmDetailParams) {
   const { slug, server, ep } = await params;
