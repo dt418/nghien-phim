@@ -23,6 +23,10 @@
   </a>
 </p>
 
+## Deployment status
+
+[![Netlify Status](https://api.netlify.com/api/v1/badges/75fd937f-be48-4969-b4cf-2537cea53320/deploy-status)](https://app.netlify.com/sites/nghienphim/deploys)
+
 ## Getting Started
 
 Used by some of the world's largest companies, Next.js enables you to create full-stack web applications by extending the latest React features, and integrating powerful Rust-based JavaScript tooling for the fastest builds.
@@ -46,7 +50,7 @@ Do note that our [Code of Conduct](https://github.com/vercel/next.js/blob/canary
 
 Contributions to Next.js are welcome and highly appreciated. However, before you jump right into it, we would like you to review our [Contribution Guidelines](/contributing.md) to make sure you have a smooth experience contributing to Next.js.
 
-### Good First Issues:
+### Good First Issues
 
 We have a list of **[good first issues](https://github.com/vercel/next.js/labels/good%20first%20issue)** that contain bugs that have a relatively limited scope. This is a great place for newcomers and beginners alike to get started, gain experience, and get familiar with our contribution process.
 
