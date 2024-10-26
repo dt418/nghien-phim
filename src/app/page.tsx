@@ -9,8 +9,12 @@ import { Separator } from "@/components/ui/separator";
 import { getFilms } from "@/lib/fetcher";
 import { THomePageProps } from "@/types/movie-list";
 
+export const fetchCache = 'force-no-store'
+export const revalidate = 0 // seconds
+export const dynamic = 'force-dynamic'
+export const runtime = 'edge';
+
 const redis = Redis.fromEnv();
-export const runtime = "edge";
 
 export default async function Home({ searchParams }: THomePageProps) {
   const { page } = await searchParams;

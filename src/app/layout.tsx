@@ -1,20 +1,13 @@
 import { type PropsWithChildren } from "react";
 import type { Metadata } from "next";
-import { Be_Vietnam_Pro } from "next/font/google";
 
 import Footer from "@/components/partials/footer";
 import { Header } from "@/components/partials/header";
+import { fontBeVietnamPro } from "@/lib/font";
 import { ThemeProvider } from "@/providers/theme";
 
 import "./globals.css";
 
-const fontBeVietnamPro = Be_Vietnam_Pro({
-  subsets: ["latin"],
-  variable: "--font-be",
-  weight: ["400", "500", "600", "700", "800", "900"],
-  display: "swap",
-  preload: true, // <--- add this
-});
 
 export const metadata: Metadata = {
   title: {
@@ -43,6 +36,4 @@ export default function RootLayout({ children }: PropsWithChildren) {
     </html>
   );
 }
-
-export { fontBeVietnamPro };
 
