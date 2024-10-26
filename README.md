@@ -25,7 +25,7 @@
 
 ## Deployment status
 
-[![Netlify Status](https://api.netlify.com/api/v1/badges/75fd937f-be48-4969-b4cf-2537cea53320/deploy-status)](https://app.netlify.com/sites/nghienphim/deploys)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/99f16b6c-2a15-4f40-b9ef-20208c0e99d7/deploy-status)](https://app.netlify.com/sites/nghienphim/deploys)
 
 ## Getting Started
 
