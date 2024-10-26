@@ -10,7 +10,7 @@ import { getFilms } from "@/lib/fetcher";
 import { THomePageProps } from "@/types/movie-list";
 
 const redis = Redis.fromEnv();
-export const revalidate = 0;
+export const runtime = "edge";
 
 export default async function Home({ searchParams }: THomePageProps) {
   const { page } = await searchParams;

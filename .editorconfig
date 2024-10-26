@@ -1,0 +1,42 @@
+# .editorconfig file
+# EditorConfig is awesome: https://EditorConfig.org
+
+# Top-level settings applied to all files
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+# Set indentation and spacing for various file types
+
+# JavaScript, TypeScript, JSX, and TSX files
+[*.{js,jsx,ts,tsx}]
+indent_style = space
+indent_size = 2
+
+# JSON files
+[*.json]
+indent_style = space
+indent_size = 2
+
+# Markdown files
+[*.md]
+trim_trailing_whitespace = false
+
+# YAML files (e.g., configuration files)
+[*.yml]
+indent_style = space
+indent_size = 2
+
+# CSS, SCSS, and Tailwind files
+[*.{css,scss}]
+indent_style = space
+indent_size = 2
+
+# Ignore minified files
+[*.min.*]
+insert_final_newline = false
+trim_trailing_whitespace = false

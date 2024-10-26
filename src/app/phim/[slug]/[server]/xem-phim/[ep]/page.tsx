@@ -76,6 +76,8 @@ export async function generateMetadata(
   };
 }
 
+export const runtime = "edge";
+
 export default async function FilmDetail({ params }: IFilmDetailParams) {
   const { slug, server, ep } = await params;
   const res = await getFilmBySlug(slug);
