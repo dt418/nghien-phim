@@ -21,7 +21,7 @@ import { IFilmDetailPageProps } from "@/types/movie";
 
 import { ReportView } from "./view";
 
-export const runtime = 'edge';
+export const revalidate = 0; // seconds
 
 const redis = Redis.fromEnv();
 // generate meta data
