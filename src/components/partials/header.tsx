@@ -31,7 +31,7 @@ export const Menu = () => {
 export function Header() {
   return (
     <header className="container">
-      <div className="flex flex-wrap flex-col md:flex-row md:justify-between gap-2 py-4">
+      <div className="flex flex-wrap flex-row justify-between gap-2 py-4">
         <Menu />
         <ThemeSwitcher />
       </div>
