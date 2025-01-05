@@ -9,7 +9,7 @@ import {
 } from '@/components/ui/navigation-menu';
 import { cn } from '@/lib/utils';
 
-import { ThemeSwitcher } from '../theme-switcher';
+import SearchBar from '../ui/header/search-bar';
 
 export const Menu = () => {
   return (
@@ -32,7 +32,7 @@ export function Header() {
     <header className="container">
       <div className="flex flex-row flex-wrap justify-between gap-2 py-4">
         <Menu />
-        <ThemeSwitcher />
+        <SearchBar />
       </div>
     </header>
   );
