@@ -8,6 +8,7 @@ import react from 'eslint-plugin-react'; // React plugin for ESLint
 import simpleImportSort from 'eslint-plugin-simple-import-sort'; // Plugin to sort imports and exports
 import globals from 'globals'; // Provides common global variables (e.g., browser, node)
 
+
 // Get the directory name and file name to configure compatibility
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -40,13 +41,14 @@ const config = [
      *
      * @property {string[]} ignores - Array of paths to ignore.
      */
-    ignores: ['**/node_modules', '**/dist', '**/build'],
+    ignores: ['**/node_modules', '**/dist', '**/build', ".next"],
   },
   ...compat.extends(
     'next/core-web-vitals', // Next.js recommended settings for web vitals
     'eslint:recommended', // Standard recommended ESLint rules
     'plugin:@typescript-eslint/eslint-recommended', // TypeScript recommended rules
-    'plugin:@typescript-eslint/recommended' // Additional recommended TypeScript rules
+    'plugin:@typescript-eslint/recommended' // Additional recommended TypeScript rules,
+
   ),
   {
     /**
