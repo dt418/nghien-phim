@@ -18,7 +18,7 @@ export const FilmCard = ({
 }: IFilmCardProps) => {
   const filmLink = `/phim/${slug}`;
   return (
-    <Link prefetch className="font-semibold" href={filmLink} title={name}>
+    <Link className="font-semibold" href={filmLink} title={name}>
       <Card className="group relative w-full max-w-sm overflow-hidden rounded-lg border shadow-sm">
         <div className="relative aspect-[2/3] overflow-hidden rounded-t-lg transition-transform group-hover:scale-105">
           <Image
