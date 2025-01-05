@@ -21,6 +21,7 @@ export const TopView = (props: ITopViewProps) => {
     const slicedData = sliceCount ? data.slice(0, sliceCount) : data;
     return slicedData.map((filmItem, index) => (
       <Link
+        prefetch
         key={filmItem.slug}
         href={`/phim/${filmItem.slug}`}
         title={filmItem.name}

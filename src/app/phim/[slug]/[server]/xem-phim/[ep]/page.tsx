@@ -186,6 +186,7 @@ export default async function FilmDetail({
                         className={cn('w-full')}
                       >
                         <Link
+                          prefetch
                           href={`/phim/${movie.slug}/${stringToSlug(
                             ep?.server_name
                           )}/xem-phim/${item?.slug}`}

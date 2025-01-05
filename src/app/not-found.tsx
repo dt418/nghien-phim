@@ -48,7 +48,9 @@ export default function NotFound() {
           go.
         </p>
         <Button className="mt-4 w-full lg:w-auto" size={'lg'} asChild>
-          <Link href={'/'}>Go back to Homepage</Link>
+          <Link prefetch href={'/'}>
+            Go back to Homepage
+          </Link>
         </Button>
       </div>
     </div>
