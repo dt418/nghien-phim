@@ -1,4 +1,4 @@
-import { calculatePageList } from "@/lib/pagination";
+import { calculatePageList } from '@/lib/pagination';
 
 import {
   Pagination,
@@ -9,7 +9,7 @@ import {
   PaginationLink,
   PaginationNext,
   PaginationPrevious,
-} from "../pagination";
+} from '../pagination';
 
 export type IFilmCardProps = {
   currentPage: number;
@@ -30,7 +30,7 @@ export const FilmPagination = ({ currentPage, totalPage }: IFilmCardProps) => {
                 tabIndex={currentPage <= 1 ? -1 : undefined}
                 className={
                   currentPage <= 1
-                    ? "pointer-events-none opacity-50"
+                    ? 'pointer-events-none opacity-50'
                     : undefined
                 }
               />
@@ -41,7 +41,7 @@ export const FilmPagination = ({ currentPage, totalPage }: IFilmCardProps) => {
                 tabIndex={currentPage <= 1 ? -1 : undefined}
                 className={
                   currentPage <= 1
-                    ? "pointer-events-none opacity-50"
+                    ? 'pointer-events-none opacity-50'
                     : undefined
                 }
               />
@@ -67,7 +67,7 @@ export const FilmPagination = ({ currentPage, totalPage }: IFilmCardProps) => {
                 tabIndex={currentPage === totalPage ? -1 : undefined}
                 className={
                   currentPage === totalPage
-                    ? "pointer-events-none opacity-50"
+                    ? 'pointer-events-none opacity-50'
                     : undefined
                 }
               />
@@ -78,7 +78,7 @@ export const FilmPagination = ({ currentPage, totalPage }: IFilmCardProps) => {
                 tabIndex={currentPage <= 1 ? -1 : undefined}
                 className={
                   currentPage >= totalPage
-                    ? "pointer-events-none opacity-50"
+                    ? 'pointer-events-none opacity-50'
                     : undefined
                 }
               />

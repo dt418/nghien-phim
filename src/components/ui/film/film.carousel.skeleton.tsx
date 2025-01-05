@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import React from "react";
-import Autoplay from "embla-carousel-autoplay";
+import React from 'react';
+import Autoplay from 'embla-carousel-autoplay';
 
 import {
   Carousel,
@@ -9,9 +9,9 @@ import {
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
-} from "../carousel";
+} from '../carousel';
 
-import { FilmCardSkeleton } from "./film.card.skeleton";
+import { FilmCardSkeleton } from './film.card.skeleton';
 
 export function FilmCarouselSkeleton() {
   return (
@@ -25,10 +25,10 @@ export function FilmCarouselSkeleton() {
       ]}
     >
       <CarouselContent className="-ml-1">
-        {Array.from({length: 10}).map((_, index) => (
+        {Array.from({ length: 10 }).map((_, index) => (
           <CarouselItem
             key={index}
-            className="pl-1 basis-11/12 sm:basis-1/2 md:basis-1/4 lg:basis-1/5"
+            className="basis-11/12 pl-1 sm:basis-1/2 md:basis-1/4 lg:basis-1/5"
           >
             <div className="p-1">
               <FilmCardSkeleton />

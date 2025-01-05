@@ -1,9 +1,9 @@
-"use server";
+'use server';
 
-import slugify from "slugify";
+import slugify from 'slugify';
 
-import type { IMovieResponse } from "@/types/movie";
-import type { IMovieListResponse } from "@/types/movie-list";
+import type { IMovieResponse } from '@/types/movie';
+import type { IMovieListResponse } from '@/types/movie-list';
 
 /**
  * Fetches a paginated list of recently updated films.
@@ -30,8 +30,8 @@ export async function getFilms(
     const res = await fetch(
       `https://phim.nguonc.com/api/films/phim-moi-cap-nhat?page=${page}`,
       {
-        method: "GET",
-        cache: "no-store",
+        method: 'GET',
+        cache: 'no-store',
       }
     );
 
@@ -74,7 +74,7 @@ export async function getFilmBySlug(
 
     if (!res.ok) {
       // This will activate the closest `error.js` Error Boundary
-      console.error("Failed to fetch film item");
+      console.error('Failed to fetch film item');
       return undefined;
     }
 
@@ -108,9 +108,9 @@ export async function searchFilms(
 ): Promise<IMovieListResponse | undefined> {
   try {
     const searchTerm = slugify(keyword, {
-      locale: "vi",
+      locale: 'vi',
       lower: true,
-      replacement: "-",
+      replacement: '-',
     });
 
     const res = await fetch(
@@ -119,7 +119,7 @@ export async function searchFilms(
 
     if (!res.ok) {
       // This will activate the closest `error.js` Error Boundary
-      console.error("Failed to fetch film item");
+      console.error('Failed to fetch film item');
       return undefined;
     }
 
@@ -156,7 +156,7 @@ export async function getFilmByYear(
 
     if (!res.ok) {
       // This will activate the closest `error.js` Error Boundary
-      console.error("Failed to fetch film item");
+      console.error('Failed to fetch film item');
       return undefined;
     }
 
@@ -196,7 +196,7 @@ export async function getFilmByCountry(
 
     if (!res.ok) {
       // This will activate the closest `error.js` Error Boundary
-      console.error("Failed to fetch film item");
+      console.error('Failed to fetch film item');
       return undefined;
     }
 
@@ -219,7 +219,7 @@ export async function getFilmByCategory(
 
     if (!res.ok) {
       // This will activate the closest `error.js` Error Boundary
-      console.error("Failed to fetch film item");
+      console.error('Failed to fetch film item');
       return undefined;
     }
 

@@ -49,12 +49,12 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground antialiased font-be;
+    @apply bg-background font-be text-foreground antialiased;
   }
   .bg-gradient {
     @apply bg-gradient-to-tl from-[#16a085] to-[#f4d03f];
   }
   .text-gradient {
-    @apply bg-gradient text-transparent bg-clip-text;
+    @apply bg-gradient bg-clip-text text-transparent;
   }
 }

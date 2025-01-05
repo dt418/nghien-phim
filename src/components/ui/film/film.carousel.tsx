@@ -1,10 +1,10 @@
-"use client";
+'use client';
 
-import React, { Fragment } from "react";
-import Autoplay from "embla-carousel-autoplay";
+import React, { Fragment } from 'react';
+import Autoplay from 'embla-carousel-autoplay';
 
-import { useMediaQuery } from "@/hooks/use-media";
-import { IMovieBase } from "@/types/movie-list";
+import { useMediaQuery } from '@/hooks/use-media';
+import { IMovieBase } from '@/types/movie-list';
 
 import {
   Carousel,
@@ -12,20 +12,20 @@ import {
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
-} from "../carousel";
+} from '../carousel';
 
-import { FilmCard } from "./film.card";
+import { FilmCard } from './film.card';
 
 type TFilmCarouselProps = {
   items: IMovieBase[] | [];
   title?: string;
 };
 export function FilmCarousel({ items = [], title }: TFilmCarouselProps) {
-  const isAllMobile = useMediaQuery("(max-width: 768px)");
+  const isAllMobile = useMediaQuery('(max-width: 768px)');
   return (
     <Fragment>
       {title ? (
-        <h2 className="text-md font-medium uppercase pl-2 border-l-[3px] border-solid border-primary text-primary text-gradient-to-t text-gradient">
+        <h2 className="text-md text-gradient-to-t text-gradient border-l-[3px] border-solid border-primary pl-2 font-medium uppercase text-primary">
           {title}
         </h2>
       ) : null}
@@ -38,7 +38,7 @@ export function FilmCarousel({ items = [], title }: TFilmCarouselProps) {
           {items?.map((filmItem) => (
             <CarouselItem
               key={filmItem.slug}
-              className="pl-1 basis-1/2 sm:basis-1/3 md:basis-1/6"
+              className="basis-1/2 pl-1 sm:basis-1/3 md:basis-1/6"
             >
               <div className="p-1">
                 <FilmCard {...filmItem} key={filmItem.slug} isPriority />

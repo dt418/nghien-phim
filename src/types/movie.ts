@@ -25,10 +25,10 @@ export interface IMovie {
 }
 
 export interface ICategory {
-  "1"?: ICategoryItem;
-  "2"?: ICategoryItem;
-  "3"?: ICategoryItem;
-  "4"?: ICategoryItem;
+  '1'?: ICategoryItem;
+  '2'?: ICategoryItem;
+  '3'?: ICategoryItem;
+  '4'?: ICategoryItem;
 }
 
 export interface ICategoryItem {

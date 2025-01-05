@@ -1,5 +1,5 @@
-import React, { type PropsWithChildren } from "react";
+import React, { type PropsWithChildren } from 'react';
 
-export default function FilmLayout(props: PropsWithChildren) {
+export default function FilmLayout(props: Readonly<PropsWithChildren>) {
   return <main className="container">{props.children}</main>;
 }

@@ -1,25 +1,25 @@
-import { PlayIcon } from "lucide-react";
+import { PlayIcon } from 'lucide-react';
 
-import { Card, CardContent } from "../card";
+import { Card, CardContent } from '../card';
 
 export const FilmCardSkeleton = () => {
   return (
     <Card className="w-full max-w-sm rounded-lg border shadow-sm">
-      <div className="relative group overflow-hidden aspect-[2/3] rounded-lg">
+      <div className="group relative aspect-[2/3] overflow-hidden rounded-lg">
         <div
-          className="object-cover rounded-t-lg transition-all scale-100 group-hover:scale-105 w-[400] bg-slate-200 dark:bg-slate-700 animate-pulse"
+          className="w-[400] scale-100 animate-pulse rounded-t-lg bg-slate-200 object-cover transition-all group-hover:scale-105 dark:bg-slate-700"
           style={{
-            aspectRatio: "2/3",
-            objectFit: "cover",
+            aspectRatio: '2/3',
+            objectFit: 'cover',
           }}
         />
-        <div className="absolute inset-0 flex items-center justify-center gap-2 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity">
-          <PlayIcon className="w-16 h-16 scale-0 opacity-0 transition-all group-hover:scale-100 group-hover:opacity-100 bg-green-500 bg-opacity-75 rounded-full p-4" />
+        <div className="pointer-events-none absolute inset-0 flex items-center justify-center gap-2 opacity-0 transition-opacity group-hover:opacity-100">
+          <PlayIcon className="h-16 w-16 scale-0 rounded-full bg-green-500 bg-opacity-75 p-4 opacity-0 transition-all group-hover:scale-100 group-hover:opacity-100" />
         </div>
       </div>
       <CardContent className="p-4">
-        <h3 className="h-4 bg-foreground rounded-full w-2/3 mb-3 animate-pulse text-lg font-bold line-clamp-1"></h3>
-        <p className="text-sm text-card-foreground line-clamp-1 font-normal h-2 bg-muted-foreground rounded-full mb-2.5 animate-pulse"></p>
+        <h3 className="mb-3 line-clamp-1 h-4 w-2/3 animate-pulse rounded-full bg-foreground text-lg font-bold"></h3>
+        <p className="mb-2.5 line-clamp-1 h-2 animate-pulse rounded-full bg-muted-foreground text-sm font-normal text-card-foreground"></p>
       </CardContent>
     </Card>
   );

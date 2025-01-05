@@ -1,23 +1,22 @@
-import { type PropsWithChildren } from "react";
-import type { Metadata } from "next";
+import { type PropsWithChildren } from 'react';
+import type { Metadata } from 'next';
 
-import Footer from "@/components/partials/footer";
-import { Header } from "@/components/partials/header";
-import { fontBeVietnamPro } from "@/lib/font";
-import { ThemeProvider } from "@/providers/theme";
+import Footer from '@/components/partials/footer';
+import { Header } from '@/components/partials/header';
+import { fontBeVietnamPro } from '@/lib/font';
+import { ThemeProvider } from '@/providers/theme';
 
-import "./globals.css";
-
+import './globals.css';
 
 export const metadata: Metadata = {
   title: {
-    template: "%s | nghienphim.tv",
-    default: "Danh sách phim mới nhất | nghienphim.tv",
+    template: '%s | nghienphim.tv',
+    default: 'Danh sách phim mới nhất | nghienphim.tv',
   },
-  description: "nghienphim.tv | Web xem phim miễn phí tốc độc cao",
+  description: 'nghienphim.tv | Web xem phim miễn phí tốc độc cao',
 };
 
-export default function RootLayout({ children }: PropsWithChildren) {
+export default function RootLayout({ children }: Readonly<PropsWithChildren>) {
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={fontBeVietnamPro.variable}>
@@ -36,4 +35,3 @@ export default function RootLayout({ children }: PropsWithChildren) {
     </html>
   );
 }
-

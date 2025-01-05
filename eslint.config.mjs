@@ -1,12 +1,12 @@
-import path from "node:path";
-import { fileURLToPath } from "node:url";
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 
-import { FlatCompat } from "@eslint/eslintrc"; // Compatibility utility for ESLint configuration
-import js from "@eslint/js"; // Basic JavaScript configuration from ESLint
-import tsParser from "@typescript-eslint/parser"; // TypeScript parser for ESLint
-import react from "eslint-plugin-react"; // React plugin for ESLint
-import simpleImportSort from "eslint-plugin-simple-import-sort"; // Plugin to sort imports and exports
-import globals from "globals"; // Provides common global variables (e.g., browser, node)
+import { FlatCompat } from '@eslint/eslintrc'; // Compatibility utility for ESLint configuration
+import js from '@eslint/js'; // Basic JavaScript configuration from ESLint
+import tsParser from '@typescript-eslint/parser'; // TypeScript parser for ESLint
+import react from 'eslint-plugin-react'; // React plugin for ESLint
+import simpleImportSort from 'eslint-plugin-simple-import-sort'; // Plugin to sort imports and exports
+import globals from 'globals'; // Provides common global variables (e.g., browser, node)
 
 // Get the directory name and file name to configure compatibility
 const __filename = fileURLToPath(import.meta.url);
@@ -40,13 +40,13 @@ const config = [
      *
      * @property {string[]} ignores - Array of paths to ignore.
      */
-    ignores: ["**/node_modules", "**/dist", "**/build"],
+    ignores: ['**/node_modules', '**/dist', '**/build'],
   },
   ...compat.extends(
-    "next/core-web-vitals", // Next.js recommended settings for web vitals
-    "eslint:recommended", // Standard recommended ESLint rules
-    "plugin:@typescript-eslint/eslint-recommended", // TypeScript recommended rules
-    "plugin:@typescript-eslint/recommended" // Additional recommended TypeScript rules
+    'next/core-web-vitals', // Next.js recommended settings for web vitals
+    'eslint:recommended', // Standard recommended ESLint rules
+    'plugin:@typescript-eslint/eslint-recommended', // TypeScript recommended rules
+    'plugin:@typescript-eslint/recommended' // Additional recommended TypeScript rules
   ),
   {
     /**
@@ -59,7 +59,7 @@ const config = [
      */
     plugins: {
       react, // Enables React-specific linting rules
-      "simple-import-sort": simpleImportSort, // Plugin for sorting imports
+      'simple-import-sort': simpleImportSort, // Plugin for sorting imports
     },
     languageOptions: {
       globals: {
@@ -70,8 +70,8 @@ const config = [
       parser: tsParser, // Specify TypeScript parser
     },
     rules: {
-      "simple-import-sort/imports": "error", // Enforce sorting of imports
-      "simple-import-sort/exports": "error", // Enforce sorting of exports
+      'simple-import-sort/imports': 'error', // Enforce sorting of imports
+      'simple-import-sort/exports': 'error', // Enforce sorting of exports
     },
   },
   {
@@ -83,10 +83,10 @@ const config = [
      * @property {string[]} files - Glob patterns for JavaScript and TypeScript files.
      * @property {Object} rules - ESLint rules applied to specified files.
      */
-    files: ["**/*.js", "**/*.jsx", "**/*.ts", "**/*.tsx"],
+    files: ['**/*.js', '**/*.jsx', '**/*.ts', '**/*.tsx'],
     rules: {
-      "simple-import-sort/imports": [
-        "error",
+      'simple-import-sort/imports': [
+        'error',
         {
           /**
            * Import Sorting Groups
@@ -96,12 +96,12 @@ const config = [
            * @type {Array<Array<string>>}
            */
           groups: [
-            ["^react", "^next", "^@?\\w"], // External libraries (React, Next.js, etc.)
-            ["^(@|components)(/.*|$)"], // Custom imports starting with "@" or "components"
-            ["^\\u0000"], // Side effect imports (like CSS imports)
-            ["^\\.\\.(?!/?$)", "^\\.\\./?$"], // Parent imports (../)
-            ["^\\./(?=.*/)(?!/?$)", "^\\.(?!/?$)", "^\\./?$"], // Relative imports (./)
-            ["^.+\\.?(css)$"], // Style imports (.css files)
+            ['^react', '^next', '^@?\\w'], // External libraries (React, Next.js, etc.)
+            ['^(@|components)(/.*|$)'], // Custom imports starting with "@" or "components"
+            ['^\\u0000'], // Side effect imports (like CSS imports)
+            ['^\\.\\.(?!/?$)', '^\\.\\./?$'], // Parent imports (../)
+            ['^\\./(?=.*/)(?!/?$)', '^\\.(?!/?$)', '^\\./?$'], // Relative imports (./)
+            ['^.+\\.?(css)$'], // Style imports (.css files)
           ],
         },
       ],
