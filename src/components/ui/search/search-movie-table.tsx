@@ -24,7 +24,7 @@ function SearchMovieTable({ data }: Readonly<SearchMovieTableProps>) {
   return (
     <Table>
       <TableHeader>
-        <TableRow>
+        <TableRow className="uppercase">
           <TableHead>Tên</TableHead>
           <TableHead>Tình Trạng</TableHead>
           <TableHead>Định dạng</TableHead>
@@ -54,17 +54,20 @@ function SearchMovieTable({ data }: Readonly<SearchMovieTableProps>) {
                 </div>
               </div>
             </TableCell>
-            <TableCell>
-              <Badge className="text-green-600" variant={'secondary'}>
+            <TableCell width={200}>
+              <Badge
+                className="text-center text-green-600"
+                variant={'secondary'}
+              >
                 {film.current_episode}
               </Badge>
             </TableCell>
-            <TableCell>
+            <TableCell width={150}>
               {film.total_episodes === 1 ? 'Phim lẻ' : 'Phim bộ'}
             </TableCell>
             <TableCell>{DateTime.fromISO(film.created).year ?? null}</TableCell>
-            <TableCell>Đang cập nhật</TableCell>
-            <TableCell>
+            <TableCell className="truncate">Đang cập nhật</TableCell>
+            <TableCell width={200}>
               {DateTime.fromISO(film.modified)
                 .setLocale('vi')
                 .toLocaleString(DateTime.DATETIME_MED) ?? null}
