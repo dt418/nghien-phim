@@ -1,6 +1,6 @@
-import { NextRequest, NextResponse } from 'next/server';
 import { Redis } from '@upstash/redis';
 import { ipAddress } from '@vercel/functions';
+import { NextRequest, NextResponse } from 'next/server';
 
 export const runtime = 'edge'; // 'nodejs' (default) | 'edge'
 

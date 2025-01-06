@@ -1,5 +1,5 @@
-import { notFound } from 'next/navigation';
 import { Redis } from '@upstash/redis';
+import { notFound } from 'next/navigation';
 
 import { FilmCarousel } from '@/components/ui/film/film.carousel';
 import { FilmList } from '@/components/ui/film/film.list';

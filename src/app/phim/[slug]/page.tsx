@@ -1,7 +1,3 @@
-import { type Metadata, type ResolvingMetadata } from 'next';
-import Image from 'next/image';
-import Link from 'next/link';
-import { notFound } from 'next/navigation';
 import { Redis } from '@upstash/redis';
 import {
   CalendarDays,
@@ -13,6 +9,10 @@ import {
   Monitor,
   UsersRound,
 } from 'lucide-react';
+import { type Metadata, type ResolvingMetadata } from 'next';
+import Image from 'next/image';
+import Link from 'next/link';
+import { notFound } from 'next/navigation';
 
 import { Button } from '@/components/ui/button';
 import { getFilmBySlug } from '@/lib/fetcher';

@@ -1,7 +1,7 @@
 'use client';
 
-import React, { Fragment } from 'react';
 import Autoplay from 'embla-carousel-autoplay';
+import React, { Fragment } from 'react';
 
 import { useMediaQuery } from '@/hooks/use-media';
 import { IMovieBase } from '@/types/movie-list';
@@ -13,7 +13,6 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from '../carousel';
-
 import { FilmCard } from './film.card';
 
 type TFilmCarouselProps = {

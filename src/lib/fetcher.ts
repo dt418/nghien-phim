@@ -3,7 +3,10 @@
 import slugify from 'slugify';
 
 import type { IMovieResponse } from '@/types/movie';
-import type { IMovieListResponse } from '@/types/movie-list';
+import type {
+  IMovieListResponse,
+  IMovieSearchListResponse,
+} from '@/types/movie-list';
 
 /**
  * Fetches a paginated list of recently updated films.
@@ -105,7 +108,7 @@ export async function getFilmBySlug(
  */
 export async function searchFilms(
   keyword: string
-): Promise<IMovieListResponse | undefined> {
+): Promise<IMovieSearchListResponse | undefined> {
   try {
     const searchTerm = slugify(keyword, {
       locale: 'vi',
@@ -123,7 +126,7 @@ export async function searchFilms(
       return undefined;
     }
 
-    const data: IMovieListResponse = await res.json();
+    const data: IMovieSearchListResponse = await res.json();
     return data;
   } catch (error) {
     console.error(`Error fetching film by slug: ${error}`);

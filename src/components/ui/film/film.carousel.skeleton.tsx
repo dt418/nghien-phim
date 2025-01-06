@@ -1,7 +1,7 @@
 'use client';
 
-import React from 'react';
 import Autoplay from 'embla-carousel-autoplay';
+import React from 'react';
 
 import {
   Carousel,
@@ -10,7 +10,6 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from '../carousel';
-
 import { FilmCardSkeleton } from './film.card.skeleton';
 
 export function FilmCarouselSkeleton() {
