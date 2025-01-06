@@ -11,11 +11,11 @@ import {
   BreadcrumbSeparator,
 } from '../breadcrumb';
 
-interface BreadcrumbData {
+export interface BreadcrumbData {
   keyword: string;
   currentPage: number;
 }
-interface SearchBreadcrumbProps {
+export interface SearchBreadcrumbProps {
   breadcrumbData: BreadcrumbData;
 }
 export default function SearchBreadcrumb({

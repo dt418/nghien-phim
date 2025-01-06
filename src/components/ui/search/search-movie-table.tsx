@@ -17,7 +17,7 @@ import {
   TableRow,
 } from '../table';
 
-interface SearchMovieTableProps {
+export interface SearchMovieTableProps {
   data: IMovieSearchItem[];
 }
 function SearchMovieTable({ data }: Readonly<SearchMovieTableProps>) {
