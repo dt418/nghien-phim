@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import * as React from 'react';
+import { Suspense } from 'react';
 
 import {
   NavigationMenu,
@@ -32,7 +33,9 @@ export function Header() {
     <header className="sticky top-0 z-50 border-b bg-background">
       <div className="container flex flex-row flex-wrap justify-between gap-2 py-4">
         <Menu />
-        <SearchBar />
+        <Suspense>
+          <SearchBar />
+        </Suspense>
       </div>
     </header>
   );
