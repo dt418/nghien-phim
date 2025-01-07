@@ -2,6 +2,7 @@
 
 import { Search } from 'lucide-react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { Suspense } from 'react';
 import { useDebouncedCallback } from 'use-debounce';
 
 import { Input } from '../input';
@@ -42,18 +43,20 @@ export default function SearchBar() {
   }, DEBOUNCE_DELAY);
 
   return (
-    <form
-      className="relative flex w-full flex-row md:w-80"
-      onSubmit={(e) => e.preventDefault()}
-    >
-      <Input
-        startIcon={<Search />}
-        type="search"
-        placeholder="Tìm kiếm phim..."
-        className="w-full"
-        onChange={(event) => handleSearchDebounced(event.target.value)}
-        aria-label="Search input"
-      />
-    </form>
+    <Suspense>
+      <form
+        className="relative flex w-full flex-row md:w-80"
+        onSubmit={(e) => e.preventDefault()}
+      >
+        <Input
+          startIcon={<Search />}
+          type="search"
+          placeholder="Tìm kiếm phim..."
+          className="w-full"
+          onChange={(event) => handleSearchDebounced(event.target.value)}
+          aria-label="Search input"
+        />
+      </form>
+    </Suspense>
   );
 }
