@@ -29,8 +29,8 @@ export const Menu = () => {
 
 export function Header() {
   return (
-    <header className="container">
-      <div className="flex flex-row flex-wrap justify-between gap-2 py-4">
+    <header className="sticky top-0 z-50 border-b bg-background">
+      <div className="container flex flex-row flex-wrap justify-between gap-2 py-4">
         <Menu />
         <SearchBar />
       </div>
