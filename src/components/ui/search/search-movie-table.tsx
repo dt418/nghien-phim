@@ -36,13 +36,14 @@ function SearchMovieTable({ data }: Readonly<SearchMovieTableProps>) {
       <TableBody>
         {data.map((film) => (
           <TableRow key={film.id}>
-            <TableCell>
+            <TableCell className="min-w-[250px] md:w-1/3">
               <div className="flex flex-row items-center gap-4">
                 <Image
                   src={film.poster_url}
                   alt={film.original_name}
-                  width={48}
-                  height={67}
+                  width={80}
+                  height={120}
+                  className="aspect-auto"
                 />
                 <div>
                   <Link href={`/phim/${film.slug}`}>
@@ -54,7 +55,7 @@ function SearchMovieTable({ data }: Readonly<SearchMovieTableProps>) {
                 </div>
               </div>
             </TableCell>
-            <TableCell width={200}>
+            <TableCell className="min-w-[100px]">
               <Badge
                 className="text-center text-green-600"
                 variant={'secondary'}
@@ -62,12 +63,12 @@ function SearchMovieTable({ data }: Readonly<SearchMovieTableProps>) {
                 {film.current_episode}
               </Badge>
             </TableCell>
-            <TableCell width={150}>
+            <TableCell className="min-w-[150px]">
               {film.total_episodes === 1 ? 'Phim lẻ' : 'Phim bộ'}
             </TableCell>
             <TableCell>{DateTime.fromISO(film.created).year ?? null}</TableCell>
             <TableCell className="truncate">Đang cập nhật</TableCell>
-            <TableCell width={200}>
+            <TableCell className="min-w-[200px]">
               {DateTime.fromISO(film.modified)
                 .setLocale('vi')
                 .toLocaleString(DateTime.DATETIME_MED) ?? null}
