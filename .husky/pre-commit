@@ -1,5 +1,9 @@
 # Kill any running pnpm dev process
-pkill -f "pnpm.*dev" || true
+if [ "$OS" = "Windows_NT" ]; then
+	taskkill /F /IM "node.exe" /FI "WINDOWTITLE eq pnpm dev*" >nul 2>&1 || true
+else
+	pkill -f "pnpm.*dev" || true
+fi
 
 # Run build and lint-staged
 pnpm run build
