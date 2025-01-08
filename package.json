@@ -11,7 +11,9 @@
     "lint:fix": "eslint . --fix",
     "format": "prettier --write .",
     "prepare": "husky",
-    "lint-staged": "lint-staged"
+    "lint-staged": "lint-staged",
+    "preinstall": "nvm use",
+    "prebuild": "nvm use"
   },
   "lint-staged": {
     "*.{ts,tsx,js,jsx}": [
