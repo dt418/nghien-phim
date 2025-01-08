@@ -1,1 +1,6 @@
+# Kill any running pnpm dev process
+pkill -f "pnpm.*dev" || true
+
+# Run build and lint-staged
+pnpm run build
 lint-staged
