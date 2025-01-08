@@ -1,10 +1,3 @@
-# Kill any running pnpm dev process
-if [ "$OS" = "Windows_NT" ]; then
-  taskkill /F /IM "node.exe" /FI "IMAGENAME eq node.exe" >nul 2>&1 || true
-else
-  pkill -f "pnpm.*dev" || true
-fi
-
 # Run build and lint-staged
 pnpm run build || { echo "Build failed. Aborting commit."; exit 1; }
 lint-staged || { echo "Lint-staged checks failed. Aborting commit."; exit 1; }
