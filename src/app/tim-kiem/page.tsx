@@ -1,7 +1,7 @@
 import SearchBreadcrumb from '@/components/ui/search/search-breadcrumb';
 import SearchMovieTable from '@/components/ui/search/search-movie-table';
 import { Separator } from '@/components/ui/separator';
-import { searchFilms } from '@/lib/fetcher';
+import { searchFilms } from '@/lib/api';
 import { IMovieSearchListResponse } from '@/types/movie-list';
 
 type SearchPageProps = {

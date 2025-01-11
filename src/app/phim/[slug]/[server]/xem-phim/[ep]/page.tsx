@@ -14,7 +14,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
 import { Button } from '@/components/ui/button';
-import { getFilmBySlug } from '@/lib/fetcher';
+import { getFilmBySlug } from '@/lib/api';
 import { stringToSlug, textTruncate } from '@/lib/stringUtils';
 import { cn } from '@/lib/utils';
 

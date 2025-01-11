@@ -6,7 +6,7 @@ import { FilmList } from '@/components/ui/film/film.list';
 import { FilmPagination } from '@/components/ui/film/film.pagination';
 import { TopView } from '@/components/ui/film/film.top-view';
 import { Separator } from '@/components/ui/separator';
-import { getFilms } from '@/lib/fetcher';
+import { getFilms } from '@/lib/api';
 import { THomePageProps } from '@/types/movie-list';
 
 const redis = Redis.fromEnv();
