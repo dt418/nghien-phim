@@ -67,7 +67,7 @@ export default function SearchBar(): JSX.Element {
 
   return (
     <form
-      className="relative flex w-full flex-row gap-2 md:w-80"
+      className="relative inline-flex w-full flex-row gap-2 md:w-80"
       onSubmit={handleSubmit}
       role="search"
     >
