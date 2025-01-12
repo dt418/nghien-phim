@@ -146,7 +146,7 @@ const Navigation = () => (
 const HeaderContent = () => (
   <div className="container flex flex-col flex-wrap justify-between gap-2 py-4 md:flex-row">
     <Logo />
-    <section className="flex flex-1 flex-row items-start justify-end">
+    <section className="flex flex-1 flex-row items-start justify-end gap-2">
       <Navigation />
       <Suspense>
         <SearchBar />
