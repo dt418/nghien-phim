@@ -1,73 +1,103 @@
 'use client';
 
+import { cva, type VariantProps } from 'class-variance-authority';
 import { Search } from 'lucide-react';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { FormEvent, useRef } from 'react';
+
+import { cn } from '@/lib/utils';
 
 import { Button } from '../button';
 import { Input } from '../input';
 
-/** Path for the search page */
+// Path for search results page
 const SEARCH_PATH = '/tim-kiem';
 
+// Define search bar variants using class-variance-authority
+const searchBarVariants = cva('relative inline-flex w-full flex-row gap-2', {
+  variants: {
+    size: {
+      default: 'md:w-80', // Default width on medium screens and up
+    },
+  },
+  defaultVariants: {
+    size: 'default',
+  },
+});
+
 /**
- * SearchBar component that handles search functionality
- * Allows users to search and updates URL with search parameters
- * @returns React component
+ * Props for the SearchBar component
+ * @interface SearchBarProps
+ * @extends {VariantProps<typeof searchBarVariants>}
+ * @example
+ * // Default usage
+ * <SearchBar />
+ *
+ * // With custom className
+ * <SearchBar className="my-4" />
  */
-export default function SearchBar(): JSX.Element {
+interface SearchBarProps extends VariantProps<typeof searchBarVariants> {
+  className?: string;
+}
+
+/**
+ * SearchBar component that provides search functionality
+ * @param {SearchBarProps} props - Component props
+ * @returns {JSX.Element} Search bar with input and submit button
+ * @example
+ * // Basic usage
+ * <SearchBar />
+ *
+ * // With custom size
+ * <SearchBar size="default" className="my-custom-class" />
+ */
+export default function SearchBar({
+  className,
+  size,
+}: SearchBarProps = {}): JSX.Element {
   const searchParams = useSearchParams();
-  const pathname = usePathname();
-  const { replace } = useRouter();
+  const { push } = useRouter();
   const inputRef = useRef<HTMLInputElement>(null);
 
   /**
-   * Updates search parameters based on the search term
-   * @param term - The search term to update params with
-   * @returns Updated URLSearchParams object
+   * Gets the current search term from the input
+   * @returns {string} Trimmed and lowercase search term
    */
-  const updateSearchParams = (term: string): URLSearchParams => {
-    const params = new URLSearchParams(searchParams);
-
-    if (!term) {
-      params.delete('keyword');
-      return params;
-    }
-
-    params.set('keyword', term.trim().toLowerCase());
-    return params;
+  const getSearchTerm = (): string => {
+    return inputRef.current?.value?.trim().toLowerCase() ?? '';
   };
 
   /**
-   * Constructs the search URL based on current pathname and search parameters
-   * @param params - URLSearchParams object containing search parameters
-   * @returns Constructed search URL string
+   * Creates a URL for the search results page
+   * @param {string} term - Search term to include in URL
+   * @returns {string} Formatted search URL with parameters
    */
-  const constructSearchUrl = (params: URLSearchParams): string => {
-    if (!params.has('keyword')) {
-      return pathname;
+  const createSearchUrl = (term: string): string => {
+    const params = new URLSearchParams();
+    if (term) {
+      params.set('keyword', term);
     }
-
-    const isSearchPage = pathname.includes(SEARCH_PATH);
-    const basePath = isSearchPage ? '' : SEARCH_PATH;
-    return `${basePath}${pathname}?${params}`;
+    return `${SEARCH_PATH}?${params.toString()}`;
   };
 
   /**
    * Handles form submission
-   * @param e - Form submission event
+   * @param {FormEvent<HTMLFormElement>} e - Form event
    */
   const handleSubmit = (e: FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
-    const searchTerm = inputRef.current?.value ?? '';
-    const params = updateSearchParams(searchTerm);
-    const searchUrl = constructSearchUrl(params);
-    replace(searchUrl);
+    const searchTerm = getSearchTerm();
+
+    if (!searchTerm) {
+      return;
+    }
+
+    push(createSearchUrl(searchTerm));
   };
 
   return (
     <form
-      className="relative inline-flex w-full flex-row gap-2 md:w-80"
+      className={cn(searchBarVariants({ size }), className)}
       onSubmit={handleSubmit}
       role="search"
     >
@@ -79,6 +109,7 @@ export default function SearchBar(): JSX.Element {
         placeholder="Tìm kiếm phim..."
         className="w-full"
         aria-label="Search input"
+        defaultValue={searchParams.get('keyword') ?? ''}
       />
       <Button type="submit" variant="secondary">
         Tìm
