@@ -28,3 +28,8 @@ export interface ICategoryItem {
   director?: string;
   casts?: string;
 }
+
+export type CategoryPageProps = {
+  params: Promise<{ category: string }>;
+  searchParams?: Promise<{ page: string }>;
+};

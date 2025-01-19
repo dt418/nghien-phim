@@ -13,15 +13,40 @@ export async function fetchWithErrorHandling<T>(
       ...options,
     });
 
+    // Handle non-JSON responses
+    const contentType = res.headers.get('content-type');
+    const data = contentType?.includes('application/json')
+      ? await res.json()
+      : await res.text();
+
     if (!res.ok) {
-      throw new APIError(`HTTP error ${res.status}`, res.status, url);
+      // Handle API error responses with proper message
+      const errorMessage =
+        typeof data === 'object' && data.message
+          ? data.message
+          : typeof data === 'string'
+            ? data
+            : `Request failed with status ${res.status}`;
+
+      throw new APIError(errorMessage, res.status, url);
     }
 
-    return res.json();
+    return data as T;
   } catch (error) {
-    console.error(`API request failed: ${url}`, error);
-    throw error instanceof APIError
-      ? error
-      : new APIError('Network error', undefined, url);
+    // Improve error logging and handling
+    if (error instanceof APIError) {
+      console.error(`API Error: ${error.message}`, {
+        status: error.status,
+      });
+      throw error;
+    }
+
+    // Handle network/other errors
+    console.error(`Network/Request Error for ${url}:`, error);
+    throw new APIError(
+      error instanceof Error ? error.message : 'Network error',
+      undefined,
+      url
+    );
   }
 }

@@ -170,7 +170,7 @@ const BreadcrumbSkeleton = () => (
   </nav>
 );
 
-export default function SearchLoading() {
+export default function CategoryLoading() {
   return (
     <div className="min-h-screen space-y-6 bg-background p-4">
       <BreadcrumbSkeleton />
