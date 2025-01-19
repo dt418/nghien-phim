@@ -2,11 +2,10 @@
 
 import slugify from 'slugify';
 
+import { ICategoryResponse } from '@/types/category';
 import type { IMovieResponse } from '@/types/movie';
-import type {
-  IMovieListResponse,
-  IMovieSearchListResponse,
-} from '@/types/movie-list';
+import type { IMovieListResponse } from '@/types/movie-list';
+import { IMovieSearchListResponse } from '@/types/search';
 
 import { API_CONFIG, createFilmsUrl } from './config';
 import { fetchWithErrorHandling } from './fetch';
@@ -16,10 +15,10 @@ import { fetchWithErrorHandling } from './fetch';
  * @param path - The endpoint path segment
  * @returns A function that handles paginated requests for the specified path
  */
-const createPaginatedHandler = (path: string) => {
-  return async (param: string, page = 1): Promise<IMovieListResponse> => {
-    return fetchWithErrorHandling<IMovieListResponse>(
-      createFilmsUrl(`/${path}/${param}&page=${page}`)
+const createPaginatedHandler = <T extends IMovieListResponse>(path: string) => {
+  return async (param: string, page = 1): Promise<T> => {
+    return fetchWithErrorHandling<T>(
+      createFilmsUrl(`/${path}/${param}?page=${page}`)
     );
   };
 };
@@ -128,7 +127,8 @@ export const searchFilms = async (
  * }
  * ```
  */
-export const getFilmByYear = createPaginatedHandler('nam-phat-hanh');
+export const getFilmByYear =
+  createPaginatedHandler<IMovieListResponse>('nam-phat-hanh');
 
 /**
  * Fetches films by country of origin
@@ -162,4 +162,5 @@ export const getFilmByCountry = createPaginatedHandler('quoc-gia');
  * }
  * ```
  */
-export const getFilmByCategory = createPaginatedHandler('the-loai');
+export const getFilmByCategory =
+  createPaginatedHandler<ICategoryResponse>('the-loai');

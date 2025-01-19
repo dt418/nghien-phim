@@ -20,11 +20,11 @@ export interface IMovie {
   language: string;
   director: string;
   casts: string;
-  category: ICategory;
+  category: IMovieCategory;
   episodes: IEpisode[];
 }
 
-export interface ICategory {
+export interface IMovieCategory {
   '1'?: ICategoryItem;
   '2'?: ICategoryItem;
   '3'?: ICategoryItem;

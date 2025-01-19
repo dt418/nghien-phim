@@ -1,11 +1,11 @@
 'use client';
-
-import { DateTime } from 'luxon';
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 
-import { IMovieSearchItem } from '@/types/movie-list';
+import { formatDate, getFilmFormat } from '@/lib/utils';
+import { ICategoryItem } from '@/types/category';
+import { IMovieSearchItem } from '@/types/search';
 
 import { Badge } from '../badge';
 import {
@@ -17,43 +17,64 @@ import {
   TableRow,
 } from '../table';
 
-export interface SearchMovieTableProps {
-  data: IMovieSearchItem[];
+const TABLE_HEADERS = [
+  'Tên',
+  'Tình Trạng',
+  'Định dạng',
+  'Năm',
+  'Quốc gia',
+  'Ngày cập nhật',
+] as const;
+
+interface FilmTitleCellProps<T extends IMovieSearchItem | ICategoryItem> {
+  film: T;
 }
-function SearchMovieTable({ data }: Readonly<SearchMovieTableProps>) {
+
+export interface SearchMovieTableProps<
+  T extends IMovieSearchItem | ICategoryItem,
+> {
+  data: T[];
+}
+
+const FilmTitleCell = <T extends IMovieSearchItem | ICategoryItem>({
+  film,
+}: FilmTitleCellProps<T>) => (
+  <div className="flex flex-row items-center gap-4">
+    <Image
+      src={film.poster_url}
+      alt={film.original_name}
+      width={80}
+      height={120}
+      className="aspect-auto"
+    />
+    <div>
+      <Link href={`/phim/${film.slug}`}>
+        <h3 className="font-bold text-lime-500">{film.name}</h3>
+        <h4 className="font-sans text-xs font-extralight">
+          {film.original_name}
+        </h4>
+      </Link>
+    </div>
+  </div>
+);
+
+function SearchMovieTable<T extends IMovieSearchItem | ICategoryItem>({
+  data,
+}: Readonly<SearchMovieTableProps<T>>) {
   return (
     <Table>
       <TableHeader>
         <TableRow className="uppercase">
-          <TableHead>Tên</TableHead>
-          <TableHead>Tình Trạng</TableHead>
-          <TableHead>Định dạng</TableHead>
-          <TableHead>Năm</TableHead>
-          <TableHead>Quốc gia</TableHead>
-          <TableHead>Ngày cập nhật</TableHead>
+          {TABLE_HEADERS.map((header) => (
+            <TableHead key={header}>{header}</TableHead>
+          ))}
         </TableRow>
       </TableHeader>
       <TableBody>
         {data.map((film) => (
-          <TableRow key={film.id}>
+          <TableRow key={film.slug}>
             <TableCell className="min-w-[250px] md:w-1/3">
-              <div className="flex flex-row items-center gap-4">
-                <Image
-                  src={film.poster_url}
-                  alt={film.original_name}
-                  width={80}
-                  height={120}
-                  className="aspect-auto"
-                />
-                <div>
-                  <Link href={`/phim/${film.slug}`}>
-                    <h3 className="font-bold text-lime-500">{film.name}</h3>
-                    <h4 className="font-sans text-xs font-extralight">
-                      {film.original_name}
-                    </h4>
-                  </Link>
-                </div>
-              </div>
+              <FilmTitleCell film={film} />
             </TableCell>
             <TableCell className="min-w-[100px]">
               <Badge
@@ -64,14 +85,12 @@ function SearchMovieTable({ data }: Readonly<SearchMovieTableProps>) {
               </Badge>
             </TableCell>
             <TableCell className="min-w-[150px]">
-              {film.total_episodes === 1 ? 'Phim lẻ' : 'Phim bộ'}
+              {getFilmFormat(film.total_episodes)}
             </TableCell>
-            <TableCell>{DateTime.fromISO(film.created).year ?? null}</TableCell>
+            <TableCell>{formatDate(film.created, 'year')}</TableCell>
             <TableCell className="truncate">Đang cập nhật</TableCell>
             <TableCell className="min-w-[200px]">
-              {DateTime.fromISO(film.modified)
-                .setLocale('vi')
-                .toLocaleString(DateTime.DATETIME_MED) ?? null}
+              {formatDate(film.modified, 'full')}
             </TableCell>
           </TableRow>
         ))}
