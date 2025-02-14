@@ -3,7 +3,7 @@ import { MenuItems } from '@/types/menu';
 export const menuItems: MenuItems = [
   {
     label: 'Tivi Show',
-    href: '/danh-sach/tv-show',
+    href: '/danh-sach/tv-shows',
   },
   {
     label: 'Phim lẻ',
@@ -64,35 +64,19 @@ export const menuItems: MenuItems = [
       { label: 'Hà Lan', href: '/quoc-gia/ha-lan' },
       { label: 'Philippines', href: '/quoc-gia/philippines' },
       { label: 'Ấn Độ', href: '/quoc-gia/an-do' },
-      { label: 'Quốc gia khác', href: '/quoc-gia/khac' },
+      { label: 'Quốc gia khác', href: '/quoc-gia/quoc-gia-khac' },
     ],
   },
   {
     label: 'Năm',
     href: '/nam-phat-hanh',
-    children: [
-      { label: '2024', href: '/nam-phat-hanh/2024' },
-      { label: '2023', href: '/nam-phat-hanh/2023' },
-      { label: '2022', href: '/nam-phat-hanh/2022' },
-      { label: '2021', href: '/nam-phat-hanh/2021' },
-      { label: '2020', href: '/nam-phat-hanh/2020' },
-      { label: '2019', href: '/nam-phat-hanh/2019' },
-      { label: '2018', href: '/nam-phat-hanh/2018' },
-      { label: '2017', href: '/nam-phat-hanh/2017' },
-      { label: '2016', href: '/nam-phat-hanh/2016' },
-      { label: '2015', href: '/nam-phat-hanh/2015' },
-      { label: '2014', href: '/nam-phat-hanh/2014' },
-      { label: '2013', href: '/nam-phat-hanh/2013' },
-      { label: '2012', href: '/nam-phat-hanh/2012' },
-      { label: '2011', href: '/nam-phat-hanh/2011' },
-      { label: '2010', href: '/nam-phat-hanh/2010' },
-      { label: '2009', href: '/nam-phat-hanh/2009' },
-      { label: '2008', href: '/nam-phat-hanh/2008' },
-      { label: '2007', href: '/nam-phat-hanh/2007' },
-      { label: '2006', href: '/nam-phat-hanh/2006' },
-      { label: '2005', href: '/nam-phat-hanh/2005' },
-      { label: '2004', href: '/nam-phat-hanh/2004' },
-    ],
+    children: Array.from(
+      { length: new Date().getFullYear() - 2003 },
+      (_, index) => {
+        const year = new Date().getFullYear() - index;
+        return { label: year.toString(), href: `/nam-phat-hanh/${year}` };
+      }
+    ),
   },
 ];
 

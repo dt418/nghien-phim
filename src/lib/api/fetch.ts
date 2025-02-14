@@ -21,12 +21,10 @@ export async function fetchWithErrorHandling<T>(
 
     if (!res.ok) {
       // Handle API error responses with proper message
+      const defaultError = `Request failed with status ${res.status}`;
+      const stringError = typeof data === 'string' ? data : defaultError;
       const errorMessage =
-        typeof data === 'object' && data.message
-          ? data.message
-          : typeof data === 'string'
-            ? data
-            : `Request failed with status ${res.status}`;
+        typeof data === 'object' && data.message ? data.message : stringError;
 
       throw new APIError(errorMessage, res.status, url);
     }

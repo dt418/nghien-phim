@@ -1,12 +1,12 @@
 import Link from 'next/link';
 import React from 'react';
 
-import { IMovieBase } from '@/types/movie-list';
+import { TMovieItemShortened } from '@/types/movie-list';
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../tabs';
 
 interface ITopViewProps {
-  topViewData: IMovieBase[];
+  topViewData: TMovieItemShortened[];
   views: Record<string, number>;
 }
 
@@ -17,7 +17,10 @@ export const TopView = (props: ITopViewProps) => {
     (a, b) => (views[b.slug] || 0) - (views[a.slug] || 0)
   );
 
-  const renderTopViewList = (data: IMovieBase[], sliceCount?: number) => {
+  const renderTopViewList = (
+    data: TMovieItemShortened[],
+    sliceCount?: number
+  ) => {
     const slicedData = sliceCount ? data.slice(0, sliceCount) : data;
     return slicedData.map((filmItem, index) => (
       <Link

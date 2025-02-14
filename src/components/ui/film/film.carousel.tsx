@@ -4,7 +4,7 @@ import Autoplay from 'embla-carousel-autoplay';
 import React, { Fragment } from 'react';
 
 import { useMediaQuery } from '@/hooks/use-media';
-import { IMovieBase } from '@/types/movie-list';
+import { TMovieItemShortened } from '@/types/movie-list';
 
 import {
   Carousel,
@@ -16,7 +16,7 @@ import {
 import { FilmCard } from './film.card';
 
 type TFilmCarouselProps = {
-  items: IMovieBase[] | [];
+  items: TMovieItemShortened[] | [];
   title?: string;
 };
 export function FilmCarousel({ items = [], title }: TFilmCarouselProps) {

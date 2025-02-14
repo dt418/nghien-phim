@@ -10,9 +10,9 @@ const HeaderSkeleton = () => (
 const CarouselSkeleton = () => (
   <div className="relative h-[200px] w-full overflow-hidden sm:h-[300px] md:h-[400px]">
     <div className="flex gap-2 p-2 sm:gap-4 sm:p-4">
-      {[...Array(6)].map((_, i) => (
+      {[...Array(6)].map((_) => (
         <Skeleton
-          key={`carousel-${i}`}
+          key={`carousel-${crypto.randomUUID()}`}
           className="h-[180px] w-[120px] flex-shrink-0 rounded-lg bg-gray-800 sm:h-[270px] sm:w-[180px] md:h-[360px] md:w-[240px]"
         />
       ))}
@@ -26,8 +26,8 @@ const MovieGridSkeleton = () => (
   <div className="col-span-12 flex flex-col gap-2 md:col-span-9">
     <Skeleton className="mb-4 h-6 w-24 bg-gray-800 sm:mb-6 sm:h-8 sm:w-32" />
     <div className="grid grid-cols-2 gap-2 sm:grid-cols-2 sm:gap-4 md:grid-cols-4">
-      {[...Array(ITEMS_PER_PAGE)].map((_, i) => (
-        <div key={`movie-${i}`} className="relative">
+      {[...Array(ITEMS_PER_PAGE)].map((_) => (
+        <div key={`movie-${crypto.randomUUID()}`} className="relative">
           <Skeleton className="h-[175px] w-full rounded-lg bg-gray-800 sm:h-[200px] md:h-[300px]" />
           <div className="absolute bottom-0 w-full space-y-1 p-2">
             <Skeleton className="h-4 w-3/4 bg-gray-800" />
@@ -43,9 +43,9 @@ const MovieGridSkeleton = () => (
 const MovieGirdPaginationSkeleton = () => {
   return (
     <div className="mt-4 flex items-center justify-center gap-2">
-      {[...Array(5)].map((_, i) => (
+      {[...Array(5)].map((_) => (
         <Skeleton
-          key={`page-${i}`}
+          key={`page-${crypto.randomUUID()}`}
           className="h-8 w-8 rounded-md bg-gray-800"
         />
       ))}
@@ -58,8 +58,11 @@ const RankingSidebarSkeleton = () => (
     <div className="space-y-2 rounded-lg bg-gray-900 p-2 sm:p-4">
       <Skeleton className="mb-2 h-5 w-1/2 bg-gray-800 sm:mb-4 sm:h-6" />
       <Skeleton className="mb-2 h-5 w-full bg-gray-700 sm:mb-4 sm:h-6" />
-      {[...Array(10)].map((_, i) => (
-        <div key={`ranking-${i}`} className="flex items-center gap-2 sm:gap-3">
+      {[...Array(10)].map((_) => (
+        <div
+          key={`ranking-${crypto.randomUUID()}`}
+          className="flex items-center gap-2 sm:gap-3"
+        >
           <Skeleton className="h-6 w-6 bg-gray-800 sm:h-8 sm:w-8" />
           <Skeleton className="h-6 flex-1 bg-gray-800 sm:h-8" />
           <Skeleton className="h-6 w-12 bg-gray-800 sm:h-8 sm:w-16" />

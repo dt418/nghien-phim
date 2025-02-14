@@ -1,16 +1,13 @@
-import { IBaseResponse } from './base-response';
-export interface IMovieListResponse extends IBaseResponse {
-  items: IMovieBase[];
+import { IMovieItemBase } from './base-movie-item';
+import { IResponseBase } from './base-response';
+export interface IMovieListResponse extends IResponseBase {
+  items: TMovieItemShortened[];
 }
 
-export interface IMovieBase {
-  name: string;
-  slug: string;
-  original_name: string;
-  thumb_url: string;
-  poster_url: string;
-  modified: string;
-}
+export type TMovieItemShortened = Pick<
+  IMovieItemBase,
+  'name' | 'slug' | 'original_name' | 'thumb_url' | 'poster_url' | 'modified'
+>;
 
 export type THomePageProps = {
   params: Promise<{ slug: string }>;

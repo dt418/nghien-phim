@@ -35,8 +35,8 @@ const CastSkeleton = () => (
 
 const EpisodeInfoSkeleton = () => (
   <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-    {[...Array(6)].map((_, i) => (
-      <div key={i} className="flex items-center gap-2">
+    {Array.from({ length: 6 }, () => crypto.randomUUID()).map((id) => (
+      <div key={id} className="flex items-center gap-2">
         <Skeleton className="h-4 w-4 bg-gray-800" />
         <Skeleton className="h-4 w-32 bg-gray-800" />
       </div>
@@ -58,8 +58,8 @@ const SynopsisSkeleton = () => (
 const EpisodeSelectionSkeleton = () => (
   <div className="mt-12">
     <div className="flex items-center justify-center gap-4">
-      {[...Array(8)].map((_, i) => (
-        <Skeleton key={i} className="h-10 w-10 rounded-md bg-gray-800" />
+      {Array.from({ length: 8 }, (_) => crypto.randomUUID()).map((id) => (
+        <Skeleton key={id} className="h-10 w-10 rounded-md bg-gray-800" />
       ))}
     </div>
   </div>

@@ -4,7 +4,7 @@ import Link from 'next/link';
 import React from 'react';
 
 import { formatDate, getFilmFormat } from '@/lib/utils';
-import { ICategoryItem } from '@/types/category';
+import { IMovieItemBase } from '@/types/base-movie-item';
 import { IMovieSearchItem } from '@/types/search';
 
 import { Badge } from '../badge';
@@ -26,17 +26,17 @@ const TABLE_HEADERS = [
   'Ngày cập nhật',
 ] as const;
 
-interface FilmTitleCellProps<T extends IMovieSearchItem | ICategoryItem> {
+interface FilmTitleCellProps<T extends IMovieSearchItem | IMovieItemBase> {
   film: T;
 }
 
 export interface SearchMovieTableProps<
-  T extends IMovieSearchItem | ICategoryItem,
+  T extends IMovieSearchItem | IMovieItemBase,
 > {
   data: T[];
 }
 
-const FilmTitleCell = <T extends IMovieSearchItem | ICategoryItem>({
+const FilmTitleCell = <T extends IMovieSearchItem | IMovieItemBase>({
   film,
 }: FilmTitleCellProps<T>) => (
   <div className="flex flex-row items-center gap-4">
@@ -58,7 +58,7 @@ const FilmTitleCell = <T extends IMovieSearchItem | ICategoryItem>({
   </div>
 );
 
-function SearchMovieTable<T extends IMovieSearchItem | ICategoryItem>({
+function SearchMovieTable<T extends IMovieSearchItem | IMovieItemBase>({
   data,
 }: Readonly<SearchMovieTableProps<T>>) {
   return (

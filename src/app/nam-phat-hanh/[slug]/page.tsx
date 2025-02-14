@@ -5,34 +5,36 @@ import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import SearchBreadcrumb from '@/components/ui/search/search-breadcrumb';
 import SearchMovieTable from '@/components/ui/search/search-movie-table';
 import { Separator } from '@/components/ui/separator';
-import { getFilmByCategory, getFilmListByCategory } from '@/lib/api';
+import { getFilmByYear } from '@/lib/api';
 import { APIError } from '@/lib/api/errors';
 import { IMovieItemBase } from '@/types/base-movie-item';
-import { ICategory, TCategoryPageProps } from '@/types/category';
+import { ICategory } from '@/types/category';
+import { TFilmByYearProps } from '@/types/film-by-year';
 
+// generate metadata here
 export async function generateMetadata(
   {
     params,
   }: {
-    params: Promise<{ category: string }>;
+    params: Promise<{ slug: string }>;
   },
   parent: ResolvingMetadata
 ): Promise<Metadata> {
-  const { category } = await params;
-  const decodedCategory = decodeURIComponent(category);
+  const { slug } = await params;
+  const decodedCategory = decodeURIComponent(slug);
   const {
     cat: { title },
     items,
-  } = await getFilmListByCategory(decodedCategory, 1);
+  } = await getFilmByYear(decodedCategory, 1);
 
   const previousImages = (await parent).openGraph?.images || [];
 
   return {
-    title: `Danh sách phim theo thể loại ${title?.toLowerCase()}`,
-    description: `Xem danh sách phim theo thể loại ${title?.toLowerCase} online với phụ đề tiếng Việt`,
+    title: `Phim phát hành năm ${title}`,
+    description: `Xem phim phát hành năm ${title} online với phụ đề tiếng Việt`,
     openGraph: {
-      title: `Danh sách phim theo thể loại ${title?.toLowerCase()}`,
-      description: `Xem danh sách phim theo thể loại ${title?.toLowerCase()} online với phụ đề tiếng Việt`,
+      title: `Phim phát hành năm ${title}`,
+      description: `Xem phim phát hành năm ${title} online với phụ đề tiếng Việt`,
       images:
         items.length > 0
           ? [items[0].poster_url, ...previousImages]
@@ -81,23 +83,23 @@ const SearchResults = ({
       }}
     />
     <Separator />
-    <h2 className="uppercase">Phim theo thể loại {category.title}</h2>
+    <h2 className="uppercase">Phim phát hành năm {category.title}</h2>
     <div className="overflow-x-auto">
       <SearchMovieTable data={items} />
     </div>
   </div>
 );
 
-export default async function CategoryPage(
-  props: Readonly<TCategoryPageProps>
+export default async function FilmByYearPage(
+  props: Readonly<TFilmByYearProps>
 ) {
   try {
     const searchParams = await props.searchParams;
-    const { category } = await props.params;
-    const decodedCategory = decodeURIComponent(category);
+    const { slug } = await props.params;
+    const decodedYear = decodeURIComponent(slug);
     const page = Number(searchParams?.page ?? 1);
 
-    const { items, cat } = await getFilmByCategory(decodedCategory, page);
+    const { items, cat } = await getFilmByYear(decodedYear, page);
 
     if (!items || items.length === 0) {
       return <EmptyState />;

@@ -129,9 +129,9 @@ const SkeletonTableRow = React.memo(() => {
 
   return (
     <TableRow>
-      {cellConfigs.map((config, index) => (
+      {cellConfigs.map((config) => (
         <TableCell
-          key={index}
+          key={config.variant}
           className={tableCellVariants({ variant: config.variant })}
         >
           {config.content}
@@ -146,9 +146,9 @@ SkeletonTableRow.displayName = 'SkeletonTableRow';
 const BreadcrumbSkeleton = () => (
   <nav className="flex" aria-label="Breadcrumb">
     <ol className="inline-flex items-center space-x-1 md:space-x-3">
-      {BREADCRUMB_ITEMS.map((item, index) => (
+      {BREADCRUMB_ITEMS.map((item) => (
         <li
-          key={index}
+          key={item.width}
           className={cn(item.current ? undefined : 'inline-flex items-center')}
         >
           <div className="flex items-center">
@@ -180,9 +180,9 @@ export default function SearchLoading() {
         <Table>
           <TableHeader>
             <TableRow>
-              {TABLE_HEADERS.map((header, index) => (
+              {TABLE_HEADERS.map((header) => (
                 <TableHead
-                  key={index}
+                  key={`table-header-${header.width}-${header.skeletonWidth}`}
                   className={cn(`min-w-[${header.width}px]`, header.className)}
                 >
                   <Skeleton
@@ -196,8 +196,8 @@ export default function SearchLoading() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {Array.from({ length: 10 }).map((_, index) => (
-              <SkeletonTableRow key={index} />
+            {Array.from({ length: 10 }).map((_) => (
+              <SkeletonTableRow key={crypto.randomUUID()} />
             ))}
           </TableBody>
         </Table>

@@ -3,6 +3,9 @@
 import slugify from 'slugify';
 
 import { ICategoryResponse } from '@/types/category';
+import { IFilmByCountryResponse } from '@/types/film-by-country';
+import { IFilmByYearResponse } from '@/types/film-by-year';
+import { IFilmListResponse } from '@/types/list';
 import type { IMovieResponse } from '@/types/movie';
 import type { IMovieListResponse } from '@/types/movie-list';
 import { IMovieSearchListResponse } from '@/types/search';
@@ -128,7 +131,7 @@ export const searchFilms = async (
  * ```
  */
 export const getFilmByYear =
-  createPaginatedHandler<IMovieListResponse>('nam-phat-hanh');
+  createPaginatedHandler<IFilmByYearResponse>('nam-phat-hanh');
 
 /**
  * Fetches films by country of origin
@@ -145,7 +148,8 @@ export const getFilmByYear =
  * }
  * ```
  */
-export const getFilmByCountry = createPaginatedHandler('quoc-gia');
+export const getFilmByCountry =
+  createPaginatedHandler<IFilmByCountryResponse>('quoc-gia');
 
 /**
  * Fetches films by category/genre
@@ -164,3 +168,26 @@ export const getFilmByCountry = createPaginatedHandler('quoc-gia');
  */
 export const getFilmByCategory =
   createPaginatedHandler<ICategoryResponse>('the-loai');
+
+/**
+ * Creates a paginated handler for retrieving a list of films by category.
+ *
+ * This function uses the 'danh-sach' endpoint to fetch film data with pagination support.
+ *
+ * @returns A paginated handler function that returns a Promise of IFilmListResponse
+ *
+ * @example
+ * ```typescript
+ * // Getting the first page of films with 10 items per page
+ * const response = await getFilmListByCategory({ page: 1, limit: 10 });
+ *
+ * // Getting films with specific category
+ * const actionFilms = await getFilmListByCategory({
+ *   page: 1,
+ *   limit: 10,
+ *   category: 'phim-dang-chieu'
+ * });
+ * ```
+ */
+export const getFilmListByCategory =
+  createPaginatedHandler<IFilmListResponse>('danh-sach');

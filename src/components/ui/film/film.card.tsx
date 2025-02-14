@@ -8,7 +8,7 @@ import Link from 'next/link';
 /**
  * Import internal dependencies
  */
-import { IMovieBase } from '@/types/movie-list';
+import { TMovieItemShortened } from '@/types/movie-list';
 
 import { Card, CardContent } from '../card';
 
@@ -17,7 +17,7 @@ import { Card, CardContent } from '../card';
  * @interface IFilmCardProps
  * @extends {IMovieBase}
  */
-interface IFilmCardProps extends IMovieBase {
+interface IFilmCardProps extends TMovieItemShortened {
   /** Flag to set image loading priority */
   isPriority?: boolean;
 }

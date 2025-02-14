@@ -170,7 +170,7 @@ const BreadcrumbSkeleton = () => (
   </nav>
 );
 
-export default function CategoryLoading() {
+export default function FilmByYearLoading() {
   return (
     <div className="min-h-screen space-y-6 bg-background p-4">
       <BreadcrumbSkeleton />

@@ -1,19 +1,10 @@
-import { IBaseResponse } from './base-response';
-import { IMovieBase } from './movie-list';
+import { IMovieItemBase } from './base-movie-item';
+import { IResponseBase } from './base-response';
 
-export interface IMovieSearchListResponse extends IBaseResponse {
+export interface IMovieSearchListResponse extends IResponseBase {
   items: IMovieSearchItem[];
 }
 
-export interface IMovieSearchItem extends IMovieBase {
+export interface IMovieSearchItem extends IMovieItemBase {
   id: string;
-  created: string;
-  description: string;
-  total_episodes: number;
-  current_episode: string;
-  time: string | null;
-  quality: string;
-  language: string;
-  director: string | null;
-  casts: string | null;
 }

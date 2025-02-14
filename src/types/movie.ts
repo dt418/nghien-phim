@@ -1,25 +1,12 @@
+import { IMovieItemBase } from './base-movie-item';
+
 export interface IMovieResponse {
   status: boolean;
   movie: IMovie;
 }
 
-export interface IMovie {
+export interface IMovie extends IMovieItemBase {
   id: string;
-  name: string;
-  slug: string;
-  original_name: string;
-  thumb_url: string;
-  poster_url: string;
-  created: string;
-  modified: string;
-  description: string;
-  total_episodes: number;
-  current_episode: string;
-  time: string;
-  quality: string;
-  language: string;
-  director: string;
-  casts: string;
   category: IMovieCategory;
   episodes: IEpisode[];
 }
