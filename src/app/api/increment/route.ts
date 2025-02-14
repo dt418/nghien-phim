@@ -2,7 +2,7 @@ import { Redis } from '@upstash/redis';
 import { ipAddress } from '@vercel/functions';
 import { NextRequest, NextResponse } from 'next/server';
 
-export const runtime = 'edge'; // 'nodejs' (default) | 'edge'
+export const runtime = 'nodejs'; // 'nodejs' (default) | 'edge'
 
 const redis = Redis.fromEnv();
 

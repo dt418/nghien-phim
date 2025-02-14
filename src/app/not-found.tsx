@@ -6,7 +6,16 @@ import React from 'react';
 import { Button } from '@/components/ui/button';
 
 export const metadata: Metadata = {
-  title: '404: Page could not be found',
+  title: '404: Không tìm thấy trang',
+  description:
+    'Trang bạn đang tìm kiếm không tồn tại. Vui lòng kiểm tra lại hoặc quay lại trang chủ',
+  openGraph: {
+    title: '404: Không tìm thấy trang',
+    description:
+      'Trang bạn đang tìm kiếm không tồn tại. Vui lòng kiểm tra lại hoặc quay lại trang chủ',
+    type: 'website',
+    images: ['/opengraph-image.jpg'],
+  },
 };
 
 export default function NotFound() {

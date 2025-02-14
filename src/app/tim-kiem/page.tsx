@@ -1,7 +1,10 @@
+import type { Metadata, ResolvingMetadata } from 'next';
+
 import SearchBreadcrumb from '@/components/ui/search/search-breadcrumb';
 import SearchMovieTable from '@/components/ui/search/search-movie-table';
 import { Separator } from '@/components/ui/separator';
 import { searchFilms } from '@/lib/api';
+import config from '@/lib/config';
 import { IMovieSearchListResponse } from '@/types/search';
 
 type SearchPageProps = {
@@ -51,6 +54,26 @@ const SearchResults = ({
     </div>
   );
 };
+
+export async function generateMetadata(
+  { searchParams }: SearchPageProps,
+  parent: ResolvingMetadata
+): Promise<Metadata> {
+  const searchTerm = await getSearchTerm(searchParams);
+  const previousImages = (await parent).openGraph?.images || [];
+  const { items } = await searchFilms(searchTerm);
+
+  return {
+    title: `Tìm kiếm phim: ${searchTerm}`,
+    description: `Xem danh sách phim theo từ khóa ${searchTerm} online với phụ đề tiếng Việt`,
+    openGraph: {
+      title: `Tìm kiếm phim: ${searchTerm}`,
+      description: `Xem danh sách phim theo từ khóa ${searchTerm} online với phụ đề tiếng Việt`,
+      images: [String(items[0].poster_url), ...previousImages],
+      url: `${config.NEXT_PUBLIC_BASE_URL}/tim-kiem?keyword=${searchTerm}`,
+    },
+  };
+}
 
 /**
  * Main search page component

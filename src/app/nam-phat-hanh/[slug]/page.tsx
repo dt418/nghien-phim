@@ -7,6 +7,7 @@ import SearchMovieTable from '@/components/ui/search/search-movie-table';
 import { Separator } from '@/components/ui/separator';
 import { getFilmByYear } from '@/lib/api';
 import { APIError } from '@/lib/api/errors';
+import config from '@/lib/config';
 import { IMovieItemBase } from '@/types/base-movie-item';
 import { ICategory } from '@/types/category';
 import { TFilmByYearProps } from '@/types/film-by-year';
@@ -35,10 +36,9 @@ export async function generateMetadata(
     openGraph: {
       title: `Phim phát hành năm ${title}`,
       description: `Xem phim phát hành năm ${title} online với phụ đề tiếng Việt`,
-      images:
-        items.length > 0
-          ? [items[0].poster_url, ...previousImages]
-          : [...previousImages],
+      images: [String(items[0].poster_url), ...previousImages],
+      type: 'website',
+      url: `${config.NEXT_PUBLIC_BASE_URL}/nam-phat-hanh/${decodedCategory}`,
     },
   };
 }

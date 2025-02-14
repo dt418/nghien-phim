@@ -5,14 +5,12 @@ import { type PropsWithChildren } from 'react';
 
 import Footer from '@/components/partials/footer';
 import { Header } from '@/components/partials/header';
+import config from '@/lib/config';
 import { fontBeVietnamPro } from '@/lib/font';
 import { ThemeProvider } from '@/providers/theme';
 
-const BASE_URL =
-  process.env.NEXT_PUBLIC_BASE_URL ?? 'https://nghienphim.netlify.app';
-
 export const metadata: Metadata = {
-  metadataBase: new URL(BASE_URL),
+  metadataBase: new URL(config.NEXT_PUBLIC_BASE_URL),
   title: {
     template: '%s | nghienphim.netlify.app',
     default: 'Danh sách phim mới nhất | nghienphim.netlify.app',

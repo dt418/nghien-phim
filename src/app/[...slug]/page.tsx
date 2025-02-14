@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation';
 
-export const runtime = 'edge';
+export const runtime = 'nodejs';
 
 export default function CatchAll() {
   notFound();

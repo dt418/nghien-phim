@@ -7,6 +7,7 @@ import SearchMovieTable from '@/components/ui/search/search-movie-table';
 import { Separator } from '@/components/ui/separator';
 import { getFilmByCountry } from '@/lib/api';
 import { APIError } from '@/lib/api/errors';
+import config from '@/lib/config';
 import { IMovieItemBase } from '@/types/base-movie-item';
 import { ICategory } from '@/types/category';
 import { TFilmByCountryProps } from '@/types/film-by-country';
@@ -35,10 +36,9 @@ export async function generateMetadata(
     openGraph: {
       title: `Phim ${title}`,
       description: `Xem phim ${title} online với phụ đề tiếng Việt`,
-      images:
-        items.length > 0
-          ? [items[0].poster_url, ...previousImages]
-          : [...previousImages],
+      images: [String(items[0].poster_url), ...previousImages],
+      type: 'website',
+      url: `${config.NEXT_PUBLIC_BASE_URL}/quoc-gia/${decodedCategory}`,
     },
   };
 }
