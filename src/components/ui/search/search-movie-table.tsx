@@ -3,6 +3,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 
+import { isImageUrl } from '@/lib/stringUtils';
 import { formatDate, getFilmFormat } from '@/lib/utils';
 import { IMovieItemBase } from '@/types/base-movie-item';
 import { IMovieSearchItem } from '@/types/search';
@@ -41,7 +42,9 @@ const FilmTitleCell = <T extends IMovieSearchItem | IMovieItemBase>({
 }: FilmTitleCellProps<T>) => (
   <div className="flex flex-row items-center gap-4">
     <Image
-      src={film.poster_url}
+      src={
+        isImageUrl(film.poster_url) ? film.poster_url : '/film-placeholder.png'
+      }
       alt={film.original_name}
       width={80}
       height={120}

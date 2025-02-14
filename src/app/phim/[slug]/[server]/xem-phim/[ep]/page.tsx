@@ -15,7 +15,7 @@ import { notFound } from 'next/navigation';
 
 import { Button } from '@/components/ui/button';
 import { getFilmBySlug } from '@/lib/api';
-import { stringToSlug, textTruncate } from '@/lib/stringUtils';
+import { isImageUrl, stringToSlug, textTruncate } from '@/lib/stringUtils';
 import { cn } from '@/lib/utils';
 
 interface IFilmDetailParams {
@@ -100,7 +100,11 @@ export default async function FilmDetail({
     <div className="flex flex-col gap-4">
       <div className="flex flex-col gap-4 sm:flex-row">
         <Image
-          src={movie?.thumb_url}
+          src={
+            isImageUrl(movie?.thumb_url)
+              ? movie.thumb_url
+              : '/film-placeholder.png'
+          }
           alt={movie?.name}
           width={400}
           height={600}
@@ -169,11 +173,11 @@ export default async function FilmDetail({
         <div className="flex w-full flex-col">
           <h2 className="text-lg font-semibold">Xem phim</h2>
           <ul>
-            {movie.episodes.map((ep) => (
+            {movie?.episodes?.map((ep) => (
               <li key={ep?.server_name}>
                 <p>{ep?.server_name}</p>
                 <ul className="mt-2 grid grid-cols-4 gap-2 sm:grid-cols-8 md:grid-cols-12">
-                  {[...(ep?.items || [])]?.reverse()?.map((item) => (
+                  {[...(ep?.items || [])]?.toReversed()?.map((item) => (
                     <li key={item?.slug}>
                       <Button
                         asChild

@@ -16,7 +16,7 @@ import { notFound } from 'next/navigation';
 
 import { Button } from '@/components/ui/button';
 import { getFilmBySlug } from '@/lib/api';
-import { stringToSlug, textTruncate } from '@/lib/stringUtils';
+import { isImageUrl, stringToSlug, textTruncate } from '@/lib/stringUtils';
 import { IFilmDetailPageProps } from '@/types/movie';
 
 import { ReportView } from './view';
@@ -49,6 +49,7 @@ export async function generateMetadata(
         String(film?.movie?.poster_url ?? film?.movie?.thumb_url),
         ...previousImages,
       ],
+      type: 'website',
     },
     twitter: {
       description: textTruncate(String(film?.movie?.description)),
@@ -80,7 +81,11 @@ export default async function FilmDetail({
       <ReportView slug={movie?.slug} />
       <div className="flex flex-col gap-4 sm:flex-row">
         <Image
-          src={movie?.thumb_url}
+          src={
+            isImageUrl(movie?.thumb_url)
+              ? movie?.thumb_url
+              : '/film-placeholder.png'
+          }
           alt={movie?.name}
           width={400}
           height={600}

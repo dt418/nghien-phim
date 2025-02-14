@@ -5,6 +5,7 @@ import { PlayIcon } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 
+import { isImageUrl } from '@/lib/stringUtils';
 /**
  * Import internal dependencies
  */
@@ -46,7 +47,7 @@ export const FilmCard = ({
           <Image
             className="rounded-t-lg object-cover"
             alt={name || original_name}
-            src={thumb_url || fallbackImage}
+            src={isImageUrl(thumb_url) ? thumb_url : fallbackImage}
             fill
             priority={isPriority}
             sizes="(min-width: 1480px) 209px, (min-width: 780px) calc(15.15vw - 12px), (min-width: 640px) calc(33.33vw - 34px), calc(50vw - 44px)"

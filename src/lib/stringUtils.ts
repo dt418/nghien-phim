@@ -31,6 +31,37 @@ export function getURL(path: string) {
   return new URL(path, baseURL).toString();
 }
 
+/**
+ * Converts a string to a URL-friendly slug with Vietnamese language support.
+ * @param str - The input string to convert to a slug
+ * @returns A lowercase URL-friendly slug with Vietnamese characters converted to Latin equivalents
+ * @example
+ * ```typescript
+ * stringToSlug("Xin chào") // returns "xin-chao"
+ * ```
+ */
 export function stringToSlug(str: string) {
   return slugify(str, { locale: 'vi', lower: true });
+}
+
+/**
+ * Checks if a given URL string points to an image file
+ * @param url - The URL string to validate
+ * @returns `true` if the URL is valid and ends with an image extension, `false` otherwise
+ * @example
+ * ```typescript
+ * isImageUrl('https://example.com/image.jpg') // Returns: true
+ * isImageUrl('https://example.com/file.pdf') // Returns: false
+ * ```
+ */
+export function isImageUrl(url: string) {
+  try {
+    // Validate URL format
+    new URL(url);
+
+    // Check if the URL ends with an image extension
+    return /\.(jpg|jpeg|png|gif|webp|svg|bmp|tiff|ico)$/i.test(url);
+  } catch {
+    return false;
+  }
 }
