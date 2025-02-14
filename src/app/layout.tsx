@@ -17,11 +17,6 @@ export const metadata: Metadata = {
     template: '%s | nghienphim.netlify.app',
     default: 'Danh sách phim mới nhất | nghienphim.netlify.app',
   },
-  openGraph: {
-    siteName: 'nghienphim.netlify.app',
-    type: 'website',
-    url: BASE_URL,
-  },
   description:
     'Xem phim mới nhất miễn phí tại nghienphim.netlify.app | Web xem phim miễn phí tốc độ cao',
 };
