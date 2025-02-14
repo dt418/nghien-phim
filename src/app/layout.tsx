@@ -18,7 +18,6 @@ export const metadata: Metadata = {
     default: 'Danh sách phim mới nhất | nghienphim.netlify.app',
   },
   openGraph: {
-    images: `${BASE_URL}/opengraph-image.jpg`,
     siteName: 'nghienphim.netlify.app',
     type: 'website',
     url: BASE_URL,
