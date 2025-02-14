@@ -19,6 +19,9 @@ export const metadata: Metadata = {
   },
   openGraph: {
     images: `${BASE_URL}/opengraph-image.jpg`,
+    siteName: 'nghienphim.netlify.app',
+    type: 'website',
+    url: BASE_URL,
   },
   description:
     'Xem phim mới nhất miễn phí tại nghienphim.netlify.app | Web xem phim miễn phí tốc độ cao',
