@@ -1,4 +1,5 @@
 import { Redis } from '@upstash/redis';
+// import type { Metadata, ResolvingMetadata } from 'next';
 import { notFound } from 'next/navigation';
 
 import { FilmCarousel } from '@/components/ui/film/film.carousel';
@@ -12,6 +13,39 @@ import { THomePageProps } from '@/types/movie-list';
 const redis = Redis.fromEnv();
 
 export const revalidate = 0;
+
+// export async function generateMetadata(
+//   { searchParams }: THomePageProps,
+//   parent: ResolvingMetadata
+// ): Promise<Metadata> {
+//   const { page } = await searchParams;
+//   const pageParam =
+//     typeof page === 'string' && Number(page) > 0 ? Number(page) : 1;
+//   const { items } = await getFilms(pageParam);
+
+//   const previousImages = (await parent).openGraph?.images || [];
+//   return {
+//     openGraph: {
+//       title: 'Danh sách phim mới nhất | nghienphim.netlify.app',
+//       description:
+//         'Xem phim mới nhất miễn phí tại nghienphim.netlify.app | Web xem phim miễn phí tốc độ cao',
+//       url: 'https://nghienphim.netlify.app/',
+//       siteName: 'nghienphim.netlify.app',
+//       images: [
+//         items[0]?.poster_url ??
+//           'https://nghienphim.netlify.app/opengraph-image.jpg',
+//         {
+//           url: 'https://nghienphim.netlify.app/opengraph-image.jpg',
+//           width: 1200,
+//           height: 630,
+//           alt: 'nghienphim.netlify.app',
+//         },
+//         ...previousImages,
+//       ],
+//       type: 'website',
+//     },
+//   };
+// }
 
 export default async function Home({ searchParams }: Readonly<THomePageProps>) {
   const { page } = await searchParams;
