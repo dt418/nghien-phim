@@ -5,16 +5,9 @@ import SearchMovieTable from '@/components/ui/search/search-movie-table';
 import { Separator } from '@/components/ui/separator';
 import { searchFilms } from '@/lib/api';
 import config from '@/lib/config';
-import { IMovieSearchListResponse } from '@/types/search';
+import { TSearchPageProps, TSearchResultsProps } from '@/types/search';
 
-type SearchPageProps = {
-  searchParams: Promise<{ keyword: string | string[] }>;
-};
-
-type SearchResultsProps = {
-  searchTerm: string;
-  searchResult: Omit<IMovieSearchListResponse, 'status'>;
-};
+export const revalidate = 10;
 
 /**
  * Extracts and formats search term from search parameters
@@ -32,7 +25,7 @@ const getSearchTerm = async (
 const SearchResults = ({
   searchTerm,
   searchResult,
-}: Readonly<SearchResultsProps>) => {
+}: Readonly<TSearchResultsProps>) => {
   const {
     items,
     paginate: { current_page = 1 },
@@ -56,7 +49,7 @@ const SearchResults = ({
 };
 
 export async function generateMetadata(
-  { searchParams }: SearchPageProps,
+  { searchParams }: TSearchPageProps,
   parent: ResolvingMetadata
 ): Promise<Metadata> {
   const searchTerm = await getSearchTerm(searchParams);
@@ -81,7 +74,7 @@ export async function generateMetadata(
  */
 export default async function SearchPage({
   searchParams,
-}: Readonly<SearchPageProps>) {
+}: Readonly<TSearchPageProps>) {
   const searchTerm = await getSearchTerm(searchParams);
 
   if (!searchTerm) {

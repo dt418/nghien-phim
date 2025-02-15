@@ -8,3 +8,12 @@ export interface IMovieSearchListResponse extends IResponseBase {
 export interface IMovieSearchItem extends IMovieItemBase {
   id: string;
 }
+
+export type TSearchPageProps = {
+  searchParams: Promise<{ keyword: string | string[] }>;
+};
+
+export type TSearchResultsProps = {
+  searchTerm: string;
+  searchResult: Omit<IMovieSearchListResponse, 'status'>;
+};

@@ -1,3 +1,5 @@
+'server only';
+
 import { Redis } from '@upstash/redis';
 import { ipAddress } from '@vercel/functions';
 import { NextRequest, NextResponse } from 'next/server';
