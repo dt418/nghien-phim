@@ -1,29 +1,23 @@
 import { Redis } from '@upstash/redis';
-import {
-  CalendarDays,
-  Check,
-  Clock,
-  GalleryVerticalEnd,
-  Globe,
-  LibraryBig,
-  Monitor,
-  UsersRound,
-} from 'lucide-react';
-import { type Metadata, type ResolvingMetadata } from 'next';
+import { PlayCircle, UsersRound } from 'lucide-react';
+import type { Metadata, ResolvingMetadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
 import { Button } from '@/components/ui/button';
+import { MovieStats } from '@/components/ui/film/film.stats';
+import { Separator } from '@/components/ui/separator';
+import { getMovieStats } from '@/config';
 import { getFilmBySlug } from '@/lib/api';
 import { isImageUrl, stringToSlug, textTruncate } from '@/lib/stringUtils';
-import { IFilmDetailPageProps } from '@/types/movie';
-
-import { ReportView } from './view';
+import type { IFilmDetailPageProps } from '@/types/movie';
 
 const redis = Redis.fromEnv();
 
 export const revalidate = 10;
+
+// Keeping the existing generateMetadata function...
 // generate meta data
 export async function generateMetadata(
   { params }: IFilmDetailPageProps,
@@ -59,6 +53,7 @@ export async function generateMetadata(
     },
   };
 }
+
 export default async function FilmDetail({
   params,
 }: Readonly<IFilmDetailPageProps>) {
@@ -75,102 +70,115 @@ export default async function FilmDetail({
     (await redis.get<number>(['pageviews', 'films', slug].join(':'))) ?? 0;
 
   const { movie } = res;
+  const movieStats = getMovieStats(movie);
+
   return (
-    <div className="flex flex-col gap-4">
-      <ReportView slug={movie?.slug} />
-      <div className="flex flex-col gap-4 sm:flex-row">
+    <div className="min-h-screen bg-black/95">
+      {/* Hero Section */}
+      <div className="relative h-[60vh] w-full">
         <Image
           src={
-            isImageUrl(movie?.thumb_url)
-              ? movie?.thumb_url
+            isImageUrl(movie?.poster_url)
+              ? movie?.poster_url
               : '/film-placeholder.png'
           }
           alt={movie?.name}
-          width={400}
-          height={600}
-          className="flex aspect-[2/3] w-full rounded-lg object-cover md:w-1/4"
+          fill
+          className="object-cover opacity-35"
+          priority
         />
-        <div className="detail flex w-full flex-col md:w-auto">
-          <h1 className="text-lg font-bold">{movie?.name}</h1>
-          <div className="flex flex-col">
-            <div className="inline-flex gap-2 text-sm font-normal">
-              <UsersRound className="h-4 w-4 flex-shrink-0" />
-              Lượt xem:{' '}
-              {Intl.NumberFormat('vi-VN', { notation: 'compact' }).format(
-                views
-              ) ?? 'Đang cập nhật'}
-            </div>
-            <div className="inline-flex gap-2 text-sm font-normal">
-              <UsersRound className="h-4 w-4 flex-shrink-0" />
-              Diễn viên: {movie?.casts ?? 'Đang cập nhật'}
-            </div>
-            <div className="inline-flex gap-2 text-sm font-normal">
-              <GalleryVerticalEnd className="h-4 w-4 flex-shrink-0" />
-              Số tập: {movie?.total_episodes ?? 'Đang cập nhật'}
-            </div>
-            <div className="inline-flex gap-2 text-sm font-normal">
-              <Check className="h-4 w-4 flex-shrink-0" />
-              Trạng thái: {movie?.current_episode ?? 'Đang cập nhật'}
-            </div>
-            <div className="inline-flex gap-2 text-sm font-normal">
-              <Clock className="h-4 w-4 flex-shrink-0" />
-              Thời lượng: {movie?.time ?? 'Đang cập nhật'}
-            </div>
-            <div className="inline-flex gap-2 text-sm font-normal">
-              <CalendarDays className="h-4 w-4 flex-shrink-0" /> Năm phát hành:{' '}
-              {movie?.category[3]?.list?.map((item) => item.name).join(', ') ??
-                'Đang cập nhật'}
-            </div>
-            <div className="inline-flex gap-2 text-sm font-normal">
-              <Monitor className="h-4 w-4 flex-shrink-0" /> Chất lượng:{' '}
-              {movie?.quality ?? 'Đang cập nhật'}
-            </div>
-            <div className="inline-flex gap-2 text-sm font-normal">
-              <LibraryBig className="h-4 w-4 flex-shrink-0" />
-              Thể loại:{' '}
-              {movie?.category[2]?.list?.map((item) => item?.name).join(', ') ??
-                'Đang cập nhật'}
-            </div>
-            <div className="inline-flex gap-2 text-sm font-normal">
-              <Globe className="h-4 w-4 flex-shrink-0" /> Quốc gia:{' '}
-              {movie?.category[4]?.list.map((ct) => ct?.name).join(', ') ??
-                'Đang cập nhật'}
-            </div>
+        <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent" />
+      </div>
+
+      {/* Content Section */}
+      <div className="relative z-10 mx-auto -mt-48 max-w-7xl px-4">
+        <div className="grid gap-8 md:grid-cols-[300px,1fr] lg:gap-12">
+          {/* Poster */}
+          <div className="relative aspect-[2/3] overflow-hidden rounded-xl">
+            <Image
+              src={
+                isImageUrl(movie?.thumb_url)
+                  ? movie?.thumb_url
+                  : '/film-placeholder.png'
+              }
+              alt={movie?.name}
+              fill
+              className="object-cover"
+              priority
+            />
           </div>
-          <div className="mt-4 flex w-full flex-col gap-2 md:w-auto">
-            <h2 className="text-lg font-semibold">Nội dung phim</h2>
-            <div
-              className="text text-sm font-normal"
-              dangerouslySetInnerHTML={{ __html: movie?.description }}
-            ></div>
+
+          {/* Details */}
+          <div className="space-y-6">
+            {/* Title and Views - Keep Existing */}
+            <div>
+              <h1 className="text-2xl font-bold text-white md:text-4xl lg:text-5xl">
+                {movie?.name}
+              </h1>
+              <div className="mt-4 flex items-center gap-4 text-gray-400">
+                <div className="flex items-center gap-2">
+                  <UsersRound className="h-4 w-4" />
+                  {Intl.NumberFormat('vi-VN', { notation: 'compact' }).format(
+                    views
+                  )}{' '}
+                  lượt xem
+                </div>
+                {movie?.quality && (
+                  <div className="rounded-full bg-primary/20 px-3 py-1 text-sm text-primary">
+                    {movie.quality}
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* Stats Grid */}
+            <MovieStats stats={movieStats} />
+            <Separator />
+            {/* Description */}
+            <div className="space-y-3">
+              <h2 className="text-xl font-semibold text-white">Diễn viên</h2>
+              <p className="leading-relaxed text-gray-300">{movie?.casts}</p>
+              <h2 className="text-xl font-semibold text-white">
+                Nội dung phim
+              </h2>
+              <div
+                className="leading-relaxed text-gray-300"
+                dangerouslySetInnerHTML={{ __html: movie?.description }}
+              />
+            </div>
           </div>
         </div>
-      </div>
-      <div className="mt-4 flex flex-col gap-4 md:flex-row">
-        <div className="flex w-full flex-col">
-          <h2 className="text-lg font-semibold">Xem phim</h2>
-          <ul>
+
+        {/* Episodes Section */}
+        <div className="mt-12">
+          <h2 className="mb-6 text-2xl font-bold text-white">Xem phim</h2>
+          <div className="space-y-8">
             {movie?.episodes?.map((ep) => (
-              <li key={ep.server_name}>
-                <p>{ep?.server_name}</p>
-                <ul className="mt-2 grid grid-cols-4 gap-2 sm:grid-cols-8 md:grid-cols-12">
+              <div key={ep.server_name} className="space-y-4">
+                <h3 className="text-lg font-semibold text-gray-300">
+                  {ep?.server_name}
+                </h3>
+                <div className="grid grid-cols-4 gap-2 sm:grid-cols-8 md:grid-cols-12">
                   {ep?.items?.toReversed()?.map((item) => (
-                    <li key={item.slug}>
-                      <Button asChild variant="ghost" className="w-full">
-                        <Link
-                          href={`/phim/${movie?.slug}/${stringToSlug(
-                            ep?.server_name
-                          )}/xem-phim/${item?.slug}`}
-                        >
-                          {item?.name}
-                        </Link>
-                      </Button>
-                    </li>
+                    <Button
+                      key={item.slug}
+                      variant="secondary"
+                      asChild
+                      className="w-full transition-colors hover:bg-primary hover:text-primary-foreground"
+                    >
+                      <Link
+                        href={`/phim/${movie?.slug}/${stringToSlug(ep?.server_name)}/xem-phim/${item?.slug}`}
+                        className="flex items-center justify-center gap-2"
+                      >
+                        <PlayCircle className="h-4 w-4 shrink-0" />
+                        {item?.name}
+                      </Link>
+                    </Button>
                   ))}
-                </ul>
-              </li>
+                </div>
+              </div>
             ))}
-          </ul>
+          </div>
         </div>
       </div>
     </div>
