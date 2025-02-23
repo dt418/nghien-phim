@@ -10,7 +10,7 @@
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "format": "prettier --write .",
-    "prepare": "husky",
+    "prepare": "lefthook install",
     "lint-staged": "lint-staged"
   },
   "lint-staged": {
@@ -75,6 +75,7 @@
     "eslint-plugin-simple-import-sort": "^12.1.1",
     "globals": "^15.14.0",
     "husky": "^9.1.7",
+    "lefthook": "^1.10.11",
     "lint-staged": "^15.3.0",
     "postcss": "^8.4.47",
     "prettier": "^3.4.2",
@@ -85,6 +86,7 @@
   "packageManager": "pnpm@10.3.0+sha512.ee592eda8815a8a293c206bb0917c4bb0ff274c50def7cbc17be05ec641fc2d1b02490ce660061356bd0d126a4d7eb2ec8830e6959fb8a447571c631d5a2442d",
   "pnpm": {
     "onlyBuiltDependencies": [
+      "lefthook",
       "sharp"
     ]
   }
