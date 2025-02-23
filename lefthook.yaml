@@ -7,6 +7,9 @@ pre-commit:
     format:
       glob: '*.{js,jsx,ts,tsx,md,mdx,html,css,scss,json,yml,yaml}'
       run: pnpm prettier {staged_files} --write
+    typecheck:
+      glob: '*.{ts,tsx}'
+      run: pnpm tsc --pretty --noEmit
     build:
       run: pnpm build
 
