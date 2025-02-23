@@ -1,7 +1,9 @@
+import { Menu } from 'lucide-react';
 import Link from 'next/link';
 import * as React from 'react';
 import { Suspense } from 'react';
 
+import { Button } from '@/components/ui/button';
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -10,6 +12,14 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from '@/components/ui/navigation-menu';
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetTitle,
+  SheetTrigger,
+} from '@/components/ui/sheet';
+import { VisuallyHidden } from '@/components/ui/visually-hidden';
 import { menuItems } from '@/config';
 import { cn } from '@/lib/utils';
 import { MenuItem } from '@/types/menu';
@@ -25,7 +35,8 @@ import SearchBar from '../ui/header/search-bar';
  */
 const Logo = () => (
   <Link href="/" className="text-gradient text-2xl font-bold uppercase">
-    <span>Nghiện Phim</span>
+    <span className="hidden lg:inline">Nghiện Phim</span>
+    <span className="inline lg:hidden">NP</span>
   </Link>
 );
 
@@ -84,10 +95,53 @@ ListItem.displayName = 'ListItem';
  */
 const DropdownContent = ({ items }: { items: MenuItem[] }) => (
   <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-3 lg:w-[600px]">
-    {items.map((child) => (
+    {items.map((child: MenuItem) => (
       <ListItem key={child.href} title={child.label} href={child.href} />
     ))}
   </ul>
+);
+
+/**
+ * Mobile menu component that renders menu items in a slide-out sheet
+ */
+const MobileMenu = () => (
+  <Sheet>
+    <SheetTrigger asChild>
+      <Button variant="ghost" size="icon" className="xl:hidden">
+        <Menu className="h-6 w-6" />
+      </Button>
+    </SheetTrigger>
+    <SheetContent side="right">
+      <VisuallyHidden>
+        <SheetTitle className="sr-only">Menu</SheetTitle>
+        <SheetDescription className="sr-only">
+          This is mobile menu that contains all the navigation links
+        </SheetDescription>
+      </VisuallyHidden>
+      <nav className="scrollbar-thin flex max-h-full flex-col space-y-4 overflow-y-scroll">
+        {menuItems.map((item) => (
+          <div key={item.href}>
+            <Link href={item.href} className="text-lg font-medium">
+              {item.label}
+            </Link>
+            {item.children && (
+              <div className="ml-4 mt-2 flex flex-col space-y-2">
+                {item.children.map((child) => (
+                  <Link
+                    key={child.href}
+                    href={child.href}
+                    className="text-sm text-muted-foreground"
+                  >
+                    {child.label}
+                  </Link>
+                ))}
+              </div>
+            )}
+          </div>
+        ))}
+      </nav>
+    </SheetContent>
+  </Sheet>
 );
 
 /**
@@ -125,7 +179,7 @@ const NavigationMenuItems = ({ item }: { item: MenuItem }) => {
  * Hidden on mobile, visible on large screens
  */
 const Navigation = () => (
-  <NavigationMenu className="hidden lg:block">
+  <NavigationMenu className="hidden xl:block">
     <NavigationMenuList className="flex items-center gap-2">
       {menuItems.map((item) => (
         <NavigationMenuItem
@@ -144,14 +198,17 @@ const Navigation = () => (
  * Handles responsive layout and positioning of logo, navigation and search
  */
 const HeaderContent = () => (
-  <div className="container flex flex-col flex-wrap justify-between gap-2 py-4 md:flex-row">
-    <Logo />
-    <section className="flex flex-1 flex-row items-start justify-end gap-2">
+  <div className="container flex items-center justify-between gap-4 py-4">
+    <div className="flex items-center gap-2">
+      <Logo />
+    </div>
+    <div className="flex flex-1 items-center justify-end gap-2">
       <Navigation />
-      <Suspense>
+      <Suspense fallback={<div>Loading...</div>}>
         <SearchBar />
       </Suspense>
-    </section>
+      <MobileMenu />
+    </div>
   </div>
 );
 

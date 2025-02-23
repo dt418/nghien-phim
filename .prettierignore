@@ -1,0 +1,52 @@
+# Dependencies
+node_modules
+package-lock.json
+pnpm-lock.yaml
+bun.lockb
+yarn.lock
+
+# Build output
+dist
+build
+.next
+out
+
+# Coverage reports
+coverage
+# husky
+.husky
+
+# Environment files
+.env*
+
+# Misc
+.DS_Store
+*.log
+
+# Cache
+.cache
+.npm
+.eslintcache
+.prettierrc
+
+#ignore
+.prettierignore
+.stylelintignore
+.eslintignore
+# IDE
+.idea
+.vscode
+
+#Storybook
+stories
+storybook-static
+
+#playwright
+playwright-report
+
+#test
+test-results
+junit.xml
+
+#docs
+docs

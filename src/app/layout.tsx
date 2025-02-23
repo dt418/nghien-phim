@@ -7,6 +7,7 @@ import Footer from '@/components/partials/footer';
 import { Header } from '@/components/partials/header';
 import config from '@/lib/config';
 import { fontBeVietnamPro } from '@/lib/font';
+import { cn } from '@/lib/utils';
 import { ThemeProvider } from '@/providers/theme';
 
 export const metadata: Metadata = {
@@ -21,8 +22,12 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: Readonly<PropsWithChildren>) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body className={fontBeVietnamPro.variable}>
+    <html
+      lang="en"
+      suppressHydrationWarning
+      className="scrollbar-thumb-rounded-full scrollbar-track-rounded-full dark:scrollbar-thumb-rounded-full dark:scrollbar-track-rounded-full scrollbar-track-secondary scrollbar-thumb-secondary-foreground dark:scrollbar-track-secondary dark:scrollbar-thumb-secondary-foreground"
+    >
+      <body className={cn(fontBeVietnamPro)}>
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"

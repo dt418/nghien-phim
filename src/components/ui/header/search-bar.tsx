@@ -17,7 +17,7 @@ const SEARCH_PATH = '/tim-kiem';
 const searchBarVariants = cva('relative inline-flex w-full flex-row gap-2', {
   variants: {
     size: {
-      default: 'md:w-80', // Default width on medium screens and up
+      default: 'lg:w-2/3 xl:w-80', // Default width on medium screens and up
     },
   },
   defaultVariants: {
