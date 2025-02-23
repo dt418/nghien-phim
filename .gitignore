@@ -1,7 +1,5 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
-
 # dependencies
-/node_modules
+/node_modules/
 /.pnp
 .pnp.js
 .yarn/install-state.gz
@@ -11,6 +9,7 @@
 
 # next.js
 /.next/
+/next/cache/
 /out/
 
 # production
@@ -26,9 +25,7 @@ yarn-debug.log*
 yarn-error.log*
 
 # local env files
-.env*.local
 .env.*
-.env
 !.env.example
 
 # vercel
@@ -37,4 +34,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
-nul
+tsconfig.tsbuildinfo
+
+# caching & tool-specific
+.turbo/
+.swc/
+.eslintcache
