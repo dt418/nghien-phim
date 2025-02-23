@@ -81,3 +81,18 @@ export const menuItems: MenuItems = [
 ];
 
 export default menuItems;
+
+export const findHrefByLabel = (label: string): string | undefined => {
+  const searchInItems = (items: MenuItems): string | undefined => {
+    for (const item of items) {
+      if (item.label === label) return item.href;
+      if (item.children) {
+        const found = searchInItems(item.children);
+        if (found) return found;
+      }
+    }
+    return undefined;
+  };
+
+  return searchInItems(menuItems);
+};

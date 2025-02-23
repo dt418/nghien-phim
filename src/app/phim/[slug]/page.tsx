@@ -11,6 +11,7 @@ import { Separator } from '@/components/ui/separator';
 import { getMovieStats } from '@/config';
 import { getFilmBySlug } from '@/lib/api';
 import { isImageUrl, stringToSlug, textTruncate } from '@/lib/stringUtils';
+import { sanitizedHtml } from '@/lib/utils';
 import type { IFilmDetailPageProps } from '@/types/movie';
 
 const redis = Redis.fromEnv();
@@ -143,7 +144,9 @@ export default async function FilmDetail({
               </h2>
               <div
                 className="leading-relaxed text-gray-300"
-                dangerouslySetInnerHTML={{ __html: movie?.description }}
+                dangerouslySetInnerHTML={{
+                  __html: sanitizedHtml(movie?.description),
+                }}
               />
             </div>
           </div>

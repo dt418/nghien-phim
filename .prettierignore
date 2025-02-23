@@ -8,7 +8,6 @@ yarn.lock
 # Build output
 dist
 build
-.next
 out
 
 # Coverage reports

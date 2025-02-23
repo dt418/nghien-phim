@@ -16,7 +16,7 @@ import { notFound } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { getFilmBySlug } from '@/lib/api';
 import { isImageUrl, stringToSlug, textTruncate } from '@/lib/stringUtils';
-import { cn } from '@/lib/utils';
+import { cn, sanitizedHtml } from '@/lib/utils';
 
 interface IFilmDetailParams {
   params: Promise<{
@@ -154,7 +154,9 @@ export default async function FilmDetail({
             <h2 className="text-lg font-semibold">Nội dung phim</h2>
             <div
               className="text-sm font-normal"
-              dangerouslySetInnerHTML={{ __html: movie?.description }}
+              dangerouslySetInnerHTML={{
+                __html: sanitizedHtml(movie?.description),
+              }}
             ></div>
           </div>
         </div>

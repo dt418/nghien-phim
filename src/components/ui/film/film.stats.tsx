@@ -24,8 +24,8 @@ interface IMovieStatsProps {
 export function MovieStats({ stats }: IMovieStatsProps) {
   return (
     <div className="grid gap-4 text-gray-300 sm:grid-cols-2">
-      {stats.map((stat, index) => (
-        <MovieStat key={index} {...stat} />
+      {stats.map((stat) => (
+        <MovieStat key={crypto.randomUUID()} {...stat} />
       ))}
     </div>
   );

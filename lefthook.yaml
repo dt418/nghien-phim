@@ -3,13 +3,10 @@ pre-commit:
   commands:
     lint:
       glob: '*.{js,jsx,ts,tsx}'
-      run: pnpm eslint {staged_files}
+      run: pnpm eslint . --fix
     format:
-      glob: '*.{js,jsx,ts,tsx,css,scss,md,json}'
-      run: pnpm prettier --write {staged_files}
-    types:
-      glob: '*.{js,jsx,ts,tsx}'
-      run: pnpm tsc --noEmit
+      glob: '*.{js,jsx,ts,tsx,md,mdx,html,css,scss,json,yml}'
+      run: pnpm prettier . --write
     build:
       run: pnpm build
 
