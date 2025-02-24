@@ -10,7 +10,6 @@
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "format": "prettier --write .",
-    "prepare": "lefthook install",
     "lint-staged": "lint-staged"
   },
   "lint-staged": {
