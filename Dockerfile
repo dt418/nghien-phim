@@ -1,54 +1,89 @@
-# The base image (use Debian-based image for compatibility)
-FROM oven/bun:1.1.2 AS base
+# Stage 1. Rebuild the source code only when needed
+FROM node:22-alpine AS base
 
-# The "dependencies" stage
+# Stage 2. Install dependencies
 FROM base AS deps
 
-# The application directory
+WORKDIR /app
+# Install dependencies based on the preferred package manager
+COPY package.json yarn.lock* package-lock.json* pnpm-lock.yaml* .npmrc* ./
+# Omit --production flag for TypeScript devDependencies
+RUN \
+  if [ -f yarn.lock ]; then yarn --frozen-lockfile; \
+  elif [ -f package-lock.json ]; then npm ci; \
+  elif [ -f pnpm-lock.yaml ]; then corepack enable && pnpm i --frozen-lockfile; \
+  # Allow install without lockfile, so example works even without Node.js installed locally
+  else echo "Warning: Lockfile not found. It is recommended to commit lockfiles to version control." && yarn install; \
+  fi
+
+# Stage 3. Build the source code
+FROM base AS builder
+
 WORKDIR /app
 
-# Copy only package management files to install dependencies
-COPY package.json ./
-
-# Install dependencies, including devDependencies
-RUN bun install --no-cache --dev
-
-# Copy all
+COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
-# The final image
-FROM base AS production
+# Environment variables must be present at build time
+# https://github.com/vercel/next.js/discussions/14030
+ARG UPSTASH_REDIS_REST_URL
+ENV UPSTASH_REDIS_REST_URL=${UPSTASH_REDIS_REST_URL}
+ARG UPSTASH_REDIS_REST_TOKEN
+ENV UPSTASH_REDIS_REST_TOKEN=${UPSTASH_REDIS_REST_TOKEN}
+ARG CLOUDINARY_CLOUD_NAME
+ENV CLOUDINARY_CLOUD_NAME=${CLOUDINARY_CLOUD_NAME}
+ARG NEXT_PUBLIC_BASE_URL
+ENV NEXT_PUBLIC_BASE_URL=${NEXT_PUBLIC_BASE_URL}
+ARG NODE_ENV
+ENV NODE_ENV=production
+# Next.js collects completely anonymous telemetry data about general usage. Learn more here: https://nextjs.org/telemetry
+# Uncomment the following line to disable telemetry at build time
+# ENV NEXT_TELEMETRY_DISABLED 1
 
-# Create a group and a non-root user to run the app
-RUN groupadd --gid 1001 "nodejs" \
-    && useradd --uid 1001 --create-home --shell /bin/bash --groups "nodejs" "nextjs"
+# Build Next.js based on the preferred package manager
+RUN \
+  if [ -f yarn.lock ]; then yarn build; \
+  elif [ -f package-lock.json ]; then npm run build; \
+  elif [ -f pnpm-lock.yaml ]; then corepack enable && pnpm build; \
+  else yarn build; \
+  fi
 
-# The application directory
+# Step 3. Production image, copy all the files and run next
+FROM base AS runner
+
 WORKDIR /app
 
-# Ensure the .next directory exists
-RUN mkdir -p /app/.next && chown -R nextjs:nodejs /app
+# Environment variables must be redefined at run time
+ARG UPSTASH_REDIS_REST_URL
+ENV UPSTASH_REDIS_REST_URL=${UPSTASH_REDIS_REST_URL}
+ARG UPSTASH_REDIS_REST_TOKEN
+ENV UPSTASH_REDIS_REST_TOKEN=${UPSTASH_REDIS_REST_TOKEN}
+ARG CLOUDINARY_CLOUD_NAME
+ENV CLOUDINARY_CLOUD_NAME=${CLOUDINARY_CLOUD_NAME}
+ARG NEXT_PUBLIC_BASE_URL
+ENV NEXT_PUBLIC_BASE_URL=${NEXT_PUBLIC_BASE_URL}
+ARG NODE_ENV
+ENV NODE_ENV=production
+# Uncomment the following line to disable telemetry at run time
+ENV NEXT_TELEMETRY_DISABLED 1
 
-# Copy only the node_modules from the deps stage (to cache dependencies)
-COPY --from=deps /app/node_modules /app/node_modules
+# Don't run production as root
+RUN addgroup --system --gid 1001 nodejs
+RUN adduser --system --uid 1001 nextjs
 
-# Copy the rest of the application files
-COPY --chown=nextjs:nodejs . .
+RUN mkdir .next
+RUN chown nextjs:nodejs .next
 
-# Enable development mode
-ENV NODE_ENV=development
-
-# Disable Next.js telemetry
-ENV NEXT_TELEMETRY_DISABLED=1
-
-# Configure application port
-ENV PORT=3000
-
-# Expose the port the app will listen on
-EXPOSE 3000
-
-# Change the user
 USER nextjs
 
-# Run the app in development mode
-CMD ["bun", "run", "next", "dev"]
+# Automatically leverage output traces to reduce image size
+# https://nextjs.org/docs/advanced-features/output-file-tracing
+COPY --from=builder /app/public ./public
+COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
+COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+
+
+# Note: Don't expose ports here, Compose will handle that for us
+
+# We can use the node process itself here
+CMD ["node", "server.js"]

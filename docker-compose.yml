@@ -1,17 +1,31 @@
-version: '3.8'
 services:
-  app:
+  nghien-phim:
+    container_name: nghien-phim
     build:
       context: .
       dockerfile: Dockerfile
-      target: deps # Build from the 'deps' stage for development
-    ports:
-      - '3000:3000' # Map port 3000 on the host to port 3000 in the container
+      args:
+        - UPSTASH_REDIS_REST_URL=${UPSTASH_REDIS_REST_URL}
+        - UPSTASH_REDIS_REST_TOKEN=${UPSTASH_REDIS_REST_TOKEN}
+        - CLOUDINARY_CLOUD_NAME=${CLOUDINARY_CLOUD_NAME}
+        - NEXT_PUBLIC_BASE_URL=${NEXT_PUBLIC_BASE_URL}
+        - NODE_ENV=production
+    env_file:
+      - .env
     environment:
-      NODE_ENV: development
-      NEXT_TELEMETRY_DISABLED: 1
-      PORT: 3000
-    volumes:
-      - .:/app # Mount the current directory into the /app directory in the container
-      - /app/node_modules # Prevents overriding node_modules in the container
-    command: ['bun', 'run', 'next', 'dev'] # Override CMD to ensure it runs in dev mode
+      - UPSTASH_REDIS_REST_URL=${UPSTASH_REDIS_REST_URL:?UPSTASH_REDIS_REST_URL is required}
+      - UPSTASH_REDIS_REST_TOKEN=${UPSTASH_REDIS_REST_TOKEN:?UPSTASH_REDIS_REST_TOKEN is required}
+      - CLOUDINARY_CLOUD_NAME=${CLOUDINARY_CLOUD_NAME:?CLOUDINARY_CLOUD_NAME is required}
+      - NEXT_PUBLIC_BASE_URL=${NEXT_PUBLIC_BASE_URL:?NEXT_PUBLIC_BASE_URL is required}
+      - NODE_ENV=production
+    restart: unless-stopped
+    ports:
+      - '3000:3000'
+    networks:
+      - nghien_phim_network
+    extra_hosts:
+      - 'host.docker.internal:host-gateway'
+
+networks:
+  nghien_phim_network:
+    driver: bridge
