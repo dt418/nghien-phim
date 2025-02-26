@@ -35,7 +35,9 @@ ENV CLOUDINARY_CLOUD_NAME=${CLOUDINARY_CLOUD_NAME}
 ARG NEXT_PUBLIC_BASE_URL
 ENV NEXT_PUBLIC_BASE_URL=${NEXT_PUBLIC_BASE_URL}
 ARG NODE_ENV
-ENV NODE_ENV=production
+ENV NODE_ENV=${NODE_ENV:-production}
+ARG HOST_NAME
+ENV HOST_NAME=${HOST_NAME:-0.0.0.0}
 # Next.js collects completely anonymous telemetry data about general usage. Learn more here: https://nextjs.org/telemetry
 # Uncomment the following line to disable telemetry at build time
 # ENV NEXT_TELEMETRY_DISABLED 1
@@ -63,7 +65,10 @@ ENV CLOUDINARY_CLOUD_NAME=${CLOUDINARY_CLOUD_NAME}
 ARG NEXT_PUBLIC_BASE_URL
 ENV NEXT_PUBLIC_BASE_URL=${NEXT_PUBLIC_BASE_URL}
 ARG NODE_ENV
-ENV NODE_ENV=production
+ENV NODE_ENV=${NODE_ENV:-production}
+ARG HOST_NAME
+ENV HOST_NAME=${HOST_NAME:-0.0.0.0}
+
 # Uncomment the following line to disable telemetry at run time
 ENV NEXT_TELEMETRY_DISABLED 1
 
@@ -71,7 +76,7 @@ ENV NEXT_TELEMETRY_DISABLED 1
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
 
-RUN mkdir .next
+RUN mkdir -p .next
 RUN chown nextjs:nodejs .next
 
 USER nextjs
