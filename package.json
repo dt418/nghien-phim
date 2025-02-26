@@ -82,11 +82,12 @@
     "tailwindcss": "^3.4.14",
     "typescript": "^5.6.3"
   },
-  "packageManager": "pnpm@10.3.0+sha512.ee592eda8815a8a293c206bb0917c4bb0ff274c50def7cbc17be05ec641fc2d1b02490ce660061356bd0d126a4d7eb2ec8830e6959fb8a447571c631d5a2442d",
+  "packageManager": "pnpm@10.5.0+sha512.11106a5916c7406fe4b8cb8e3067974b8728f47308a4f5ac5e850304afa6f57e2847d7950dfe78877d8d36bfb401d381c4215db3a4c3547ffa63c14333a6fa51",
   "pnpm": {
     "onlyBuiltDependencies": [
       "lefthook",
       "sharp"
-    ]
+    ],
+    "overrides": {}
   }
 }
