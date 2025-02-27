@@ -29,7 +29,9 @@ jobs:
             --build-arg UPSTASH_REDIS_REST_URL=${{ secrets.UPSTASH_REDIS_REST_URL }}
 
       - name: Log in to Docker Hub
-        run: echo "${{ secrets.DOCKER_HUB_TOKEN }}" | docker login -u danhthanh418 --password-stdin
+        env:
+          DOCKER_HUB_TOKEN: ${{ secrets.DOCKER_HUB_TOKEN }}
+        run: docker login -u danhthanh418 -p "$DOCKER_HUB_TOKEN"
 
       - name: Push image to Docker Hub
         run: docker push danhthanh418/nghien-phim:$IMAGE_TAG
