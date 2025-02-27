@@ -1,23 +1,29 @@
 # Stage 1. Rebuild the source code only when needed
 FROM node:22-alpine AS base
+LABEL author="danhthanh418"
+
 
 # Stage 2. Install dependencies
 FROM base AS deps
+LABEL author="danhthanh418"
+
+# Check https://github.com/nodejs/docker-node/tree/b4117f9333da4138b03a546ec926ef50a31506c3#nodealpine to understand why libc6-compat might be needed.
+RUN apk add --no-cache libc6-compat
 
 WORKDIR /app
 # Install dependencies based on the preferred package manager
 COPY package.json yarn.lock* package-lock.json* pnpm-lock.yaml* .npmrc* ./
-# Omit --production flag for TypeScript devDependencies
+
 RUN \
   if [ -f yarn.lock ]; then yarn --frozen-lockfile; \
   elif [ -f package-lock.json ]; then npm ci; \
-  elif [ -f pnpm-lock.yaml ]; then corepack enable && pnpm i --frozen-lockfile; \
-  # Allow install without lockfile, so example works even without Node.js installed locally
-  else echo "Warning: Lockfile not found. It is recommended to commit lockfiles to version control." && yarn install; \
+  elif [ -f pnpm-lock.yaml ]; then corepack enable pnpm && pnpm i --frozen-lockfile; \
+  else echo "Lockfile not found." && exit 1; \
   fi
 
 # Stage 3. Build the source code
 FROM base AS builder
+LABEL author="danhthanh418"
 
 WORKDIR /app
 
@@ -44,14 +50,16 @@ ENV HOST_NAME=${HOST_NAME:-0.0.0.0}
 
 # Build Next.js based on the preferred package manager
 RUN \
-  if [ -f yarn.lock ]; then yarn build; \
+  if [ -f yarn.lock ]; then yarn run build; \
   elif [ -f package-lock.json ]; then npm run build; \
-  elif [ -f pnpm-lock.yaml ]; then corepack enable && pnpm build; \
-  else yarn build; \
+  elif [ -f pnpm-lock.yaml ]; then corepack enable pnpm && pnpm run build; \
+  else echo "Lockfile not found." && exit 1; \
   fi
 
 # Step 3. Production image, copy all the files and run next
 FROM base AS runner
+LABEL author="danhthanh418"
+
 
 WORKDIR /app
 

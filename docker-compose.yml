@@ -1,31 +1,30 @@
 services:
-  nghien-phim:
-    container_name: nghien-phim
+  nextjs:
     build:
       context: .
       dockerfile: Dockerfile
       args:
-        - UPSTASH_REDIS_REST_URL=${UPSTASH_REDIS_REST_URL}
-        - UPSTASH_REDIS_REST_TOKEN=${UPSTASH_REDIS_REST_TOKEN}
-        - CLOUDINARY_CLOUD_NAME=${CLOUDINARY_CLOUD_NAME}
-        - NEXT_PUBLIC_BASE_URL=${NEXT_PUBLIC_BASE_URL}
-        - NODE_ENV=production
-    env_file:
-      - .env
+        # Build-time variables
+        UPSTASH_REDIS_REST_URL: ${UPSTASH_REDIS_REST_URL}
+        UPSTASH_REDIS_REST_TOKEN: ${UPSTASH_REDIS_REST_TOKEN}
+        CLOUDINARY_CLOUD_NAME: ${CLOUDINARY_CLOUD_NAME}
+        NEXT_PUBLIC_BASE_URL: ${NEXT_PUBLIC_BASE_URL}
+        NODE_ENV: production
     environment:
-      - UPSTASH_REDIS_REST_URL=${UPSTASH_REDIS_REST_URL:?UPSTASH_REDIS_REST_URL is required}
-      - UPSTASH_REDIS_REST_TOKEN=${UPSTASH_REDIS_REST_TOKEN:?UPSTASH_REDIS_REST_TOKEN is required}
-      - CLOUDINARY_CLOUD_NAME=${CLOUDINARY_CLOUD_NAME:?CLOUDINARY_CLOUD_NAME is required}
-      - NEXT_PUBLIC_BASE_URL=${NEXT_PUBLIC_BASE_URL:?NEXT_PUBLIC_BASE_URL is required}
-      - NODE_ENV=production
-    restart: unless-stopped
+      # Runtime variables
+      HOST_NAME: 0.0.0.0
+      PORT: 3000
+      # Pass through any other runtime variables needed
+      UPSTASH_REDIS_REST_URL: ${UPSTASH_REDIS_REST_URL}
+      UPSTASH_REDIS_REST_TOKEN: ${UPSTASH_REDIS_REST_TOKEN}
+      CLOUDINARY_CLOUD_NAME: ${CLOUDINARY_CLOUD_NAME}
+      NEXT_PUBLIC_BASE_URL: ${NEXT_PUBLIC_BASE_URL}
     ports:
-      - '3000:3000'
-    networks:
-      - nghien_phim_network
-    extra_hosts:
-      - 'host.docker.internal:host-gateway'
-
-networks:
-  nghien_phim_network:
-    driver: bridge
+      - "3000:3000"
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:3000"]
+      interval: 30s
+      timeout: 30s
+      retries: 3
+      start_period: 5s
+    restart: unless-stopped
