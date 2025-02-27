@@ -22,7 +22,7 @@ jobs:
         run: |
           docker build . \
             --file Dockerfile \
-            --tag danhthanh418/nghien-phim:$IMAGE_TAG \
+            --tag ${{ secrets.DOCKER_HUB_USERNAME }}/nghien-phim:$IMAGE_TAG \
             --build-arg CLOUDINARY_CLOUD_NAME=${{ secrets.CLOUDINARY_CLOUD_NAME }} \
             --build-arg NEXT_PUBLIC_BASE_URL=${{ secrets.NEXT_PUBLIC_BASE_URL }} \
             --build-arg UPSTASH_REDIS_REST_TOKEN=${{ secrets.UPSTASH_REDIS_REST_TOKEN }} \
@@ -30,8 +30,9 @@ jobs:
 
       - name: Log in to Docker Hub
         env:
+          DOCKER_HUB_USERNAME: ${{ secrets.DOCKER_HUB_USERNAME }}
           DOCKER_HUB_TOKEN: ${{ secrets.DOCKER_HUB_TOKEN }}
-        run: docker login -u danhthanh418 -p "$DOCKER_HUB_TOKEN"
+        run: docker login -u "$DOCKER_HUB_USERNAME" -p "$DOCKER_HUB_TOKEN"
 
       - name: Push image to Docker Hub
-        run: docker push danhthanh418/nghien-phim:$IMAGE_TAG
+        run: docker push ${{ secrets.DOCKER_HUB_USERNAME }}/nghien-phim:$IMAGE_TAG
