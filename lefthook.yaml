@@ -3,14 +3,14 @@ pre-commit:
   commands:
     lint:
       glob: '*.{js,jsx,ts,tsx}'
-      run: pnpm eslint {staged_files} --fix
+      run: bun run eslint {staged_files} --fix
     format:
       glob: '*.{js,jsx,ts,tsx,md,mdx,html,css,scss,json,yml,yaml}'
-      run: pnpm prettier {staged_files} --write
+      run: bun run prettier {staged_files} --write
     build:
-      run: pnpm build
+      run: bun run build
 
 commit-msg:
   commands:
     commitlint:
-      run: pnpm commitlint --edit {1}
+      run: bun run commitlint --edit {1}

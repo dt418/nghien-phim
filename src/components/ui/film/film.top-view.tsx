@@ -8,10 +8,11 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '../tabs';
 interface ITopViewProps {
   topViewData: TMovieItemShortened[];
   views: Record<string, number>;
+  title: string;
 }
 
 export const TopView = (props: ITopViewProps) => {
-  const { topViewData, views } = props;
+  const { topViewData, views, title } = props;
 
   const sortedTopViewDataByViews = [...topViewData].sort(
     (a, b) => (views[b.slug] || 0) - (views[a.slug] || 0)
@@ -39,7 +40,7 @@ export const TopView = (props: ITopViewProps) => {
         </div>
         <div className="col-span-10 ml-1">
           <span className="block truncate capitalize">{filmItem.name}</span>
-          <span className="text-xs">{views[filmItem.slug]} lượt xem</span>
+          <span className="text-xs">{views[filmItem.slug] || 0} lượt xem</span>
         </div>
       </Link>
     ));
@@ -49,7 +50,7 @@ export const TopView = (props: ITopViewProps) => {
     <aside className="flex flex-wrap">
       <div className="w-full">
         <span className="text-md block w-full border-b border-border pb-2 font-medium uppercase">
-          Top Xem Nhiều
+          {title}
         </span>
         <Tabs defaultValue="ngay" className="mt-2 w-full">
           <TabsList className="w-full">
