@@ -1,3 +1,9 @@
+# Prompt for Dockerfile name (default to "Dockerfile" if empty)
+$dockerfile = Read-Host "Enter the Dockerfile name (default: Dockerfile)"
+if ([string]::IsNullOrWhiteSpace($dockerfile)) {
+    $dockerfile = "Dockerfile"
+}
+
 # Read .env file and create a hashtable of environment variables
 $envContent = Get-Content -Path "./.env" -ErrorAction SilentlyContinue
 $envVars = @{}
@@ -15,6 +21,7 @@ if ($envContent) {
 $dockerCommand = @(
     "docker build"
     "-t nghien-phim:latest"
+    "--file `"$dockerfile`""
     "--build-arg UPSTASH_REDIS_REST_URL=$($envVars['UPSTASH_REDIS_REST_URL'])"
     "--build-arg UPSTASH_REDIS_REST_TOKEN=$($envVars['UPSTASH_REDIS_REST_TOKEN'])"
     "--build-arg CLOUDINARY_CLOUD_NAME=$($envVars['CLOUDINARY_CLOUD_NAME'])"
