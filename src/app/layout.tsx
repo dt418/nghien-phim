@@ -22,11 +22,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: Readonly<PropsWithChildren>) {
   return (
-    <html
-      lang="en"
-      suppressHydrationWarning
-      className="scrollbar-thumb-rounded-full scrollbar-track-rounded-full dark:scrollbar-thumb-rounded-full dark:scrollbar-track-rounded-full scrollbar-track-secondary scrollbar-thumb-secondary-foreground dark:scrollbar-track-secondary dark:scrollbar-thumb-secondary-foreground"
-    >
+    <html lang="en" suppressHydrationWarning>
       <body className={cn(fontBeVietnamPro)}>
         <ThemeProvider
           attribute="class"
