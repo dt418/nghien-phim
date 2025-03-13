@@ -7,7 +7,6 @@ import { fileURLToPath } from 'node:url';
 import { fixupConfigRules } from '@eslint/compat';
 import { FlatCompat } from '@eslint/eslintrc';
 import js from '@eslint/js';
-import typescriptEslint from '@typescript-eslint/eslint-plugin';
 import tsParser from '@typescript-eslint/parser';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -20,7 +19,14 @@ const compat = new FlatCompat({
 });
 
 const patchedConfig = fixupConfigRules([
-  ...compat.extends('next/core-web-vitals'),
+  ...compat.extends(
+    'eslint:recommended',
+    'plugin:import/recommended',
+    'plugin:import/typescript',
+    'next',
+    'next/core-web-vitals',
+    'next/typescript'
+  ),
 ]);
 
 const config = [
@@ -41,7 +47,6 @@ const config = [
       '**/.vscode/',
       '**/*.test.js',
       '**/*.spec.js',
-      '**/*.config.js',
       '**/vite.config.ts',
       '**/public/',
       '**/static/',
@@ -51,7 +56,6 @@ const config = [
 
   {
     plugins: {
-      '@typescript-eslint': typescriptEslint,
       'simple-import-sort': simpleImportSort, // Plugin for sorting imports
     },
 
@@ -68,6 +72,12 @@ const config = [
     settings: {
       react: {
         version: 'detect',
+      },
+      'import/resolver': {
+        // You will also need to install and configure the TypeScript resolver
+        // See also https://github.com/import-js/eslint-import-resolver-typescript#configuration
+        typescript: true,
+        node: true,
       },
     },
 
