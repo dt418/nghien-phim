@@ -1,9 +1,10 @@
-import react from 'eslint-plugin-react'; // React plugin for ESLint
+import prettierConfigRecommended from 'eslint-plugin-prettier/recommended';
 import simpleImportSort from 'eslint-plugin-simple-import-sort'; // Plugin to sort imports and exports
 import globals from 'globals';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
+import { fixupConfigRules } from '@eslint/compat';
 import { FlatCompat } from '@eslint/eslintrc';
 import js from '@eslint/js';
 import typescriptEslint from '@typescript-eslint/eslint-plugin';
@@ -18,7 +19,13 @@ const compat = new FlatCompat({
   allConfig: js.configs.all,
 });
 
+const patchedConfig = fixupConfigRules([
+  ...compat.extends('next/core-web-vitals'),
+]);
+
 const config = [
+  ...patchedConfig,
+  prettierConfigRecommended,
   {
     ignores: [
       '**/build/',
@@ -41,15 +48,10 @@ const config = [
       '**/*.d.ts',
     ],
   },
-  ...compat.extends(
-    'next/core-web-vitals',
-    'eslint:recommended',
-    'plugin:@typescript-eslint/recommended'
-  ),
+
   {
     plugins: {
       '@typescript-eslint': typescriptEslint,
-      react, // Enables React-specific linting rules
       'simple-import-sort': simpleImportSort, // Plugin for sorting imports
     },
 
