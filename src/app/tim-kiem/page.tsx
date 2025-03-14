@@ -3,6 +3,7 @@ import { cookies } from 'next/headers';
 import { notFound } from 'next/navigation';
 
 import { loadSearchParams } from '@/components/ui/header/page-search-params';
+import NoResult from '@/components/ui/search/no-result';
 import SearchBreadcrumb from '@/components/ui/search/search-breadcrumb';
 import SearchMovieTable from '@/components/ui/search/search-movie-table';
 import { Separator } from '@/components/ui/separator';
@@ -26,7 +27,7 @@ const SearchResults = ({
   } = searchResult;
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex min-h-[calc(100vh-4rem)] flex-col gap-4">
       <SearchBreadcrumb
         breadcrumbData={{
           keyword: searchTerm,
@@ -35,8 +36,10 @@ const SearchResults = ({
         }}
       />
       <Separator />
-      <h2 className="uppercase">Kết quả tìm kiếm cho: {rawSearchTerm}</h2>
-      <div className="overflow-x-auto">
+      <h2 className="text-xl font-semibold uppercase">
+        Kết quả tìm kiếm cho: {rawSearchTerm}
+      </h2>
+      <div className="flex-1 overflow-x-auto">
         <SearchMovieTable data={items} />
       </div>
     </div>
@@ -48,20 +51,25 @@ export async function generateMetadata(
   parent: ResolvingMetadata
 ): Promise<Metadata> {
   const { keyword } = await loadSearchParams(searchParams);
-  const previousImages = (await parent).openGraph?.images || [];
-  if (!keyword) {
-    notFound();
-  }
-
   const { items } = await searchFilms(keyword);
 
+  if (!keyword || items.length === 0) {
+    notFound();
+  }
+  const cookiesStore = await cookies();
+  const rawKeyword = cookiesStore.get('keyword')?.value ?? keyword;
+  const previousImages = (await parent).openGraph?.images || [];
+
   return {
-    title: `Tìm kiếm phim: ${keyword}`,
-    description: `Xem danh sách phim theo từ khóa ${keyword} online với phụ đề tiếng Việt`,
+    title: `Tìm kiếm phim: ${rawKeyword}`,
+    description: `Xem danh sách phim theo từ khóa ${rawKeyword} online với phụ đề tiếng Việt`,
     openGraph: {
-      title: `Tìm kiếm phim: ${keyword}`,
-      description: `Xem danh sách phim theo từ khóa ${keyword} online với phụ đề tiếng Việt`,
-      images: [String(items[0].poster_url), ...previousImages],
+      title: `Tìm kiếm phim: ${rawKeyword}`,
+      description: `Xem danh sách phim theo từ khóa ${rawKeyword} online với phụ đề tiếng Việt`,
+      images:
+        items.length > 0
+          ? [String(items[0].poster_url), ...previousImages]
+          : previousImages,
       url: `${config.NEXT_PUBLIC_BASE_URL}/tim-kiem?keyword=${keyword}`,
     },
   };
@@ -86,15 +94,17 @@ export default async function SearchPage({
 
   const searchResult = await searchFilms(keyword);
 
-  if (!searchResult?.items) {
-    return <p>Không tìm thấy kết quả nào</p>;
+  if (!searchResult || searchResult.items.length === 0) {
+    return <NoResult />;
   }
 
   return (
-    <SearchResults
-      searchTerm={keyword}
-      searchResult={searchResult}
-      rawSearchTerm={rawKeyword}
-    />
+    <main className="container mx-auto min-h-screen px-4 py-6">
+      <SearchResults
+        searchTerm={keyword}
+        searchResult={searchResult}
+        rawSearchTerm={rawKeyword}
+      />
+    </main>
   );
 }

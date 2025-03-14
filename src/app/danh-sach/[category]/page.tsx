@@ -37,7 +37,10 @@ export async function generateMetadata(
     openGraph: {
       title: `Danh sách ${title?.toLowerCase()}`,
       description: `Xem danh sách ${title?.toLowerCase()} online với phụ đề tiếng Việt`,
-      images: [String(items[0].poster_url), ...previousImages],
+      images:
+        items.length > 0
+          ? [String(items[0].poster_url), ...previousImages]
+          : previousImages,
       type: 'website',
       url: `${config.NEXT_PUBLIC_BASE_URL}/danh-sach/${decodedCategory}`,
     },

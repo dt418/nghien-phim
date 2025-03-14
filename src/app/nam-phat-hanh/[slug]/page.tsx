@@ -37,7 +37,10 @@ export async function generateMetadata(
     openGraph: {
       title: `Phim phát hành năm ${title}`,
       description: `Xem phim phát hành năm ${title} online với phụ đề tiếng Việt`,
-      images: [String(items[0].poster_url), ...previousImages],
+      images:
+        items.length > 0
+          ? [String(items[0].poster_url), ...previousImages]
+          : previousImages,
       type: 'website',
       url: `${config.NEXT_PUBLIC_BASE_URL}/nam-phat-hanh/${decodedCategory}`,
     },
