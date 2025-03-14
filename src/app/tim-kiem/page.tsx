@@ -1,6 +1,6 @@
 import type { Metadata, ResolvingMetadata } from 'next';
 import { cookies } from 'next/headers';
-import { notFound } from 'next/navigation';
+import { redirect } from 'next/navigation';
 
 import { loadSearchParams } from '@/components/ui/header/page-search-params';
 import NoResult from '@/components/ui/search/no-result';
@@ -51,13 +51,14 @@ export async function generateMetadata(
   parent: ResolvingMetadata
 ): Promise<Metadata> {
   const { keyword } = await loadSearchParams(searchParams);
-  const { items } = await searchFilms(keyword);
 
-  if (!keyword || items.length === 0) {
-    notFound();
+  if (!keyword) {
+    redirect('/');
   }
+
   const cookiesStore = await cookies();
   const rawKeyword = cookiesStore.get('keyword')?.value ?? keyword;
+  const { items } = await searchFilms(keyword);
   const previousImages = (await parent).openGraph?.images || [];
 
   return {
@@ -83,8 +84,9 @@ export default async function SearchPage({
   searchParams,
 }: Readonly<TSearchPageProps>) {
   const { keyword } = await loadSearchParams(searchParams);
+
   if (!keyword) {
-    notFound();
+    redirect('/');
   }
 
   const cookiesStore = await cookies();
@@ -93,8 +95,7 @@ export default async function SearchPage({
     : keyword;
 
   const searchResult = await searchFilms(keyword);
-
-  if (!searchResult || searchResult.items.length === 0) {
+  if (!searchResult || searchResult?.items.length === 0) {
     return <NoResult />;
   }
 
