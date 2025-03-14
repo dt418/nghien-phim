@@ -11,7 +11,7 @@ import config from '@/lib/config';
 import { IMovieItemBase } from '@/types/base-movie-item';
 import { ICategory, TCategoryPageProps } from '@/types/category';
 
-export const revalidate = 10;
+export const revalidate = 3600;
 
 export async function generateMetadata(
   {

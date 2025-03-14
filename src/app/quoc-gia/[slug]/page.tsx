@@ -12,7 +12,7 @@ import { IMovieItemBase } from '@/types/base-movie-item';
 import { ICategory } from '@/types/category';
 import { TFilmByCountryProps } from '@/types/film-by-country';
 
-export const revalidate = 10;
+export const revalidate = 3600;
 // generate metadata here
 export async function generateMetadata(
   {

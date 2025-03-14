@@ -1,3 +1,5 @@
+import { SearchParams } from 'nuqs/server';
+
 import { IMovieItemBase } from './base-movie-item';
 import { IResponseBase } from './base-response';
 
@@ -10,10 +12,11 @@ export interface IMovieSearchItem extends IMovieItemBase {
 }
 
 export type TSearchPageProps = {
-  searchParams: Promise<{ keyword: string | string[] }>;
+  searchParams: Promise<SearchParams>;
 };
 
 export type TSearchResultsProps = {
   searchTerm: string;
+  rawSearchTerm: string;
   searchResult: Omit<IMovieSearchListResponse, 'status'>;
 };
