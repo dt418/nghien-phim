@@ -31,7 +31,10 @@ export async function generateMetadata(
         'Xem phim mới nhất miễn phí tại nghienphim.netlify.app | Web xem phim miễn phí tốc độ cao',
       url: 'https://nghienphim.netlify.app/',
       siteName: 'nghienphim.netlify.app',
-      images: [String(items[0].poster_url), ...previousImages],
+      images:
+        items.length > 0
+          ? [String(items[0].poster_url), ...previousImages]
+          : previousImages,
       type: 'website',
     },
   };

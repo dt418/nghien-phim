@@ -36,7 +36,10 @@ export async function generateMetadata(
     openGraph: {
       title: `Danh sách phim theo thể loại ${title?.toLowerCase()}`,
       description: `Xem danh sách phim theo thể loại ${title?.toLowerCase()} online với phụ đề tiếng Việt`,
-      images: [String(items[0].poster_url), ...previousImages],
+      images:
+        items.length > 0
+          ? [String(items[0].poster_url), ...previousImages]
+          : previousImages,
       type: 'website',
       url: `${config.NEXT_PUBLIC_BASE_URL}/the-loai/${decodedCategory}`,
     },

@@ -1,5 +1,5 @@
 import prettierConfigRecommended from 'eslint-plugin-prettier/recommended';
-import simpleImportSort from 'eslint-plugin-simple-import-sort'; // Plugin to sort imports and exports
+import simpleImportSort from 'eslint-plugin-simple-import-sort';
 import globals from 'globals';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -30,8 +30,6 @@ const patchedConfig = fixupConfigRules([
 ]);
 
 const config = [
-  ...patchedConfig,
-  prettierConfigRecommended,
   {
     ignores: [
       '**/build/',
@@ -53,10 +51,11 @@ const config = [
       '**/*.d.ts',
     ],
   },
-
+  prettierConfigRecommended,
+  ...patchedConfig,
   {
     plugins: {
-      'simple-import-sort': simpleImportSort, // Plugin for sorting imports
+      'simple-import-sort': simpleImportSort,
     },
 
     languageOptions: {
@@ -65,7 +64,6 @@ const config = [
         ...globals.node,
         ...globals.jest,
       },
-
       parser: tsParser,
     },
 
@@ -74,8 +72,6 @@ const config = [
         version: 'detect',
       },
       'import/resolver': {
-        // You will also need to install and configure the TypeScript resolver
-        // See also https://github.com/import-js/eslint-import-resolver-typescript#configuration
         typescript: true,
         node: true,
       },
@@ -83,7 +79,6 @@ const config = [
 
     rules: {
       'no-unused-vars': 'off',
-
       '@typescript-eslint/no-unused-vars': [
         'error',
         {
@@ -91,13 +86,15 @@ const config = [
           varsIgnorePattern: '^_',
         },
       ],
-
       '@typescript-eslint/no-explicit-any': 'warn',
       '@typescript-eslint/ban-ts-comment': 'warn',
       'react-hooks/rules-of-hooks': 'error',
       'react-hooks/exhaustive-deps': 'warn',
       'simple-import-sort/imports': 'error',
       'simple-import-sort/exports': 'error',
+      // Avoid conflicts with prettier
+      'arrow-body-style': 'off',
+      'prefer-arrow-callback': 'off',
     },
   },
   {
@@ -116,7 +113,6 @@ const config = [
           groups: [
             // Packages come first.
             ['^react', '^next', '^\\w'],
-            // Internal packages.
             ['^@store(/.*|$)'],
             ['^@components(/.*|$)'],
             ['^@ui(/.*|$)'],

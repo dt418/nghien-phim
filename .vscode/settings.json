@@ -19,5 +19,4 @@
     "markdown"
   ],
   "typescript.tsdk": "node_modules\\typescript\\lib",
-  "eslint.useFlatConfig": false
 }
