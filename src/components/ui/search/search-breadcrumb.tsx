@@ -19,6 +19,7 @@ export interface BreadcrumbData {
   keyword: string;
   /** Current page number in pagination */
   currentPage: number;
+  rawKeyword?: string;
 }
 
 /**
@@ -38,13 +39,7 @@ export default function SearchBreadcrumb({
   breadcrumbData,
 }: Readonly<SearchBreadcrumbProps>): JSX.Element {
   // Destructure props for easier access
-  const { keyword, currentPage } = breadcrumbData;
-
-  // Encode keyword for URL, replacing spaces with plus signs
-  const encodedKeyword = React.useMemo(
-    () => encodeURIComponent(keyword).replace(/%20/g, '+'),
-    [keyword]
-  );
+  const { keyword, currentPage, rawKeyword } = breadcrumbData;
 
   return (
     <Breadcrumb className="py-4">
@@ -57,8 +52,8 @@ export default function SearchBreadcrumb({
 
         {/* Search results link */}
         <BreadcrumbItem>
-          <BreadcrumbLink href={`/tim-kiem?keyword=${encodedKeyword}`}>
-            Tìm kiếm: {keyword}
+          <BreadcrumbLink href={`/tim-kiem?keyword=${keyword}`}>
+            Tìm kiếm: {rawKeyword}
           </BreadcrumbLink>
         </BreadcrumbItem>
         <BreadcrumbSeparator />

@@ -11,16 +11,16 @@ function Footer() {
           <p className="text-sm">&copy; {currentYear} All rights reserved.</p>
         </Link>
         <nav className="col-span-full flex flex-wrap gap-2 md:col-span-2 md:justify-end">
-          <Link className="text-sm hover:underline" href="#">
+          <Link className="text-sm hover:underline" href="/">
             About Us
           </Link>
-          <Link className="text-sm hover:underline" href="#">
+          <Link className="text-sm hover:underline" href="/">
             Services
           </Link>
-          <Link className="text-sm hover:underline" href="#">
+          <Link className="text-sm hover:underline" href="/">
             Contact
           </Link>
-          <Link className="text-sm hover:underline" href="#">
+          <Link className="text-sm hover:underline" href="/">
             Privacy Policy
           </Link>
         </nav>

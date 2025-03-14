@@ -41,7 +41,12 @@ export function getURL(path: string) {
  * ```
  */
 export function stringToSlug(str: string) {
-  return slugify(str, { locale: 'vi', lower: true });
+  return slugify(str, {
+    locale: 'vi',
+    lower: true,
+    strict: true,
+    replacement: '-',
+  });
 }
 
 /**

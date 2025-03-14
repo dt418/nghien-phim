@@ -12,7 +12,7 @@ import { THomePageProps } from '@/types/movie-list';
 
 const redis = Redis.fromEnv();
 
-export const revalidate = 10;
+export const revalidate = 3600;
 
 export async function generateMetadata(
   { searchParams }: THomePageProps,

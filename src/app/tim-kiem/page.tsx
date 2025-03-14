@@ -1,5 +1,8 @@
 import type { Metadata, ResolvingMetadata } from 'next';
+import { cookies } from 'next/headers';
+import { notFound } from 'next/navigation';
 
+import { loadSearchParams } from '@/components/ui/header/page-search-params';
 import SearchBreadcrumb from '@/components/ui/search/search-breadcrumb';
 import SearchMovieTable from '@/components/ui/search/search-movie-table';
 import { Separator } from '@/components/ui/separator';
@@ -7,17 +10,7 @@ import { searchFilms } from '@/lib/api';
 import config from '@/lib/config';
 import { TSearchPageProps, TSearchResultsProps } from '@/types/search';
 
-export const revalidate = 10;
-
-/**
- * Extracts and formats search term from search parameters
- */
-const getSearchTerm = async (
-  searchParams: Promise<{ keyword: string | string[] }>
-) => {
-  const { keyword = '' } = await searchParams;
-  return Array.isArray(keyword) ? keyword.join(' ') : keyword;
-};
+export const revalidate = 3600;
 
 /**
  * Renders search results including breadcrumb, title and movie table
@@ -25,6 +18,7 @@ const getSearchTerm = async (
 const SearchResults = ({
   searchTerm,
   searchResult,
+  rawSearchTerm,
 }: Readonly<TSearchResultsProps>) => {
   const {
     items,
@@ -36,11 +30,12 @@ const SearchResults = ({
       <SearchBreadcrumb
         breadcrumbData={{
           keyword: searchTerm,
+          rawKeyword: rawSearchTerm,
           currentPage: current_page,
         }}
       />
       <Separator />
-      <h2 className="uppercase">Kết quả tìm kiếm cho: {searchTerm}</h2>
+      <h2 className="uppercase">Kết quả tìm kiếm cho: {rawSearchTerm}</h2>
       <div className="overflow-x-auto">
         <SearchMovieTable data={items} />
       </div>
@@ -52,18 +47,22 @@ export async function generateMetadata(
   { searchParams }: TSearchPageProps,
   parent: ResolvingMetadata
 ): Promise<Metadata> {
-  const searchTerm = await getSearchTerm(searchParams);
+  const { keyword } = await loadSearchParams(searchParams);
   const previousImages = (await parent).openGraph?.images || [];
-  const { items } = await searchFilms(searchTerm);
+  if (!keyword) {
+    notFound();
+  }
+
+  const { items } = await searchFilms(keyword);
 
   return {
-    title: `Tìm kiếm phim: ${searchTerm}`,
-    description: `Xem danh sách phim theo từ khóa ${searchTerm} online với phụ đề tiếng Việt`,
+    title: `Tìm kiếm phim: ${keyword}`,
+    description: `Xem danh sách phim theo từ khóa ${keyword} online với phụ đề tiếng Việt`,
     openGraph: {
-      title: `Tìm kiếm phim: ${searchTerm}`,
-      description: `Xem danh sách phim theo từ khóa ${searchTerm} online với phụ đề tiếng Việt`,
+      title: `Tìm kiếm phim: ${keyword}`,
+      description: `Xem danh sách phim theo từ khóa ${keyword} online với phụ đề tiếng Việt`,
       images: [String(items[0].poster_url), ...previousImages],
-      url: `${config.NEXT_PUBLIC_BASE_URL}/tim-kiem?keyword=${searchTerm}`,
+      url: `${config.NEXT_PUBLIC_BASE_URL}/tim-kiem?keyword=${keyword}`,
     },
   };
 }
@@ -75,17 +74,27 @@ export async function generateMetadata(
 export default async function SearchPage({
   searchParams,
 }: Readonly<TSearchPageProps>) {
-  const searchTerm = await getSearchTerm(searchParams);
-
-  if (!searchTerm) {
-    return <p>Vui lòng nhập từ khóa tìm kiếm</p>;
+  const { keyword } = await loadSearchParams(searchParams);
+  if (!keyword) {
+    notFound();
   }
 
-  const searchResult = await searchFilms(searchTerm);
+  const cookiesStore = await cookies();
+  const rawKeyword = cookiesStore.has('keyword')
+    ? (cookiesStore.get('keyword')?.value as string)
+    : keyword;
+
+  const searchResult = await searchFilms(keyword);
 
   if (!searchResult?.items) {
     return <p>Không tìm thấy kết quả nào</p>;
   }
 
-  return <SearchResults searchTerm={searchTerm} searchResult={searchResult} />;
+  return (
+    <SearchResults
+      searchTerm={keyword}
+      searchResult={searchResult}
+      rawSearchTerm={rawKeyword}
+    />
+  );
 }

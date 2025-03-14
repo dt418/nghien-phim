@@ -5,6 +5,7 @@ import { Search } from 'lucide-react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { FormEvent, useRef } from 'react';
 
+import { stringToSlug } from '@/lib/stringUtils';
 import { cn } from '@/lib/utils';
 
 import { Button } from '../button';
@@ -84,7 +85,7 @@ export default function SearchBar({
    * Handles form submission
    * @param {FormEvent<HTMLFormElement>} e - Form event
    */
-  const handleSubmit = (e: FormEvent<HTMLFormElement>): void => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
     const searchTerm = getSearchTerm();
 
@@ -92,7 +93,15 @@ export default function SearchBar({
       return;
     }
 
-    push(createSearchUrl(searchTerm));
+    const slugifiedSearchTerm = stringToSlug(searchTerm);
+
+    await fetch('/api/set-search', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ rawQuery: searchTerm }),
+    });
+
+    push(createSearchUrl(slugifiedSearchTerm));
   };
 
   return (

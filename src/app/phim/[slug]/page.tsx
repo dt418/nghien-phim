@@ -16,7 +16,7 @@ import type { IFilmDetailPageProps } from '@/types/movie';
 
 const redis = Redis.fromEnv();
 
-export const revalidate = 10;
+export const revalidate = 3600;
 
 // Keeping the existing generateMetadata function...
 // generate meta data

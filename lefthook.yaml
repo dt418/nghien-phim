@@ -1,12 +1,9 @@
 pre-commit:
   parallel: true
   commands:
-    lint:
-      glob: '*.{js,jsx,ts,tsx}'
-      run: pnpm eslint {staged_files} --fix
-    format:
-      glob: '*.{js,jsx,ts,tsx,md,mdx,html,css,scss,json,yml,yaml}'
-      run: pnpm prettier {staged_files} --write
+    lint-staged:
+      add: true
+      run: pnpm lint-staged
     test:
       run: pnpm test
     build:
