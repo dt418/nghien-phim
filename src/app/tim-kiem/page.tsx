@@ -11,7 +11,7 @@ import { searchFilms } from '@/lib/api';
 import config from '@/lib/config';
 import { TSearchPageProps, TSearchResultsProps } from '@/types/search';
 
-export const revalidate = 3600;
+export const revalidate = 10;
 
 /**
  * Renders search results including breadcrumb, title and movie table

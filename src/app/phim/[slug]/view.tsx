@@ -1,7 +1,7 @@
 'use client';
 import React, { useCallback, useEffect } from 'react';
 
-export const ReportView: React.FC<{ slug: string }> = ({ slug }) => {
+export const ReportView: React.FC<{ slug: string | string[] }> = ({ slug }) => {
   const fetchIncrement = useCallback(async () => {
     if (slug) {
       try {

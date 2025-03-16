@@ -14,6 +14,8 @@ import { isImageUrl, stringToSlug, textTruncate } from '@/lib/stringUtils';
 import { sanitizedHtml } from '@/lib/utils';
 import type { IFilmDetailPageProps } from '@/types/movie';
 
+import { ReportView } from './view';
+
 const redis = Redis.fromEnv();
 
 export const revalidate = 3600;
@@ -75,6 +77,9 @@ export default async function FilmDetail({
 
   return (
     <div className="min-h-screen bg-black/95">
+      {/* Add ReportView component to increment view count */}
+      <ReportView slug={slug} />
+
       {/* Hero Section */}
       <div className="relative h-[60vh] w-full">
         <Image
