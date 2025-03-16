@@ -18,7 +18,7 @@ import { ReportView } from './view';
 
 const redis = Redis.fromEnv();
 
-export const revalidate = 3600;
+export const revalidate = 10;
 
 // Keeping the existing generateMetadata function...
 // generate meta data
