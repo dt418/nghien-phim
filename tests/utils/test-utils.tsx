@@ -1,41 +1,46 @@
-import { render } from '@testing-library/react';
-import { ThemeProvider } from 'next-themes';
-import { ReactElement } from 'react';
-import { vi } from 'vitest';
+import type { ReactElement } from 'react'
+import { render } from '@testing-library/react'
+import { vi } from 'vitest'
+
+import { ThemeProvider } from '~/providers/theme'
 
 // Mock matchMedia
 Object.defineProperty(window, 'matchMedia', {
-  writable: true,
-  value: vi.fn().mockImplementation((query) => ({
+  value: vi.fn().mockImplementation(query => ({
+    addEventListener: vi.fn(),
+    addListener: vi.fn(),
+    dispatchEvent: vi.fn(),
     matches: false,
     media: query,
     onchange: null,
-    addListener: vi.fn(),
-    removeListener: vi.fn(),
-    addEventListener: vi.fn(),
     removeEventListener: vi.fn(),
-    dispatchEvent: vi.fn(),
+    removeListener: vi.fn(),
   })),
-});
+  writable: true,
+})
 
-interface WrapperProps {
-  children: React.ReactNode;
+function customRender(ui: ReactElement, options = {}) {
+  return render(ui, {
+    wrapper: ThemeProvider,
+    ...options,
+  })
 }
 
-const AllTheProviders = ({ children }: WrapperProps) => {
-  return (
-    <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-      {children}
-    </ThemeProvider>
-  );
-};
-
-const customRender = (ui: ReactElement, options = {}) =>
-  render(ui, {
-    wrapper: AllTheProviders,
-    ...options,
-  });
-
-export * from '@testing-library/react';
-export { default as userEvent } from '@testing-library/user-event';
-export { customRender };
+export {
+  act,
+  buildQueries,
+  cleanup,
+  configure,
+  fireEvent,
+  getNodeText,
+  prettyDOM,
+  queries,
+  queryHelpers,
+  render,
+  screen,
+  waitFor,
+  waitForElementToBeRemoved,
+  within,
+} from '@testing-library/react'
+export { default as userEvent } from '@testing-library/user-event'
+export { customRender }

@@ -16,16 +16,12 @@
  * // With 5 total pages, showing 1 page on each side
  * calculatePageList(3, 1, 5) // returns [2, 3, 4]
  */
-export const calculatePageList = (
-  currentPage: number,
-  PAGE_TO_DISPLAY: number,
-  totalPage: number
-): number[] => {
+export function calculatePageList(currentPage: number, PAGE_TO_DISPLAY: number, totalPage: number): number[] {
   // Ensure start page is not less than 1
-  const start = Math.max(1, currentPage - PAGE_TO_DISPLAY);
+  const start = Math.max(1, currentPage - PAGE_TO_DISPLAY)
   // Ensure end page does not exceed total pages
-  const end = Math.min(totalPage, currentPage + PAGE_TO_DISPLAY);
+  const end = Math.min(totalPage, currentPage + PAGE_TO_DISPLAY)
 
   // Create array of page numbers from start to end
-  return Array.from({ length: end - start + 1 }, (_, index) => start + index);
-};
+  return Array.from({ length: end - start + 1 }, (_, index) => start + index)
+}

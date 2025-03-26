@@ -1,4 +1,4 @@
-import { MenuItems } from '@/types/menu';
+import type { MenuItems } from '~/types/menu'
 
 export const menuItems: MenuItems = [
   {
@@ -73,26 +73,28 @@ export const menuItems: MenuItems = [
     children: Array.from(
       { length: new Date().getFullYear() - 2003 },
       (_, index) => {
-        const year = new Date().getFullYear() - index;
-        return { label: year.toString(), href: `/nam-phat-hanh/${year}` };
-      }
+        const year = new Date().getFullYear() - index
+        return { label: year.toString(), href: `/nam-phat-hanh/${year}` }
+      },
     ),
   },
-];
+]
 
-export default menuItems;
+export default menuItems
 
-export const findHrefByLabel = (label: string): string | undefined => {
+export function findHrefByLabel(label: string): string | undefined {
   const searchInItems = (items: MenuItems): string | undefined => {
     for (const item of items) {
-      if (item.label === label) return item.href;
+      if (item.label === label)
+        return item.href
       if (item.children) {
-        const found = searchInItems(item.children);
-        if (found) return found;
+        const found = searchInItems(item.children)
+        if (found)
+          return found
       }
     }
-    return undefined;
-  };
+    return undefined
+  }
 
-  return searchInItems(menuItems);
-};
+  return searchInItems(menuItems)
+}

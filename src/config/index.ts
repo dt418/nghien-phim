@@ -1,2 +1,2 @@
-export { menuItems } from './menu-item';
-export { getMovieStats } from './movie-stats';
+export { menuItems } from './menu-item'
+export { getMovieStats } from './movie-stats'

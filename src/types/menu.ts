@@ -1,7 +1,7 @@
-export type MenuItem = {
-  label: string;
-  href: string;
-  children?: MenuItem[];
-};
+export interface MenuItem {
+  href: string
+  label: string
+  children?: MenuItem[]
+}
 
-export type MenuItems = MenuItem[];
+export type MenuItems = MenuItem[]

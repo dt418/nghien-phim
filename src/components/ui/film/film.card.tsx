@@ -1,17 +1,17 @@
 /**
- * Import external dependencies
- */
-import { PlayIcon } from 'lucide-react';
-import Image from 'next/image';
-import Link from 'next/link';
-
-import { isImageUrl } from '@/lib/stringUtils';
-/**
  * Import internal dependencies
  */
-import { TMovieItemShortened } from '@/types/movie-list';
+import type { TMovieItemShortened } from '~/types/movie-list'
+/**
+ * Import external dependencies
+ */
+import { PlayIcon } from 'lucide-react'
+import Image from 'next/image'
 
-import { Card, CardContent } from '../card';
+import Link from 'next/link'
+import { isImageUrl } from '~/lib/stringUtils'
+
+import { Card, CardContent } from '../card'
 
 /**
  * Props interface extending base movie properties
@@ -20,7 +20,7 @@ import { Card, CardContent } from '../card';
  */
 interface IFilmCardProps extends TMovieItemShortened {
   /** Flag to set image loading priority */
-  isPriority?: boolean;
+  isPriority?: boolean
 }
 
 /**
@@ -28,16 +28,16 @@ interface IFilmCardProps extends TMovieItemShortened {
  * @param {IFilmCardProps} props - Component props
  * @returns {JSX.Element} Rendered FilmCard component
  */
-export const FilmCard = ({
+export function FilmCard({
   name,
   slug,
   thumb_url,
   original_name,
   isPriority = false,
-}: IFilmCardProps): JSX.Element => {
+}: IFilmCardProps): JSX.Element {
   // Constants
-  const filmLink = `/phim/${slug}`;
-  const fallbackImage = '/film-placeholder.png';
+  const filmLink = `/phim/${slug}`
+  const fallbackImage = '/film-placeholder.png'
 
   return (
     <Link className="font-semibold" href={filmLink} title={name}>
@@ -70,5 +70,5 @@ export const FilmCard = ({
         </CardContent>
       </Card>
     </Link>
-  );
-};
+  )
+}

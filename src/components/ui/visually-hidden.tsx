@@ -1,5 +1,5 @@
-'use client';
+'use client'
 
-import { VisuallyHidden } from '@radix-ui/react-visually-hidden';
+import { VisuallyHidden } from '@radix-ui/react-visually-hidden'
 
-export { VisuallyHidden };
+export { VisuallyHidden }

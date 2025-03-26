@@ -1,7 +1,7 @@
-import { IPagination } from './pagination';
+import type { IPagination } from './pagination'
 
 export interface IResponseBase {
-  status: string;
-  message?: string;
-  paginate: IPagination;
+  status: string
+  message?: string
+  paginate: IPagination
 }

@@ -1,43 +1,42 @@
-import { Redis } from '@upstash/redis';
-import { PlayCircle, UsersRound } from 'lucide-react';
-import type { Metadata, ResolvingMetadata } from 'next';
-import Image from 'next/image';
-import Link from 'next/link';
-import { notFound } from 'next/navigation';
+import type { Metadata, ResolvingMetadata } from 'next'
+import type { IFilmDetailPageProps } from '~/types/movie'
+import { Redis } from '@upstash/redis'
+import { PlayCircle, UsersRound } from 'lucide-react'
+import Image from 'next/image'
+import Link from 'next/link'
+import { notFound } from 'next/navigation'
 
-import { Button } from '@/components/ui/button';
-import { MovieStats } from '@/components/ui/film/film.stats';
-import { Separator } from '@/components/ui/separator';
-import { getMovieStats } from '@/config';
-import { getFilmBySlug } from '@/lib/api';
-import { isImageUrl, stringToSlug, textTruncate } from '@/lib/stringUtils';
-import { sanitizedHtml } from '@/lib/utils';
-import type { IFilmDetailPageProps } from '@/types/movie';
+import { Button } from '~/components/ui/button'
+import { MovieStats } from '~/components/ui/film/film.stats'
 
-import { ReportView } from './view';
+import { Separator } from '~/components/ui/separator'
+import { getMovieStats } from '~/config'
+import { getFilmBySlug } from '~/lib/api'
+import { isImageUrl, stringToSlug, textTruncate } from '~/lib/stringUtils'
+import { sanitizedHtml } from '~/lib/utils'
+import { ReportView } from './view'
 
-const redis = Redis.fromEnv();
+const redis = Redis.fromEnv()
 
-export const revalidate = 10;
+export const revalidate = 10
 
 // Keeping the existing generateMetadata function...
 // generate meta data
 export async function generateMetadata(
   { params }: IFilmDetailPageProps,
-  parent: ResolvingMetadata
+  parent: ResolvingMetadata,
 ): Promise<Metadata> {
-  const { slug } = await params;
+  const { slug } = await params
   // fetch data
-  const film = await getFilmBySlug(slug);
+  const film = await getFilmBySlug(slug)
   if (!film) {
-    notFound();
+    notFound()
   }
 
   // optionally access and extend (rather than replace) parent metadata
-  const previousImages = (await parent).openGraph?.images ?? [];
+  const previousImages = (await parent).openGraph?.images ?? []
 
   return {
-    title: film?.movie?.name,
     description: textTruncate(String(film?.movie?.description)),
     openGraph: {
       description: textTruncate(String(film?.movie?.description)),
@@ -47,6 +46,7 @@ export async function generateMetadata(
       ],
       type: 'website',
     },
+    title: film?.movie?.name,
     twitter: {
       description: textTruncate(String(film?.movie?.description)),
       images: [
@@ -54,26 +54,26 @@ export async function generateMetadata(
         ...previousImages,
       ],
     },
-  };
+  }
 }
 
 export default async function FilmDetail({
   params,
 }: Readonly<IFilmDetailPageProps>) {
-  const slug = (await params)?.slug;
+  const slug = (await params)?.slug
   if (!slug) {
-    notFound();
+    notFound()
   }
-  const res = await getFilmBySlug(slug);
+  const res = await getFilmBySlug(slug)
 
   if (!res) {
-    notFound();
+    notFound()
   }
-  const views =
-    (await redis.get<number>(['pageviews', 'films', slug].join(':'))) ?? 0;
+  const views
+    = (await redis.get<number>(['pageviews', 'films', slug].join(':'))) ?? 0
 
-  const { movie } = res;
-  const movieStats = getMovieStats(movie);
+  const { movie } = res
+  const movieStats = getMovieStats(movie)
 
   return (
     <div className="min-h-screen bg-black/95">
@@ -125,8 +125,9 @@ export default async function FilmDetail({
                 <div className="flex items-center gap-2">
                   <UsersRound className="h-4 w-4" />
                   {Intl.NumberFormat('vi-VN', { notation: 'compact' }).format(
-                    views
-                  )}{' '}
+                    views,
+                  )}
+                  {' '}
                   lượt xem
                 </div>
                 {movie?.quality && (
@@ -149,6 +150,7 @@ export default async function FilmDetail({
               </h2>
               <div
                 className="leading-relaxed text-gray-300"
+                // Using sanitizedHtml to safely render HTML content
                 dangerouslySetInnerHTML={{
                   __html: sanitizedHtml(movie?.description),
                 }}
@@ -161,13 +163,13 @@ export default async function FilmDetail({
         <div className="mt-12">
           <h2 className="mb-6 text-2xl font-bold text-white">Xem phim</h2>
           <div className="space-y-8">
-            {movie?.episodes?.map((ep) => (
+            {movie?.episodes?.map(ep => (
               <div key={ep.server_name} className="space-y-4">
                 <h3 className="text-lg font-semibold text-gray-300">
                   {ep?.server_name}
                 </h3>
                 <div className="grid grid-cols-4 gap-2 sm:grid-cols-8 md:grid-cols-12">
-                  {ep?.items?.toReversed()?.map((item) => (
+                  {ep?.items?.toReversed()?.map(item => (
                     <Button
                       key={item.slug}
                       variant="secondary"
@@ -190,5 +192,5 @@ export default async function FilmDetail({
         </div>
       </div>
     </div>
-  );
+  )
 }

@@ -1,14 +1,14 @@
-'server only';
-import { cookies } from 'next/headers';
-import { NextResponse } from 'next/server';
+'server only'
+import { cookies } from 'next/headers'
+import { NextResponse } from 'next/server'
 
 export async function POST(req: Request) {
-  const { rawQuery } = await req.json();
+  const { rawQuery } = await req.json()
   if (!rawQuery)
-    return NextResponse.json({ error: 'No query provided' }, { status: 400 });
-  const cookiesStorage = await cookies();
+    return NextResponse.json({ error: 'No query provided' }, { status: 400 })
+  const cookiesStorage = await cookies()
   // Lưu từ khóa vào cookies (tồn tại 1 ngày)
-  cookiesStorage.set('keyword', rawQuery, { path: '/', maxAge: 86400 });
+  cookiesStorage.set('keyword', rawQuery, { maxAge: 86400, path: '/' })
 
-  return NextResponse.json({ success: true });
+  return NextResponse.json({ success: true })
 }

@@ -1,3 +1,4 @@
+import type { Metadata, ResolvingMetadata } from 'next'
 import {
   CalendarDays,
   Check,
@@ -7,57 +8,55 @@ import {
   LibraryBig,
   Monitor,
   UsersRound,
-} from 'lucide-react';
-import { type Metadata, type ResolvingMetadata } from 'next';
-import Image from 'next/image';
-import Link from 'next/link';
-import { notFound } from 'next/navigation';
+} from 'lucide-react'
+import Image from 'next/image'
+import Link from 'next/link'
+import { notFound } from 'next/navigation'
 
-import { Button } from '@/components/ui/button';
-import { getFilmBySlug } from '@/lib/api';
-import { isImageUrl, stringToSlug, textTruncate } from '@/lib/stringUtils';
-import { cn, sanitizedHtml } from '@/lib/utils';
+import { Button } from '~/components/ui/button'
+import { getFilmBySlug } from '~/lib/api'
+import { isImageUrl, stringToSlug, textTruncate } from '~/lib/stringUtils'
+import { cn, sanitizedHtml } from '~/lib/utils'
 
 interface IFilmDetailParams {
   params: Promise<{
-    slug: string | string[];
-    server: string | string[];
-    ep: string | string[];
-  }>;
+    slug: string | string[]
+    server: string | string[]
+    ep: string | string[]
+  }>
 }
 
-type Props = {
+interface Props {
+  searchParams: Promise<Record<string, string | string[] | undefined>>
   params: Promise<{
-    slug: string | string[];
-    server: string | string[];
-    ep: string | string[];
-  }>;
-  searchParams: Promise<Record<string, string | string[] | undefined>>;
-};
+    slug: string | string[]
+    server: string | string[]
+    ep: string | string[]
+  }>
+}
 
-export const revalidate = 10;
+export const revalidate = 10
 
 export async function generateMetadata(
   { params }: Props,
-  parent: ResolvingMetadata
+  parent: ResolvingMetadata,
 ): Promise<Metadata> {
-  const { slug, server, ep } = await params;
+  const { ep, server, slug } = await params
   // fetch data
-  const film = await getFilmBySlug(slug);
+  const film = await getFilmBySlug(slug)
   // optionally access and extend (rather than replace) parent metadata
-  const previousImages = (await parent).openGraph?.images ?? [];
+  const previousImages = (await parent).openGraph?.images ?? []
 
   const currentServer = film?.movie?.episodes?.filter(
-    (sv) => stringToSlug(sv?.server_name) === server
-  );
-  const currentEp =
-    currentServer?.[0]?.items?.filter((e) => e?.slug === ep) ?? [];
+    sv => stringToSlug(sv?.server_name) === server,
+  )
+  const currentEp
+    = currentServer?.[0]?.items?.filter(e => e?.slug === ep) ?? []
 
   if (currentEp.length === 0) {
-    notFound();
+    notFound()
   }
   return {
-    title: `Xem phim ${film?.movie?.name} - Tập ${currentEp[0]?.name}`,
     description: textTruncate(String(film?.movie?.description)),
     openGraph: {
       description: textTruncate(String(film?.movie?.description)),
@@ -66,6 +65,7 @@ export async function generateMetadata(
         ...previousImages,
       ],
     },
+    title: `Xem phim ${film?.movie?.name} - Tập ${currentEp[0]?.name}`,
     twitter: {
       description: textTruncate(String(film?.movie?.description)),
       images: [
@@ -73,26 +73,26 @@ export async function generateMetadata(
         ...previousImages,
       ],
     },
-  };
+  }
 }
 
 export default async function FilmDetail({
   params,
 }: Readonly<IFilmDetailParams>) {
-  const { slug, server, ep } = await params;
-  const res = await getFilmBySlug(slug);
+  const { ep, server, slug } = await params
+  const res = await getFilmBySlug(slug)
   if (!res) {
-    notFound();
+    notFound()
   }
-  const { movie } = res;
+  const { movie } = res
 
   const currentServer = movie?.episodes?.filter(
-    (sv) => stringToSlug(sv?.server_name) === server
-  );
-  const currentEp =
-    currentServer[0]?.items?.filter((e) => e?.slug === ep) ?? [];
+    sv => stringToSlug(sv?.server_name) === server,
+  )
+  const currentEp
+    = currentServer[0]?.items?.filter(e => e?.slug === ep) ?? []
   if (currentEp.length === 0) {
-    notFound();
+    notFound()
   }
 
   return (
@@ -114,40 +114,58 @@ export default async function FilmDetail({
           <div className="flex flex-col">
             <div className="inline-flex gap-2 text-sm font-normal">
               <UsersRound className="h-4 w-4 flex-shrink-0" />
-              Diễn viên: {movie?.casts ?? 'Đang cập nhật'}
+              Diễn viên:
+              {' '}
+              {movie?.casts ?? 'Đang cập nhật'}
             </div>
             <div className="inline-flex gap-2 text-sm font-normal">
               <GalleryVerticalEnd className="h-4 w-4 flex-shrink-0" />
-              Số tập: {movie?.total_episodes ?? 'Đang cập nhật'}
+              Số tập:
+              {' '}
+              {movie?.total_episodes ?? 'Đang cập nhật'}
             </div>
             <div className="inline-flex gap-2 text-sm font-normal">
               <Check className="h-4 w-4 flex-shrink-0" />
-              Trạng thái: {movie?.current_episode ?? 'Đang cập nhật'}
+              Trạng thái:
+              {' '}
+              {movie?.current_episode ?? 'Đang cập nhật'}
             </div>
             <div className="inline-flex gap-2 text-sm font-normal">
               <Clock className="h-4 w-4 flex-shrink-0" />
-              Thời lượng: {movie?.time ?? 'Đang cập nhật'}
+              Thời lượng:
+              {' '}
+              {movie?.time ?? 'Đang cập nhật'}
             </div>
             <div className="inline-flex gap-2 text-sm font-normal">
-              <CalendarDays className="h-4 w-4 flex-shrink-0" /> Năm phát hành:{' '}
+              <CalendarDays className="h-4 w-4 flex-shrink-0" />
+              {' '}
+              Năm phát hành:
+              {' '}
               {movie?.category[3]?.list
-                ?.map((item) => item?.name)
+                ?.map(item => item?.name)
                 ?.join(', ') ?? 'Đang cập nhật'}
             </div>
             <div className="inline-flex gap-2 text-sm font-normal">
-              <Monitor className="h-4 w-4 flex-shrink-0" /> Chất lượng:{' '}
+              <Monitor className="h-4 w-4 flex-shrink-0" />
+              {' '}
+              Chất lượng:
+              {' '}
               {movie?.quality ?? 'Đang cập nhật'}
             </div>
             <div className="inline-flex gap-2 text-sm font-normal">
               <LibraryBig className="h-4 w-4 flex-shrink-0" />
-              Thể loại:{' '}
-              {movie?.category[2]?.list?.map((item) => item.name).join(', ') ??
-                'Đang cập nhật'}
+              Thể loại:
+              {' '}
+              {movie?.category[2]?.list?.map(item => item.name).join(', ')
+                ?? 'Đang cập nhật'}
             </div>
             <div className="inline-flex gap-2 text-sm font-normal">
-              <Globe className="h-4 w-4 flex-shrink-0" /> Quốc gia:{' '}
-              {movie?.category[4]?.list?.map((ct) => ct?.name)?.join(', ') ??
-                'Đang cập nhật'}
+              <Globe className="h-4 w-4 flex-shrink-0" />
+              {' '}
+              Quốc gia:
+              {' '}
+              {movie?.category[4]?.list?.map(ct => ct?.name)?.join(', ')
+                ?? 'Đang cập nhật'}
             </div>
           </div>
           <div className="mt-4 flex w-full flex-col gap-2 md:w-auto">
@@ -157,7 +175,8 @@ export default async function FilmDetail({
               dangerouslySetInnerHTML={{
                 __html: sanitizedHtml(movie?.description),
               }}
-            ></div>
+            >
+            </div>
           </div>
         </div>
       </div>
@@ -174,17 +193,17 @@ export default async function FilmDetail({
         <div className="flex w-full flex-col">
           <h2 className="text-lg font-semibold">Xem phim</h2>
           <ul>
-            {movie?.episodes?.map((ep) => (
+            {movie?.episodes?.map(ep => (
               <li key={ep?.server_name}>
                 <p>{ep?.server_name}</p>
                 <ul className="mt-2 grid grid-cols-4 gap-2 sm:grid-cols-8 md:grid-cols-12">
-                  {[...(ep?.items || [])]?.toReversed()?.map((item) => (
+                  {[...(ep?.items || [])]?.toReversed()?.map(item => (
                     <li key={item?.slug}>
                       <Button
                         asChild
                         variant={
-                          server === stringToSlug(ep.server_name) &&
-                          item?.slug?.split('-')[1] === currentEp[0]?.name
+                          server === stringToSlug(ep.server_name)
+                          && item?.slug?.split('-')[1] === currentEp[0]?.name
                             ? 'secondary'
                             : 'ghost'
                         }
@@ -192,7 +211,7 @@ export default async function FilmDetail({
                       >
                         <Link
                           href={`/phim/${movie.slug}/${stringToSlug(
-                            ep?.server_name
+                            ep?.server_name,
                           )}/xem-phim/${item?.slug}`}
                         >
                           {item?.name}
@@ -207,5 +226,5 @@ export default async function FilmDetail({
         </div>
       </div>
     </div>
-  );
+  )
 }

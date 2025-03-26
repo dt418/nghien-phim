@@ -1,6 +1,6 @@
-'use client';
+'use client'
 
-import React from 'react';
+import React from 'react'
 
 import {
   Breadcrumb,
@@ -9,17 +9,17 @@ import {
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
-} from '../breadcrumb';
+} from '../breadcrumb'
 
 /**
  * Interface representing the breadcrumb navigation data
  */
 export interface BreadcrumbData {
   /** Search keyword entered by the user */
-  keyword: string;
+  keyword: string
   /** Current page number in pagination */
-  currentPage: number;
-  rawKeyword?: string;
+  currentPage: number
+  rawKeyword?: string
 }
 
 /**
@@ -27,7 +27,7 @@ export interface BreadcrumbData {
  */
 export interface SearchBreadcrumbProps {
   /** Data required to render the breadcrumb */
-  breadcrumbData: BreadcrumbData;
+  breadcrumbData: BreadcrumbData
 }
 
 /**
@@ -39,7 +39,7 @@ export default function SearchBreadcrumb({
   breadcrumbData,
 }: Readonly<SearchBreadcrumbProps>): JSX.Element {
   // Destructure props for easier access
-  const { keyword, currentPage, rawKeyword } = breadcrumbData;
+  const { currentPage, keyword, rawKeyword } = breadcrumbData
 
   return (
     <Breadcrumb className="py-4">
@@ -53,16 +53,21 @@ export default function SearchBreadcrumb({
         {/* Search results link */}
         <BreadcrumbItem>
           <BreadcrumbLink href={`/tim-kiem?keyword=${keyword}`}>
-            Tìm kiếm: {rawKeyword}
+            Tìm kiếm:
+            {' '}
+            {rawKeyword}
           </BreadcrumbLink>
         </BreadcrumbItem>
         <BreadcrumbSeparator />
 
         {/* Current page indicator */}
         <BreadcrumbItem>
-          <BreadcrumbPage>Trang {currentPage}</BreadcrumbPage>
+          <BreadcrumbPage>
+            Trang
+            {currentPage}
+          </BreadcrumbPage>
         </BreadcrumbItem>
       </BreadcrumbList>
     </Breadcrumb>
-  );
+  )
 }

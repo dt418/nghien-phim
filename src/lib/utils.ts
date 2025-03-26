@@ -1,10 +1,12 @@
-import { type ClassValue, clsx } from 'clsx';
-import DOMPurify, { Config } from 'isomorphic-dompurify';
-import { DateTime } from 'luxon';
-import { twMerge } from 'tailwind-merge';
+import type { ClassValue } from 'clsx'
+import type { Config } from 'isomorphic-dompurify'
+import { clsx } from 'clsx'
+import DOMPurify from 'isomorphic-dompurify'
+import { DateTime } from 'luxon'
+import { twMerge } from 'tailwind-merge'
 
 export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs));
+  return twMerge(clsx(inputs))
 }
 
 /**
@@ -26,14 +28,16 @@ export function cn(...inputs: ClassValue[]) {
  * // Returns: '25 thg 12, 2023, 15:30'
  * ```
  */
-export const formatDate = (date: string, format: 'year' | 'full') => {
-  const dateTime = DateTime.fromISO(date);
-  if (format === 'year') return dateTime.year ?? null;
-  return dateTime.setLocale('vi').toLocaleString(DateTime.DATETIME_MED) ?? null;
-};
+export function formatDate(date: string, format: 'year' | 'full') {
+  const dateTime = DateTime.fromISO(date)
+  if (format === 'year')
+    return dateTime.year ?? null
+  return dateTime.setLocale('vi').toLocaleString(DateTime.DATETIME_MED) ?? null
+}
 
-export const getFilmFormat = (totalEpisodes: number) =>
-  totalEpisodes === 1 ? 'Phim lẻ' : 'Phim bộ';
+export function getFilmFormat(totalEpisodes: number) {
+  return totalEpisodes === 1 ? 'Phim lẻ' : 'Phim bộ'
+}
 
 /**
  * Sanitizes HTML content using DOMPurify to prevent XSS attacks
@@ -52,6 +56,6 @@ export const getFilmFormat = (totalEpisodes: number) =>
  * const clean = sanitizedHtml(dirty, config);
  * // Result: <div></div>
  */
-export const sanitizedHtml = (html: string | Node, cfg?: Config) => {
-  return DOMPurify.sanitize(html, cfg);
-};
+export function sanitizedHtml(html: string | Node, cfg?: Config) {
+  return DOMPurify.sanitize(html, cfg)
+}

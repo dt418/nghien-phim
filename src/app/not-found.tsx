@@ -1,9 +1,9 @@
-import { Metadata } from 'next';
-import Image from 'next/image';
-import Link from 'next/link';
-import React from 'react';
+import type { Metadata } from 'next'
+import Image from 'next/image'
+import Link from 'next/link'
+import React from 'react'
 
-import { Button } from '@/components/ui/button';
+import { Button } from '~/components/ui/button'
 
 export const metadata: Metadata = {
   title: '404: Không tìm thấy trang',
@@ -16,7 +16,7 @@ export const metadata: Metadata = {
     type: 'website',
     images: ['/opengraph-image.jpg'],
   },
-};
+}
 
 export default function NotFound() {
   return (
@@ -56,10 +56,10 @@ export default function NotFound() {
           Sorry about that! Please visit our hompage to get where you need to
           go.
         </p>
-        <Button className="mt-4 w-full lg:w-auto" size={'lg'} asChild>
-          <Link href={'/'}>Go back to Homepage</Link>
+        <Button className="mt-4 w-full lg:w-auto" size="lg" asChild>
+          <Link href="/">Go back to Homepage</Link>
         </Button>
       </div>
     </div>
-  );
+  )
 }

@@ -1,4 +1,4 @@
-import { calculatePageList } from '@/lib/pagination';
+import { calculatePageList } from '~/lib/pagination'
 
 import {
   Pagination,
@@ -9,16 +9,16 @@ import {
   PaginationLink,
   PaginationNext,
   PaginationPrevious,
-} from '../pagination';
+} from '../pagination'
 
-export type IFilmCardProps = {
-  currentPage: number;
-  totalPage: number;
-};
+export interface IFilmCardProps {
+  currentPage: number
+  totalPage: number
+}
 
-export const FilmPagination = ({ currentPage, totalPage }: IFilmCardProps) => {
-  const PAGE_TO_DISPLAY = 2;
-  const pageList = calculatePageList(currentPage, PAGE_TO_DISPLAY, totalPage);
+export function FilmPagination({ currentPage, totalPage }: IFilmCardProps) {
+  const PAGE_TO_DISPLAY = 2
+  const pageList = calculatePageList(currentPage, PAGE_TO_DISPLAY, totalPage)
   return (
     <Pagination>
       <PaginationContent>
@@ -26,7 +26,7 @@ export const FilmPagination = ({ currentPage, totalPage }: IFilmCardProps) => {
           <>
             <PaginationItem>
               <PaginationFirst
-                href={`/`}
+                href="/"
                 tabIndex={currentPage <= 1 ? -1 : undefined}
                 className={
                   currentPage <= 1
@@ -48,7 +48,7 @@ export const FilmPagination = ({ currentPage, totalPage }: IFilmCardProps) => {
             </PaginationItem>
           </>
         )}
-        {pageList.map((pageItem) => (
+        {pageList.map(pageItem => (
           <PaginationItem key={pageItem}>
             <PaginationLink
               href={`/?page=${pageItem}`}
@@ -87,5 +87,5 @@ export const FilmPagination = ({ currentPage, totalPage }: IFilmCardProps) => {
         )}
       </PaginationContent>
     </Pagination>
-  );
-};
+  )
+}

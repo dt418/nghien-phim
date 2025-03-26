@@ -1,27 +1,33 @@
 {
   "compilerOptions": {
+    "incremental": true,
+    "target": "ESNext",
+    "jsx": "preserve",
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "baseUrl": ".",
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "paths": {
+      "~/*": [
+        "./src/*"
+      ]
+    },
+    "resolveJsonModule": true,
     "allowJs": true,
-    "skipLibCheck": true,
     "strict": true,
     "noEmit": true,
     "esModuleInterop": true,
-    "module": "esnext",
-    "moduleResolution": "bundler",
-    "resolveJsonModule": true,
     "isolatedModules": true,
-    "jsx": "preserve",
-    "incremental": true,
+    "skipLibCheck": true,
     "plugins": [
       {
         "name": "next"
       }
-    ],
-    "paths": {
-      "@/*": ["./src/*"]
-    },
-    "target": "ESNext"
+    ]
   },
   "include": [
     "next-env.d.ts",
@@ -30,5 +36,7 @@
     ".next/types/**/*.ts",
     "vitest.config.mts"
   ],
-  "exclude": ["node_modules"]
+  "exclude": [
+    "node_modules"
+  ]
 }

@@ -1,16 +1,19 @@
-import path from 'node:path';
+import path from 'path'
 
-import react from '@vitejs/plugin-react';
-import tsconfigPaths from 'vite-tsconfig-paths';
-import { defineConfig } from 'vitest/config';
+import react from '@vitejs/plugin-react'
+import tsconfigPaths from 'vite-tsconfig-paths'
+import { defineConfig } from 'vitest/config'
 
 export default defineConfig({
   plugins: [react(), tsconfigPaths()],
+  resolve: {
+    alias: {
+      '~': path.resolve(__dirname, './src'),
+    },
+  },
   test: {
-    globals: true,
-    environment: 'jsdom',
-    exclude: ['node_modules', '.next', 'dist'],
     coverage: {
+      all: true,
       exclude: [
         'node_modules/**',
         '.next/**',
@@ -20,13 +23,10 @@ export default defineConfig({
         '**/types/**',
       ],
       reporter: ['text', 'json', 'html'],
-      all: true,
     },
+    environment: 'jsdom',
+    exclude: ['node_modules', '.next', 'dist'],
+    globals: true,
     setupFiles: ['./tests/setup.ts'],
   },
-  resolve: {
-    alias: {
-      '@': path.resolve(__dirname, './src'),
-    },
-  },
-});
+})

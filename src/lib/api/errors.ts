@@ -5,9 +5,9 @@ export class APIError extends Error {
   constructor(
     message: string,
     public status?: number,
-    public endpoint?: string
+    public endpoint?: string,
   ) {
-    super(message);
-    this.name = 'APIError';
+    super(message)
+    this.name = 'APIError'
   }
 }

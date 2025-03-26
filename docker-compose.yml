@@ -23,14 +23,13 @@ services:
       - '3000:3000'
     healthcheck:
       test:
-        [
-          'CMD',
-          'wget',
-          '--no-verbose',
-          '--tries=1',
-          '--spider',
-          'http://localhost:3000',
-        ]
+        - CMD
+        - wget
+        - --no-verbose
+        - --tries=1
+        - --spider
+        - 'http://localhost:3000'
+
       interval: 30s
       timeout: 30s
       retries: 3

@@ -1,29 +1,29 @@
-import { Redis } from '@upstash/redis';
-import type { Metadata, ResolvingMetadata } from 'next';
-import { notFound } from 'next/navigation';
+import type { Metadata, ResolvingMetadata } from 'next'
+import type { THomePageProps } from '~/types/movie-list'
+import { Redis } from '@upstash/redis'
 
-import { FilmCarousel } from '@/components/ui/film/film.carousel';
-import { FilmList } from '@/components/ui/film/film.list';
-import { FilmPagination } from '@/components/ui/film/film.pagination';
-import { TopView } from '@/components/ui/film/film.top-view';
-import { Separator } from '@/components/ui/separator';
-import { getFilms } from '@/lib/api';
-import { THomePageProps } from '@/types/movie-list';
+import { notFound } from 'next/navigation'
+import { FilmCarousel } from '~/components/ui/film/film.carousel'
+import { FilmList } from '~/components/ui/film/film.list'
+import { FilmPagination } from '~/components/ui/film/film.pagination'
+import { TopView } from '~/components/ui/film/film.top-view'
+import { Separator } from '~/components/ui/separator'
+import { getFilms } from '~/lib/api'
 
-const redis = Redis.fromEnv();
+const redis = Redis.fromEnv()
 
-export const revalidate = 10;
+export const revalidate = 10
 
 export async function generateMetadata(
   { searchParams }: THomePageProps,
-  parent: ResolvingMetadata
+  parent: ResolvingMetadata,
 ): Promise<Metadata> {
-  const { page } = await searchParams;
-  const pageParam =
-    typeof page === 'string' && Number(page) > 0 ? Number(page) : 1;
-  const { items } = await getFilms(pageParam);
+  const { page } = await searchParams
+  const pageParam
+    = typeof page === 'string' && Number(page) > 0 ? Number(page) : 1
+  const { items } = await getFilms(pageParam)
 
-  const previousImages = (await parent).openGraph?.images || [];
+  const previousImages = (await parent).openGraph?.images || []
   return {
     openGraph: {
       title: 'Danh sách phim mới nhất | nghienphim.netlify.app',
@@ -37,32 +37,32 @@ export async function generateMetadata(
           : previousImages,
       type: 'website',
     },
-  };
+  }
 }
 
 export default async function Home({ searchParams }: Readonly<THomePageProps>) {
-  const { page } = await searchParams;
-  const pageParam =
-    typeof page === 'string' && Number(page) > 0 ? Number(page) : 1;
-  const films = await getFilms(pageParam);
+  const { page } = await searchParams
+  const pageParam
+    = typeof page === 'string' && Number(page) > 0 ? Number(page) : 1
+  const films = await getFilms(pageParam)
 
   if (!films) {
-    notFound();
+    notFound()
   }
 
-  const { items, paginate } = films;
+  const { items, paginate } = films
 
   const views = (
     await redis.mget<number[]>(
-      ...items.map((film) => ['pageviews', 'films', film.slug].join(':'))
+      ...items.map(film => ['pageviews', 'films', film.slug].join(':')),
     )
   ).reduce(
     (acc, v, i) => {
-      acc[items[i].slug] = v ?? 0;
-      return acc;
+      acc[items[i].slug] = v ?? 0
+      return acc
     },
-    {} as Record<string, number>
-  );
+    {} as Record<string, number>,
+  )
 
   return (
     <main className="container space-y-4">
@@ -86,5 +86,5 @@ export default async function Home({ searchParams }: Readonly<THomePageProps>) {
         </div>
       </section>
     </main>
-  );
+  )
 }

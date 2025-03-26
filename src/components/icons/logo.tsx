@@ -1,4 +1,4 @@
-export const Logo: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
+export const Logo: React.FC<React.SVGProps<SVGSVGElement>> = props => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="1em"
@@ -15,4 +15,4 @@ export const Logo: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
       clipRule="evenodd"
     />
   </svg>
-);
+)

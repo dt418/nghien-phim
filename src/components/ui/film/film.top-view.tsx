@@ -1,27 +1,26 @@
-import Link from 'next/link';
-import React from 'react';
+import type { TMovieItemShortened } from '~/types/movie-list'
+import Link from 'next/link'
 
-import { TMovieItemShortened } from '@/types/movie-list';
-
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '../tabs';
+import React from 'react'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '../tabs'
 
 interface ITopViewProps {
-  topViewData: TMovieItemShortened[];
-  views: Record<string, number>;
+  topViewData: TMovieItemShortened[]
+  views: Record<string, number>
 }
 
-export const TopView = (props: ITopViewProps) => {
-  const { topViewData, views } = props;
+export function TopView(props: ITopViewProps) {
+  const { topViewData, views } = props
 
   const sortedTopViewDataByViews = [...topViewData].sort(
-    (a, b) => (views[b.slug] || 0) - (views[a.slug] || 0)
-  );
+    (a, b) => (views[b.slug] || 0) - (views[a.slug] || 0),
+  )
 
   const renderTopViewList = (
     data: TMovieItemShortened[],
-    sliceCount?: number
+    sliceCount?: number,
   ) => {
-    const slicedData = sliceCount ? data.slice(0, sliceCount) : data;
+    const slicedData = sliceCount ? data.slice(0, sliceCount) : data
     return slicedData.map((filmItem, index) => (
       <Link
         prefetch
@@ -39,11 +38,15 @@ export const TopView = (props: ITopViewProps) => {
         </div>
         <div className="col-span-10 ml-1">
           <span className="block truncate capitalize">{filmItem.name}</span>
-          <span className="text-xs">{views[filmItem.slug]} lượt xem</span>
+          <span className="text-xs">
+            {views[filmItem.slug]}
+            {' '}
+            lượt xem
+          </span>
         </div>
       </Link>
-    ));
-  };
+    ))
+  }
 
   return (
     <aside className="flex flex-wrap">
@@ -87,5 +90,5 @@ export const TopView = (props: ITopViewProps) => {
         </Tabs>
       </div>
     </aside>
-  );
-};
+  )
+}

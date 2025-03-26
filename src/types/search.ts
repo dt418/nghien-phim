@@ -1,22 +1,22 @@
-import { SearchParams } from 'nuqs/server';
+import type { SearchParams } from 'nuqs/server'
 
-import { IMovieItemBase } from './base-movie-item';
-import { IResponseBase } from './base-response';
+import type { IMovieItemBase } from './base-movie-item'
+import type { IResponseBase } from './base-response'
 
 export interface IMovieSearchListResponse extends IResponseBase {
-  items: IMovieSearchItem[];
+  items: IMovieSearchItem[]
 }
 
 export interface IMovieSearchItem extends IMovieItemBase {
-  id: string;
+  id: string
 }
 
-export type TSearchPageProps = {
-  searchParams: Promise<SearchParams>;
-};
+export interface TSearchPageProps {
+  searchParams: Promise<SearchParams>
+}
 
-export type TSearchResultsProps = {
-  searchTerm: string;
-  rawSearchTerm: string;
-  searchResult: Omit<IMovieSearchListResponse, 'status'>;
-};
+export interface TSearchResultsProps {
+  searchTerm: string
+  rawSearchTerm: string
+  searchResult: Omit<IMovieSearchListResponse, 'status'>
+}

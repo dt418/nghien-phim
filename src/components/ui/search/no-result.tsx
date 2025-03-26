@@ -1,4 +1,4 @@
-const NoResult = () => {
+function NoResult() {
   return (
     <div className="flex min-h-[calc(100vh-12rem)] flex-col items-center justify-center gap-4 md:min-h-[calc(100vh-8rem)]">
       <svg
@@ -21,7 +21,7 @@ const NoResult = () => {
         Vui lòng thử tìm kiếm với từ khóa khác
       </p>
     </div>
-  );
-};
+  )
+}
 
-export default NoResult;
+export default NoResult

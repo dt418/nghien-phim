@@ -1,139 +1,68 @@
-import prettierConfigRecommended from 'eslint-plugin-prettier/recommended';
-import simpleImportSort from 'eslint-plugin-simple-import-sort';
-import globals from 'globals';
-import path from 'node:path';
-import { fileURLToPath } from 'node:url';
+import antfu from '@antfu/eslint-config'
+import stylistic from '@stylistic/eslint-plugin'
+import perfectionist from 'eslint-plugin-perfectionist'
+import tailwindcss from 'eslint-plugin-tailwindcss'
 
-import { fixupConfigRules } from '@eslint/compat';
-import { FlatCompat } from '@eslint/eslintrc';
-import js from '@eslint/js';
-import tsParser from '@typescript-eslint/parser';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-const compat = new FlatCompat({
-  baseDirectory: __dirname,
-  recommendedConfig: js.configs.recommended,
-  allConfig: js.configs.all,
-});
-
-const patchedConfig = fixupConfigRules([
-  ...compat.extends(
-    'eslint:recommended',
-    'plugin:import/recommended',
-    'plugin:import/typescript',
-    'next',
-    'next/core-web-vitals',
-    'next/typescript'
-  ),
-]);
-
-const config = [
-  {
-    ignores: [
-      '**/build/',
-      '**/dist/',
-      '**/out/',
-      '**/node_modules/',
-      '**/coverage/',
-      '**/.cache/',
-      '**/.next/',
-      '**/.env',
-      '**/.env.*',
-      '**/.idea/',
-      '**/.vscode/',
-      '**/*.test.js',
-      '**/*.spec.js',
-      '**/vite.config.ts',
-      '**/public/',
-      '**/static/',
-      '**/*.d.ts',
-    ],
+export default antfu({
+  react: true,
+  typescript: true,
+  stylistic: true,
+  type: 'app',
+  yaml: false,
+  ignores: [
+    '**/dist/**',
+    '**/node_modules/**',
+    '**/coverage/**',
+    '**/public/**',
+    '**/build/**',
+    '**/temp/**',
+    '**/.next/**',
+    '**/out/**',
+    '**/.vercel/**',
+    '**/next-env.d.ts',
+    '**/pnpm-lock.yaml',
+    '**/.pnpm/**',
+  ],
+  plugins: {
+    '@stylistic': stylistic,
+    tailwindcss,
+    perfectionist,
   },
-  prettierConfigRecommended,
-  ...patchedConfig,
-  {
-    plugins: {
-      'simple-import-sort': simpleImportSort,
-    },
+  // Additional modern ESLint rules
+  rules: {
+    'no-unused-vars': 'error',
+    'no-console': 'warn',
+    'prefer-const': 'error',
+    'no-var': 'error',
+    'eqeqeq': ['error', 'always'],
+    'arrow-body-style': ['error', 'as-needed'],
 
-    languageOptions: {
-      globals: {
-        ...globals.browser,
-        ...globals.node,
-        ...globals.jest,
+    // Perfectionist import sorting (more detailed than standard import/order)
+    'perfectionist/sort-imports': 'error',
+    // Remove the standard import/order as perfectionist replaces it
+    'import/order': 'off',
+    'react/prefer-destructuring-assignment': 'off',
+    'react/react-in-jsx-scope': 'off',
+    'ts/no-use-before-define': 'off',
+    'react-refresh/only-export-components': 'off',
+    'react-dom/no-dangerously-set-innerhtml': 'off',
+    'react-dom/no-missing-iframe-sandbox': 'off',
+    'unicorn/prefer-node-protocol': 'off',
+  },
+  // Enable modern JavaScript features
+  parserOptions: {
+    ecmaVersion: 'latest',
+    sourceType: 'module',
+  },
+  settings: {
+    'import/resolver': {
+      node: {
+        paths: ['src'],
       },
-      parser: tsParser,
-    },
-
-    settings: {
-      react: {
-        version: 'detect',
-      },
-      'import/resolver': {
-        typescript: true,
-        node: true,
+      alias: {
+        map: [['~', './src']],
+        extensions: ['.ts', '.tsx', '.js', '.jsx'],
       },
     },
-
-    rules: {
-      'no-unused-vars': 'off',
-      '@typescript-eslint/no-unused-vars': [
-        'error',
-        {
-          argsIgnorePattern: '^_',
-          varsIgnorePattern: '^_',
-        },
-      ],
-      '@typescript-eslint/no-explicit-any': 'warn',
-      '@typescript-eslint/ban-ts-comment': 'warn',
-      'react-hooks/rules-of-hooks': 'error',
-      'react-hooks/exhaustive-deps': 'warn',
-      'simple-import-sort/imports': 'error',
-      'simple-import-sort/exports': 'error',
-      // Avoid conflicts with prettier
-      'arrow-body-style': 'off',
-      'prefer-arrow-callback': 'off',
-    },
   },
-  {
-    files: ['*.ts', '*.tsx', '*.js', '*.jsx', '*.mjs', '*.cjs'],
-    rules: {
-      'simple-import-sort/imports': [
-        'error',
-        {
-          /**
-           * Import Sorting Groups
-           *
-           * Organizes imports into logical groups to maintain consistency and readability.
-           *
-           * @type {Array<Array<string>>}
-           */
-          groups: [
-            // Packages come first.
-            ['^react', '^next', '^\\w'],
-            ['^@store(/.*|$)'],
-            ['^@components(/.*|$)'],
-            ['^@ui(/.*|$)'],
-            ['^@lib(/.*|$)'],
-            ['^@pages(/.*|$)'],
-            ['^@utils(/.*|$)'],
-            ['^@hooks(/.*|$)'],
-            ['^@services(/.*|$)'],
-            // Side effect imports.
-            ['^\\u0000'],
-            // Parent imports. Put `..` last.
-            ['^\\.\\.(?!/?$)', '^\\.\\./?$'],
-            // Other relative imports. Put same-folder imports and `.` last.
-            ['^\\./(?=.*/)(?!/?$)', '^\\.(?!/?$)', '^\\./?$'],
-            // Style imports.
-            ['^.+\\.?(css)$'],
-          ],
-        },
-      ],
-    },
-  },
-];
-
-export default config;
+})

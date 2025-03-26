@@ -1,21 +1,24 @@
-import slugify from 'slugify';
+import process from 'process'
+
+import slugify from 'slugify'
 
 export function textTruncate(str: string, length = 160, ending = '...') {
-  if (length == null) {
-    length = 100;
+  if (!length) {
+    length = 100
   }
 
-  if (ending == null) {
-    ending = '...';
+  if (!ending) {
+    ending = '...'
   }
   if (typeof str === 'string' && str.length > length) {
-    return str.substring(0, length - ending.length) + ending;
-  } else {
-    return str;
+    return str.substring(0, length - ending.length) + ending
+  }
+  else {
+    return str
   }
 }
 
-const IS_SERVER = typeof window === 'undefined';
+const IS_SERVER = typeof window === 'undefined'
 
 /**
  *
@@ -27,8 +30,8 @@ const IS_SERVER = typeof window === 'undefined';
 export function getURL(path: string) {
   const baseURL = IS_SERVER
     ? process.env.NEXT_SITE_URL!
-    : window.location.origin;
-  return new URL(path, baseURL).toString();
+    : window.location.origin
+  return new URL(path, baseURL).toString()
 }
 
 /**
@@ -44,9 +47,9 @@ export function stringToSlug(str: string) {
   return slugify(str, {
     locale: 'vi',
     lower: true,
-    strict: true,
     replacement: '-',
-  });
+    strict: true,
+  })
 }
 
 /**
@@ -62,11 +65,12 @@ export function stringToSlug(str: string) {
 export function isImageUrl(url: string) {
   try {
     // Validate URL format
-    new URL(url);
+    URL.canParse(url)
 
     // Check if the URL ends with an image extension
-    return /\.(jpg|jpeg|png|gif|webp|svg|bmp|tiff|ico)$/i.test(url);
-  } catch {
-    return false;
+    return /\.(?:jpg|jpeg|png|gif|webp|svg|bmp|tiff|ico)$/i.test(url)
+  }
+  catch {
+    return false
   }
 }

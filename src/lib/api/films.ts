@@ -1,30 +1,28 @@
-'use server';
+'use server'
 
-import slugify from 'slugify';
+import type { ICategoryResponse } from '~/types/category'
 
-import { ICategoryResponse } from '@/types/category';
-import { IFilmByCountryResponse } from '@/types/film-by-country';
-import { IFilmByYearResponse } from '@/types/film-by-year';
-import { IFilmListResponse } from '@/types/list';
-import type { IMovieResponse } from '@/types/movie';
-import type { IMovieListResponse } from '@/types/movie-list';
-import { IMovieSearchListResponse } from '@/types/search';
+import type { IFilmByCountryResponse } from '~/types/film-by-country'
+import type { IFilmByYearResponse } from '~/types/film-by-year'
+import type { IFilmListResponse } from '~/types/list'
+import type { IMovieResponse } from '~/types/movie'
+import type { IMovieListResponse } from '~/types/movie-list'
+import type { IMovieSearchListResponse } from '~/types/search'
+import slugify from 'slugify'
 
-import { API_CONFIG, createFilmsUrl } from './config';
-import { fetchWithErrorHandling } from './fetch';
+import { API_CONFIG, createFilmsUrl } from './config'
+import { fetchWithErrorHandling } from './fetch'
 
 /**
  * Creates a handler for paginated film endpoints
  * @param path - The endpoint path segment
  * @returns A function that handles paginated requests for the specified path
  */
-const createPaginatedHandler = <T extends IMovieListResponse>(path: string) => {
-  return async (param: string, page = 1): Promise<T> => {
-    return fetchWithErrorHandling<T>(
-      createFilmsUrl(`/${path}/${param}?page=${page}`)
-    );
-  };
-};
+function createPaginatedHandler<T extends IMovieListResponse>(path: string) {
+  return async (param: string, page = 1): Promise<T> => fetchWithErrorHandling<T>(
+    createFilmsUrl(`/${path}/${param}?page=${page}`),
+  )
+}
 
 /**
  * Fetches a paginated list of recently updated films
@@ -45,12 +43,12 @@ const createPaginatedHandler = <T extends IMovieListResponse>(path: string) => {
  * }
  * ```
  */
-export const getFilms = async (page: number): Promise<IMovieListResponse> => {
+export async function getFilms(page: number): Promise<IMovieListResponse> {
   return fetchWithErrorHandling<IMovieListResponse>(
     createFilmsUrl(`/phim-moi-cap-nhat?page=${page}`),
-    { cache: 'no-store' }
-  );
-};
+    { cache: 'no-store' },
+  )
+}
 
 /**
  * Fetches detailed information for a specific film
@@ -72,13 +70,11 @@ export const getFilms = async (page: number): Promise<IMovieListResponse> => {
  * }
  * ```
  */
-export const getFilmBySlug = async (
-  slug: string | string[]
-): Promise<IMovieResponse> => {
+export async function getFilmBySlug(slug: string | string[]): Promise<IMovieResponse> {
   return fetchWithErrorHandling<IMovieResponse>(
-    `${API_CONFIG.BASE_URL}${API_CONFIG.FILM_PATH}/${slug}`
-  );
-};
+    `${API_CONFIG.BASE_URL}${API_CONFIG.FILM_PATH}/${slug}`,
+  )
+}
 
 /**
  * Searches for films using a keyword
@@ -100,18 +96,16 @@ export const getFilmBySlug = async (
  * }
  * ```
  */
-export const searchFilms = async (
-  keyword: string
-): Promise<IMovieSearchListResponse> => {
+export async function searchFilms(keyword: string): Promise<IMovieSearchListResponse> {
   const searchTerm = slugify(keyword, {
     locale: 'vi',
     lower: true,
     replacement: '-',
-  });
+  })
   return fetchWithErrorHandling<IMovieSearchListResponse>(
-    createFilmsUrl(`/search?keyword=${searchTerm}`)
-  );
-};
+    createFilmsUrl(`/search?keyword=${searchTerm}`),
+  )
+}
 
 // Create handlers for different film filtering options
 
@@ -130,8 +124,8 @@ export const searchFilms = async (
  * }
  * ```
  */
-export const getFilmByYear =
-  createPaginatedHandler<IFilmByYearResponse>('nam-phat-hanh');
+export const getFilmByYear
+  = createPaginatedHandler<IFilmByYearResponse>('nam-phat-hanh')
 
 /**
  * Fetches films by country of origin
@@ -148,8 +142,8 @@ export const getFilmByYear =
  * }
  * ```
  */
-export const getFilmByCountry =
-  createPaginatedHandler<IFilmByCountryResponse>('quoc-gia');
+export const getFilmByCountry
+  = createPaginatedHandler<IFilmByCountryResponse>('quoc-gia')
 
 /**
  * Fetches films by category/genre
@@ -166,8 +160,8 @@ export const getFilmByCountry =
  * }
  * ```
  */
-export const getFilmByCategory =
-  createPaginatedHandler<ICategoryResponse>('the-loai');
+export const getFilmByCategory
+  = createPaginatedHandler<ICategoryResponse>('the-loai')
 
 /**
  * Creates a paginated handler for retrieving a list of films by category.
@@ -189,5 +183,5 @@ export const getFilmByCategory =
  * });
  * ```
  */
-export const getFilmListByCategory =
-  createPaginatedHandler<IFilmListResponse>('danh-sach');
+export const getFilmListByCategory
+  = createPaginatedHandler<IFilmListResponse>('danh-sach')

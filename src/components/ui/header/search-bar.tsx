@@ -1,18 +1,20 @@
-'use client';
+'use client'
 
-import { cva, type VariantProps } from 'class-variance-authority';
-import { Search } from 'lucide-react';
-import { useRouter, useSearchParams } from 'next/navigation';
-import { FormEvent, useRef } from 'react';
+import type { VariantProps } from 'class-variance-authority'
+import type { FormEvent } from 'react'
+import { cva } from 'class-variance-authority'
+import { Search } from 'lucide-react'
+import { useRouter, useSearchParams } from 'next/navigation'
+import { useRef } from 'react'
 
-import { stringToSlug } from '@/lib/stringUtils';
-import { cn } from '@/lib/utils';
+import { stringToSlug } from '~/lib/stringUtils'
+import { cn } from '~/lib/utils'
 
-import { Button } from '../button';
-import { Input } from '../input';
+import { Button } from '../button'
+import { Input } from '../input'
 
 // Path for search results page
-const SEARCH_PATH = '/tim-kiem';
+const SEARCH_PATH = '/tim-kiem'
 
 // Define search bar variants using class-variance-authority
 const searchBarVariants = cva('relative inline-flex w-full flex-row gap-2', {
@@ -24,7 +26,7 @@ const searchBarVariants = cva('relative inline-flex w-full flex-row gap-2', {
   defaultVariants: {
     size: 'default',
   },
-});
+})
 
 /**
  * Props for the SearchBar component
@@ -38,7 +40,7 @@ const searchBarVariants = cva('relative inline-flex w-full flex-row gap-2', {
  * <SearchBar className="my-4" />
  */
 interface SearchBarProps extends VariantProps<typeof searchBarVariants> {
-  className?: string;
+  className?: string
 }
 
 /**
@@ -56,17 +58,15 @@ export default function SearchBar({
   className,
   size,
 }: SearchBarProps = {}): JSX.Element {
-  const searchParams = useSearchParams();
-  const { push } = useRouter();
-  const inputRef = useRef<HTMLInputElement>(null);
+  const searchParams = useSearchParams()
+  const { push } = useRouter()
+  const inputRef = useRef<HTMLInputElement>(null)
 
   /**
    * Gets the current search term from the input
    * @returns {string} Trimmed and lowercase search term
    */
-  const getSearchTerm = (): string => {
-    return inputRef.current?.value?.trim().toLowerCase() ?? '';
-  };
+  const getSearchTerm = (): string => inputRef.current?.value?.trim().toLowerCase() ?? ''
 
   /**
    * Creates a URL for the search results page
@@ -74,35 +74,35 @@ export default function SearchBar({
    * @returns {string} Formatted search URL with parameters
    */
   const createSearchUrl = (term: string): string => {
-    const params = new URLSearchParams();
+    const params = new URLSearchParams()
     if (term) {
-      params.set('keyword', term);
+      params.set('keyword', term)
     }
-    return `${SEARCH_PATH}?${params.toString()}`;
-  };
+    return `${SEARCH_PATH}?${params.toString()}`
+  }
 
   /**
    * Handles form submission
    * @param {FormEvent<HTMLFormElement>} e - Form event
    */
   const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
-    e.preventDefault();
-    const searchTerm = getSearchTerm();
+    e.preventDefault()
+    const searchTerm = getSearchTerm()
 
     if (!searchTerm) {
-      return;
+      return
     }
 
-    const slugifiedSearchTerm = stringToSlug(searchTerm);
+    const slugifiedSearchTerm = stringToSlug(searchTerm)
 
     await fetch('/api/set-search', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ rawQuery: searchTerm }),
-    });
+    })
 
-    push(createSearchUrl(slugifiedSearchTerm));
-  };
+    push(createSearchUrl(slugifiedSearchTerm))
+  }
 
   return (
     <form
@@ -124,5 +124,5 @@ export default function SearchBar({
         Tìm
       </Button>
     </form>
-  );
+  )
 }

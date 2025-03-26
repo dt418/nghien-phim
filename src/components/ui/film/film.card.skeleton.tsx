@@ -1,8 +1,8 @@
-import { PlayIcon } from 'lucide-react';
+import { PlayIcon } from 'lucide-react'
 
-import { Card, CardContent } from '../card';
+import { Card, CardContent } from '../card'
 
-export const FilmCardSkeleton = () => {
+export function FilmCardSkeleton() {
   return (
     <Card className="w-full max-w-sm rounded-lg border shadow-sm">
       <div className="group relative aspect-[2/3] overflow-hidden rounded-lg">
@@ -22,5 +22,5 @@ export const FilmCardSkeleton = () => {
         <p className="mb-2.5 line-clamp-1 h-2 animate-pulse rounded-full bg-muted-foreground text-sm font-normal text-card-foreground"></p>
       </CardContent>
     </Card>
-  );
-};
+  )
+}
