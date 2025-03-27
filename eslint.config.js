@@ -1,4 +1,5 @@
 import antfu from '@antfu/eslint-config'
+import nextPlugin from '@next/eslint-plugin-next'
 import stylistic from '@stylistic/eslint-plugin'
 import perfectionist from 'eslint-plugin-perfectionist'
 import tailwindcss from 'eslint-plugin-tailwindcss'
@@ -7,8 +8,10 @@ export default antfu({
   react: true,
   typescript: true,
   stylistic: true,
+  tailwindcss: true,
   type: 'app',
   yaml: false,
+  jsonc: false,
   ignores: [
     '**/dist/**',
     '**/node_modules/**',
@@ -27,6 +30,7 @@ export default antfu({
     '@stylistic': stylistic,
     tailwindcss,
     perfectionist,
+    '@next/next': nextPlugin,
   },
   // Additional modern ESLint rules
   rules: {
@@ -48,6 +52,12 @@ export default antfu({
     'react-dom/no-dangerously-set-innerhtml': 'off',
     'react-dom/no-missing-iframe-sandbox': 'off',
     'unicorn/prefer-node-protocol': 'off',
+
+    // Next.js rules
+    ...nextPlugin.configs.recommended.rules,
+    ...nextPlugin.configs['core-web-vitals'].rules,
+
+    '@next/next/no-html-link-for-pages': 'error',
   },
   // Enable modern JavaScript features
   parserOptions: {
