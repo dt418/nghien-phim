@@ -46,7 +46,7 @@ interface SearchBarProps extends VariantProps<typeof searchBarVariants> {
 /**
  * SearchBar component that provides search functionality
  * @param {SearchBarProps} props - Component props
- * @returns {JSX.Element} Search bar with input and submit button
+ * @returns {React.ReactElement} Search bar with input and submit button
  * @example
  * // Basic usage
  * <SearchBar />
@@ -57,7 +57,7 @@ interface SearchBarProps extends VariantProps<typeof searchBarVariants> {
 export default function SearchBar({
   className,
   size,
-}: SearchBarProps = {}): JSX.Element {
+}: SearchBarProps = {}): React.ReactElement {
   const searchParams = useSearchParams()
   const { push } = useRouter()
   const inputRef = useRef<HTMLInputElement>(null)

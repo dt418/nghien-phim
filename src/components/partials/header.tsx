@@ -60,8 +60,8 @@ type ListItemProps = React.ComponentPropsWithoutRef<typeof Link> & {
  * </ListItem>
  * ```
  */
-const ListItem = React.forwardRef<React.ElementRef<typeof Link>, ListItemProps>(
-  ({ className, title, children, ...props }, ref) => (
+function ListItem({ ref, className, title, children, ...props }: ListItemProps & { ref?: React.RefObject<React.ComponentRef<typeof Link> | null> }) {
+  return (
     <li>
       <NavigationMenuLink asChild>
         <Link
@@ -81,8 +81,8 @@ const ListItem = React.forwardRef<React.ElementRef<typeof Link>, ListItemProps>(
         </Link>
       </NavigationMenuLink>
     </li>
-  ),
-)
+  )
+}
 ListItem.displayName = 'ListItem'
 
 /**

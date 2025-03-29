@@ -26,7 +26,7 @@ interface IFilmCardProps extends TMovieItemShortened {
 /**
  * FilmCard Component - Displays a movie card with image and details
  * @param {IFilmCardProps} props - Component props
- * @returns {JSX.Element} Rendered FilmCard component
+ * @returns {React.ReactElement} Rendered FilmCard component
  */
 export function FilmCard({
   name,
@@ -34,7 +34,7 @@ export function FilmCard({
   thumb_url,
   original_name,
   isPriority = false,
-}: IFilmCardProps): JSX.Element {
+}: IFilmCardProps): React.ReactElement {
   // Constants
   const filmLink = `/phim/${slug}`
   const fallbackImage = '/film-placeholder.png'

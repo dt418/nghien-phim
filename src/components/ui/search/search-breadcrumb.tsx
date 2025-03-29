@@ -33,11 +33,11 @@ export interface SearchBreadcrumbProps {
 /**
  * SearchBreadcrumb component displays navigation path for search results
  * @param {SearchBreadcrumbProps} props - Component props
- * @returns {JSX.Element} Rendered breadcrumb navigation
+ * @returns {React.ReactElement} Rendered breadcrumb navigation
  */
 export default function SearchBreadcrumb({
   breadcrumbData,
-}: Readonly<SearchBreadcrumbProps>): JSX.Element {
+}: Readonly<SearchBreadcrumbProps>): React.ReactElement {
   // Destructure props for easier access
   const { currentPage, keyword, rawKeyword } = breadcrumbData
 

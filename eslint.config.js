@@ -9,6 +9,7 @@ export default antfu({
   typescript: true,
   stylistic: true,
   tailwindcss: true,
+  jsx: true,
   type: 'app',
   yaml: false,
   jsonc: false,
@@ -25,6 +26,7 @@ export default antfu({
     '**/next-env.d.ts',
     '**/pnpm-lock.yaml',
     '**/.pnpm/**',
+    '**/fixtures',
   ],
   plugins: {
     '@stylistic': stylistic,

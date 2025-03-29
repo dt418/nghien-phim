@@ -40,18 +40,16 @@ export interface ButtonProps
   asChild?: boolean
 }
 
-const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ asChild = false, className, size, variant, ...props }, ref) => {
-    const Comp = asChild ? Slot : 'button'
-    return (
-      <Comp
-        className={cn(buttonVariants({ className, size, variant }))}
-        ref={ref}
-        {...props}
-      />
-    )
-  },
-)
+function Button({ ref, asChild = false, className, size, variant, ...props }: ButtonProps & { ref?: React.RefObject<HTMLButtonElement | null> }) {
+  const Comp = asChild ? Slot : 'button'
+  return (
+    <Comp
+      className={cn(buttonVariants({ className, size, variant }))}
+      ref={ref}
+      {...props}
+    />
+  )
+}
 Button.displayName = 'Button'
 
 export { Button, buttonVariants }
