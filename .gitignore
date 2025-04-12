@@ -41,3 +41,4 @@ next-env.d.ts
 .eslintcache
 #pnpm
 .pnpm/**
+.vscode/mcp.json
