@@ -46,7 +46,6 @@ function createPaginatedHandler<T extends IMovieListResponse>(path: string) {
 export async function getFilms(page: number): Promise<IMovieListResponse> {
   return fetchWithErrorHandling<IMovieListResponse>(
     createFilmsUrl(`/phim-moi-cap-nhat?page=${page}`),
-    { cache: 'no-store' },
   )
 }
 
@@ -166,22 +165,24 @@ export const getFilmByCategory
 /**
  * Creates a paginated handler for retrieving a list of films by category.
  *
- * This function uses the 'danh-sach' endpoint to fetch film data with pagination support.
- *
+ * @param param - The category to fetch films from
+ * @param page - The page number to fetch (starting from 1)
+ * @param options - Optional fetch options
  * @returns A paginated handler function that returns a Promise of IFilmListResponse
  *
  * @example
  * ```typescript
  * // Getting the first page of films with 10 items per page
- * const response = await getFilmListByCategory({ page: 1, limit: 10 });
- *
- * // Getting films with specific category
- * const actionFilms = await getFilmListByCategory({
- *   page: 1,
- *   limit: 10,
- *   category: 'phim-dang-chieu'
- * });
+ * const response = await getFilmListByCategory('phim-dang-chieu', 1, { cache: 'force-cache' });
  * ```
  */
-export const getFilmListByCategory
-  = createPaginatedHandler<IFilmListResponse>('danh-sach')
+export async function getFilmListByCategory(
+  param: string,
+  page = 1,
+  options?: RequestInit,
+): Promise<IFilmListResponse> {
+  return fetchWithErrorHandling<IFilmListResponse>(
+    createFilmsUrl(`/${'danh-sach'}/${param}?page=${page}`),
+    options,
+  )
+}
