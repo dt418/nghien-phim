@@ -12,6 +12,21 @@ describe('button', () => {
     )
   })
 
+  it('renders icon-only button with aria-label', () => {
+    customRender(<Button aria-label="Settings" size="icon"><svg data-testid="icon" /></Button>)
+    const button = screen.getByRole('button', { name: /settings/i })
+    expect(button).toBeInTheDocument()
+    expect(button).toHaveAttribute('aria-label', 'Settings')
+    expect(screen.getByTestId('icon')).toBeInTheDocument()
+  })
+
+  it('renders disabled button', () => {
+    customRender(<Button disabled>Disabled</Button>)
+    const button = screen.getByRole('button', { name: /disabled/i })
+    expect(button).toBeDisabled()
+    expect(button).toHaveClass('disabled:pointer-events-none disabled:opacity-50')
+  })
+
   it('applies variant classes correctly', () => {
     customRender(<Button variant="destructive">Delete</Button>)
     const button = screen.getByRole('button', { name: /delete/i })

@@ -4,18 +4,17 @@ import type { NextRequest } from 'next/server'
 import { Redis } from '@upstash/redis'
 import { ipAddress } from '@vercel/functions'
 import { NextResponse } from 'next/server'
-
-export const runtime = 'nodejs' // 'nodejs' (default) | 'edge'
+import { errorResponse } from '~/lib/api/errorResponse'
 
 const redis = Redis.fromEnv()
 
 export async function POST(req: NextRequest): Promise<NextResponse> {
   try {
     if (req.method !== 'POST') {
-      return new NextResponse('use POST', { status: 405 })
+      return errorResponse('use POST', 405)
     }
     if (req.headers.get('Content-Type') !== 'application/json') {
-      return new NextResponse('must be json', { status: 400 })
+      return errorResponse('must be json', 400)
     }
 
     const body = await req.json()
@@ -24,7 +23,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
       slug = body.slug
     }
     if (!slug) {
-      return new NextResponse('Slug not found', { status: 400 })
+      return errorResponse('Slug not found', 400)
     }
 
     const key = ['pageviews', 'films', slug].join(':')
@@ -66,12 +65,6 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
   }
   catch (error) {
     console.error('Error in increment route:', error)
-    return new NextResponse(
-      JSON.stringify({ error: 'Internal Server Error' }),
-      {
-        headers: { 'Content-Type': 'application/json' },
-        status: 500,
-      },
-    )
+    return errorResponse('Internal Server Error', 500)
   }
 }
