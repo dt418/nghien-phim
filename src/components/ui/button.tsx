@@ -34,6 +34,11 @@ const buttonVariants = cva(
   },
 )
 
+/**
+ * Button component.
+ *
+ * Accessibility: If using an icon-only button, be sure to provide an aria-label prop for screen readers.
+ */
 export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
   VariantProps<typeof buttonVariants> {
@@ -46,7 +51,7 @@ function Button({ ref, asChild = false, className, size, variant, ...props }: Bu
     <Comp
       className={cn(buttonVariants({ className, size, variant }))}
       ref={ref}
-      {...props}
+      {...props} // This will pass aria-* and other props through
     />
   )
 }

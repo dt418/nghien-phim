@@ -1,7 +1,5 @@
 import antfu from '@antfu/eslint-config'
 import nextPlugin from '@next/eslint-plugin-next'
-import stylistic from '@stylistic/eslint-plugin'
-import perfectionist from 'eslint-plugin-perfectionist'
 import tailwindcss from 'eslint-plugin-tailwindcss'
 
 export default antfu({
@@ -29,9 +27,7 @@ export default antfu({
     '**/fixtures',
   ],
   plugins: {
-    '@stylistic': stylistic,
     tailwindcss,
-    perfectionist,
     '@next/next': nextPlugin,
   },
   // Additional modern ESLint rules
