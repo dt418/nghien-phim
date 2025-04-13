@@ -107,7 +107,7 @@ export default async function FilmListPage(props: Readonly<TFilmListProps>) {
     const decodedCategory = decodeURIComponent(category)
     const page = Number(searchParams?.page ?? 1)
 
-    const { items, cat } = await getFilmListByCategory(decodedCategory, page)
+    const { items, cat } = await getFilmListByCategory(decodedCategory, page, { cache: 'force-cache' })
 
     if (!items || items.length === 0) {
       return <EmptyState />

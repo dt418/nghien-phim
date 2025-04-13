@@ -65,8 +65,28 @@ A list of the original co-authors of Next.js that helped bring this amazing fram
 - Tony Kovanen ([@tonykovanen](https://twitter.com/tonykovanen))
 - Dan Zajdband ([@impronunciable](https://twitter.com/impronunciable))
 
----
-
 ## Security
 
-If you believe you have found a security vulnerability in Next.js, we encourage you to **_responsibly disclose this and NOT open a public issue_**. We will investigate all legitimate reports. Email `security@vercel.com` to disclose any security vulnerabilities. Alternatively, you can visit this [link](https://vercel.com/security) to know more about Vercel's security and report any security vulnerabilities.
+If you believe you have found a security vulnerability in Next.js, we encourage you to **responsibly disclose this and NOT open a public issue**. We will investigate all legitimate reports. Email `security@vercel.com` to disclose any security vulnerabilities. Alternatively, you can visit this [link](https://vercel.com/security) to know more about Vercel's security and report any security vulnerabilities.
+
+## Testing
+
+This project uses [Vitest](https://vitest.dev/) for unit testing.
+
+### Setup
+
+To set up the testing environment, run the following command:
+
+```bash
+pnpm install
+```
+
+### Running Tests
+
+To run the unit tests, use the following command:
+
+```bash
+pnpm test
+```
+
+This command will execute all the test files in the project and display the results.
