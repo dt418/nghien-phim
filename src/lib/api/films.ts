@@ -1,14 +1,14 @@
 'use server'
 
-import type { ICategoryResponse } from '~/types/category'
-
-import type { IFilmByCountryResponse } from '~/types/film-by-country'
-import type { IFilmByYearResponse } from '~/types/film-by-year'
-import type { IFilmListResponse } from '~/types/list'
-import type { IMovieResponse } from '~/types/movie'
-import type { IMovieListResponse } from '~/types/movie-list'
-import type { IMovieSearchListResponse } from '~/types/search'
 import slugify from 'slugify'
+
+import type { CategoryResponse } from '~/types/category'
+import type { FilmByCountryResponse } from '~/types/film-by-country'
+import type { FilmByYearResponse } from '~/types/film-by-year'
+import type { FilmListResponse } from '~/types/list'
+import type { MovieResponse } from '~/types/movie'
+import type { MovieListResponse } from '~/types/movie-list'
+import type { MovieSearchListResponse } from '~/types/search'
 
 import { API_CONFIG, createFilmsUrl } from './config'
 import { fetchWithErrorHandling } from './fetch'
@@ -18,7 +18,7 @@ import { fetchWithErrorHandling } from './fetch'
  * @param path - The endpoint path segment
  * @returns A function that handles paginated requests for the specified path
  */
-function createPaginatedHandler<T extends IMovieListResponse>(path: string) {
+function createPaginatedHandler<T extends MovieListResponse>(path: string) {
   return async (param: string, page = 1): Promise<T> => fetchWithErrorHandling<T>(
     createFilmsUrl(`/${path}/${param}?page=${page}`),
   )
@@ -43,8 +43,8 @@ function createPaginatedHandler<T extends IMovieListResponse>(path: string) {
  * }
  * ```
  */
-export async function getFilms(page: number): Promise<IMovieListResponse> {
-  return fetchWithErrorHandling<IMovieListResponse>(
+export async function getFilms(page: number): Promise<MovieListResponse> {
+  return fetchWithErrorHandling<MovieListResponse>(
     createFilmsUrl(`/phim-moi-cap-nhat?page=${page}`),
   )
 }
@@ -69,8 +69,8 @@ export async function getFilms(page: number): Promise<IMovieListResponse> {
  * }
  * ```
  */
-export async function getFilmBySlug(slug: string | string[]): Promise<IMovieResponse> {
-  return fetchWithErrorHandling<IMovieResponse>(
+export async function getFilmBySlug(slug: string | string[]): Promise<MovieResponse> {
+  return fetchWithErrorHandling<MovieResponse>(
     `${API_CONFIG.BASE_URL}${API_CONFIG.FILM_PATH}/${slug}`,
   )
 }
@@ -95,13 +95,13 @@ export async function getFilmBySlug(slug: string | string[]): Promise<IMovieResp
  * }
  * ```
  */
-export async function searchFilms(keyword: string): Promise<IMovieSearchListResponse> {
+export async function searchFilms(keyword: string): Promise<MovieSearchListResponse> {
   const searchTerm = slugify(keyword, {
     locale: 'vi',
     lower: true,
     replacement: '-',
   })
-  return fetchWithErrorHandling<IMovieSearchListResponse>(
+  return fetchWithErrorHandling<MovieSearchListResponse>(
     createFilmsUrl(`/search?keyword=${searchTerm}`),
   )
 }
@@ -124,7 +124,7 @@ export async function searchFilms(keyword: string): Promise<IMovieSearchListResp
  * ```
  */
 export const getFilmByYear
-  = createPaginatedHandler<IFilmByYearResponse>('nam-phat-hanh')
+  = createPaginatedHandler<FilmByYearResponse>('nam-phat-hanh')
 
 /**
  * Fetches films by country of origin
@@ -142,7 +142,7 @@ export const getFilmByYear
  * ```
  */
 export const getFilmByCountry
-  = createPaginatedHandler<IFilmByCountryResponse>('quoc-gia')
+  = createPaginatedHandler<FilmByCountryResponse>('quoc-gia')
 
 /**
  * Fetches films by category/genre
@@ -160,7 +160,7 @@ export const getFilmByCountry
  * ```
  */
 export const getFilmByCategory
-  = createPaginatedHandler<ICategoryResponse>('the-loai')
+  = createPaginatedHandler<CategoryResponse>('the-loai')
 
 /**
  * Creates a paginated handler for retrieving a list of films by category.
@@ -180,8 +180,8 @@ export async function getFilmListByCategory(
   param: string,
   page = 1,
   options?: RequestInit,
-): Promise<IFilmListResponse> {
-  return fetchWithErrorHandling<IFilmListResponse>(
+): Promise<FilmListResponse> {
+  return fetchWithErrorHandling<FilmListResponse>(
     createFilmsUrl(`/${'danh-sach'}/${param}?page=${page}`),
     options,
   )

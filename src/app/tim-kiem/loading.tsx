@@ -1,5 +1,6 @@
-import { cva } from 'class-variance-authority'
 import React from 'react'
+
+import { cva } from 'class-variance-authority'
 
 import { Skeleton } from '~/components/ui/skeleton'
 import {
@@ -10,6 +11,7 @@ import {
   TableHeader,
   TableRow,
 } from '~/components/ui/table'
+
 import { cn } from '~/lib/utils'
 
 interface TableHeaderProps {

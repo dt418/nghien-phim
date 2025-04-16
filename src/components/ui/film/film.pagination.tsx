@@ -11,12 +11,12 @@ import {
   PaginationPrevious,
 } from '../pagination'
 
-export interface IFilmCardProps {
+export interface FilmCardProps {
   currentPage: number
   totalPage: number
 }
 
-export function FilmPagination({ currentPage, totalPage }: IFilmCardProps) {
+export function FilmPagination({ currentPage, totalPage }: FilmCardProps) {
   const PAGE_TO_DISPLAY = 2
   const pageList = calculatePageList(currentPage, PAGE_TO_DISPLAY, totalPage)
   return (

@@ -1,12 +1,16 @@
-import type { Metadata } from 'next'
 import type { PropsWithChildren } from 'react'
+
+import type { Metadata } from 'next'
 
 import Footer from '~/components/partials/footer'
 import { Header } from '~/components/partials/header'
+
 import config from '~/lib/config'
 import { fontBeVietnamPro } from '~/lib/font'
 import { cn } from '~/lib/utils'
+
 import { ThemeProvider } from '~/providers/theme'
+
 import './globals.css'
 
 export const metadata: Metadata = {

@@ -1,5 +1,4 @@
 import process from 'process'
-
 import slugify from 'slugify'
 
 export function textTruncate(str: string, length = 160, ending = '...') {

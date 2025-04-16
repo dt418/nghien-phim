@@ -1,21 +1,24 @@
 import type { Metadata, ResolvingMetadata } from 'next'
-import type { THomePageProps } from '~/types/movie-list'
+import { notFound } from 'next/navigation'
+
 import { Redis } from '@upstash/redis'
 
-import { notFound } from 'next/navigation'
 import { FilmCarousel } from '~/components/ui/film/film.carousel'
 import { FilmList } from '~/components/ui/film/film.list'
 import { FilmPagination } from '~/components/ui/film/film.pagination'
 import { TopView } from '~/components/ui/film/film.top-view'
 import { Separator } from '~/components/ui/separator'
+
 import { getFilms } from '~/lib/api'
+
+import type { HomePageProps } from '~/types/movie-list'
 
 const redis = Redis.fromEnv()
 
 export const revalidate = 10
 
 export async function generateMetadata(
-  { searchParams }: THomePageProps,
+  { searchParams }: HomePageProps,
   parent: ResolvingMetadata,
 ): Promise<Metadata> {
   const { page } = await searchParams
@@ -40,7 +43,7 @@ export async function generateMetadata(
   }
 }
 
-export default async function Home({ searchParams }: Readonly<THomePageProps>) {
+export default async function Home({ searchParams }: Readonly<HomePageProps>) {
   const { page } = await searchParams
   const pageParam
     = typeof page === 'string' && Number(page) > 0 ? Number(page) : 1

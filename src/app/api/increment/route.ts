@@ -1,9 +1,11 @@
 'server only'
 
 import type { NextRequest } from 'next/server'
+import { NextResponse } from 'next/server'
+
 import { Redis } from '@upstash/redis'
 import { ipAddress } from '@vercel/functions'
-import { NextResponse } from 'next/server'
+
 import { errorResponse } from '~/lib/api/errorResponse'
 
 const redis = Redis.fromEnv()

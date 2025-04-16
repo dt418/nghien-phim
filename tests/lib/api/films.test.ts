@@ -1,4 +1,5 @@
 import { describe, expect, it, vi } from 'vitest'
+
 import { fetchWithErrorHandling } from '~/lib/api/fetch'
 import { getFilmByCategory, getFilmByCountry, getFilmBySlug, getFilmByYear, getFilmListByCategory, getFilms, searchFilms } from '~/lib/api/films'
 

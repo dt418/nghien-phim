@@ -1,5 +1,6 @@
-import Link from 'next/link'
 import React from 'react'
+
+import Link from 'next/link'
 
 function Footer() {
   const currentYear = new Date().getFullYear()

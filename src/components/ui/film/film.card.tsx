@@ -1,15 +1,17 @@
 /**
  * Import internal dependencies
  */
-import type { TMovieItemShortened } from '~/types/movie-list'
+import Image from 'next/image'
+import Link from 'next/link'
+
 /**
  * Import external dependencies
  */
 import { PlayIcon } from 'lucide-react'
-import Image from 'next/image'
 
-import Link from 'next/link'
 import { isImageUrl } from '~/lib/stringUtils'
+
+import type { MovieItemShortened } from '~/types/movie-list'
 
 import { Card, CardContent } from '../card'
 
@@ -18,7 +20,7 @@ import { Card, CardContent } from '../card'
  * @interface IFilmCardProps
  * @extends {IMovieBase}
  */
-interface IFilmCardProps extends TMovieItemShortened {
+interface IFilmCardProps extends MovieItemShortened {
   /** Flag to set image loading priority */
   isPriority?: boolean
 }

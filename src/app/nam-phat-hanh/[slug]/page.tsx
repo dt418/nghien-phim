@@ -1,16 +1,19 @@
 import type { Metadata, ResolvingMetadata } from 'next'
-import type { IMovieItemBase } from '~/types/base-movie-item'
 
-import type { ICategory } from '~/types/category'
-import type { TFilmByYearProps } from '~/types/film-by-year'
 import { AlertCircle } from 'lucide-react'
+
 import { Alert, AlertDescription, AlertTitle } from '~/components/ui/alert'
 import SearchBreadcrumb from '~/components/ui/search/search-breadcrumb'
 import SearchMovieTable from '~/components/ui/search/search-movie-table'
 import { Separator } from '~/components/ui/separator'
+
 import { getFilmByYear } from '~/lib/api'
 import { APIError } from '~/lib/api/errors'
 import config from '~/lib/config'
+
+import type { MovieItemBase } from '~/types/base-movie-item'
+import type { Category } from '~/types/category'
+import type { FilmByYearProps } from '~/types/film-by-year'
 
 export const revalidate = 10
 // generate metadata here
@@ -79,8 +82,8 @@ function SearchResults({
   category,
   page,
 }: {
-  items: IMovieItemBase[]
-  category: Pick<ICategory, 'title'>
+  items: MovieItemBase[]
+  category: Pick<Category, 'title'>
   page: number
 }) {
   return (
@@ -104,7 +107,7 @@ function SearchResults({
 }
 
 export default async function FilmByYearPage(
-  props: Readonly<TFilmByYearProps>,
+  props: Readonly<FilmByYearProps>,
 ) {
   try {
     const searchParams = await props.searchParams

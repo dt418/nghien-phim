@@ -1,19 +1,23 @@
 import type { Metadata, ResolvingMetadata } from 'next'
-import type { IFilmDetailPageProps } from '~/types/movie'
-import { Redis } from '@upstash/redis'
-import { PlayCircle, UsersRound } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 
+import { Redis } from '@upstash/redis'
+import { PlayCircle, UsersRound } from 'lucide-react'
+
 import { Button } from '~/components/ui/button'
 import { MovieStats } from '~/components/ui/film/film.stats'
-
 import { Separator } from '~/components/ui/separator'
+
 import { getMovieStats } from '~/config'
+
 import { getFilmBySlug } from '~/lib/api'
 import { isImageUrl, stringToSlug, textTruncate } from '~/lib/stringUtils'
 import { sanitizedHtml } from '~/lib/utils'
+
+import type { FilmDetailPageProps } from '~/types/movie'
+
 import { ReportView } from './view'
 
 const redis = Redis.fromEnv()
@@ -23,7 +27,7 @@ export const revalidate = 10
 // Keeping the existing generateMetadata function...
 // generate meta data
 export async function generateMetadata(
-  { params }: IFilmDetailPageProps,
+  { params }: FilmDetailPageProps,
   parent: ResolvingMetadata,
 ): Promise<Metadata> {
   const { slug } = await params
@@ -59,7 +63,7 @@ export async function generateMetadata(
 
 export default async function FilmDetail({
   params,
-}: Readonly<IFilmDetailPageProps>) {
+}: Readonly<FilmDetailPageProps>) {
   const slug = (await params)?.slug
   if (!slug) {
     notFound()
