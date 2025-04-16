@@ -1,4 +1,8 @@
 import type { Metadata, ResolvingMetadata } from 'next'
+import Image from 'next/image'
+import Link from 'next/link'
+import { notFound } from 'next/navigation'
+
 import {
   CalendarDays,
   Check,
@@ -9,11 +13,9 @@ import {
   Monitor,
   UsersRound,
 } from 'lucide-react'
-import Image from 'next/image'
-import Link from 'next/link'
-import { notFound } from 'next/navigation'
 
 import { Button } from '~/components/ui/button'
+
 import { getFilmBySlug } from '~/lib/api'
 import { isImageUrl, stringToSlug, textTruncate } from '~/lib/stringUtils'
 import { cn, sanitizedHtml } from '~/lib/utils'

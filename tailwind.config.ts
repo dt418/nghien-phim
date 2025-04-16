@@ -1,7 +1,7 @@
-import type { Config } from 'tailwindcss'
 import typography from '@tailwindcss/typography'
-import pluginAnimate from 'tailwindcss-animate'
+import type { Config } from 'tailwindcss'
 import { fontFamily } from 'tailwindcss/defaultTheme'
+import pluginAnimate from 'tailwindcss-animate'
 
 const config = {
   content: [

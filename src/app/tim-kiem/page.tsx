@@ -1,15 +1,17 @@
 import type { Metadata, ResolvingMetadata } from 'next'
-import type { TSearchPageProps, TSearchResultsProps } from '~/types/search'
 import { cookies } from 'next/headers'
-
 import { redirect } from 'next/navigation'
+
 import { loadSearchParams } from '~/components/ui/header/page-search-params'
 import NoResult from '~/components/ui/search/no-result'
 import SearchBreadcrumb from '~/components/ui/search/search-breadcrumb'
 import SearchMovieTable from '~/components/ui/search/search-movie-table'
 import { Separator } from '~/components/ui/separator'
+
 import { searchFilms } from '~/lib/api'
 import config from '~/lib/config'
+
+import type { SearchPageProps, SearchResultsProps } from '~/types/search'
 
 export const revalidate = 10
 
@@ -20,7 +22,7 @@ function SearchResults({
   searchTerm,
   searchResult,
   rawSearchTerm,
-}: Readonly<TSearchResultsProps>) {
+}: Readonly<SearchResultsProps>) {
   const {
     items,
     paginate: { current_page = 1 },
@@ -49,7 +51,7 @@ function SearchResults({
 }
 
 export async function generateMetadata(
-  { searchParams }: TSearchPageProps,
+  { searchParams }: SearchPageProps,
   parent: ResolvingMetadata,
 ): Promise<Metadata> {
   const { keyword } = await loadSearchParams(searchParams)
@@ -84,7 +86,7 @@ export async function generateMetadata(
  */
 export default async function SearchPage({
   searchParams,
-}: Readonly<TSearchPageProps>) {
+}: Readonly<SearchPageProps>) {
   const { keyword } = await loadSearchParams(searchParams)
 
   if (!keyword) {

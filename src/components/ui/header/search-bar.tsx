@@ -1,11 +1,13 @@
 'use client'
 
-import type { VariantProps } from 'class-variance-authority'
 import type { FormEvent } from 'react'
+import { useRef } from 'react'
+
+import { useRouter, useSearchParams } from 'next/navigation'
+
+import type { VariantProps } from 'class-variance-authority'
 import { cva } from 'class-variance-authority'
 import { Search } from 'lucide-react'
-import { useRouter, useSearchParams } from 'next/navigation'
-import { useRef } from 'react'
 
 import { stringToSlug } from '~/lib/stringUtils'
 import { cn } from '~/lib/utils'

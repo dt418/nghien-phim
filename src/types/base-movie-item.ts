@@ -1,4 +1,4 @@
-export interface IMovieItemBase {
+export interface MovieItemBase {
   name: string
   slug: string
   created: string

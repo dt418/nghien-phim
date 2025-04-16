@@ -1,5 +1,6 @@
 import antfu from '@antfu/eslint-config'
 import nextPlugin from '@next/eslint-plugin-next'
+import simpleImportSort from 'eslint-plugin-simple-import-sort'
 import tailwindcss from 'eslint-plugin-tailwindcss'
 
 export default antfu({
@@ -29,6 +30,8 @@ export default antfu({
   plugins: {
     tailwindcss,
     '@next/next': nextPlugin,
+    // 'perfectionist': perfectionistNatural,
+    'simple-import-sort': simpleImportSort,
   },
   // Additional modern ESLint rules
   rules: {
@@ -39,10 +42,49 @@ export default antfu({
     'eqeqeq': ['error', 'always'],
     'arrow-body-style': ['error', 'as-needed'],
 
-    // Perfectionist import sorting (more detailed than standard import/order)
-    'perfectionist/sort-imports': 'error',
-    // Remove the standard import/order as perfectionist replaces it
+    // 'import/order': 'off', // handled by perfectionist
+    // 'sort-imports': 'off', // handled by perfectionist
+    // 'perfectionist/sort-imports': [
+    //   'error',
+    //   {
+    //     type: 'alphabetical',
+    //     order: 'asc',
+    //   },
+    // ],
+
     'import/order': 'off',
+    'sort-imports': 'off',
+    'perfectionist/sort-imports': 'off',
+    'perfectionist/sort-objects': 'off',
+    'perfectionist/sort-arrays': 'off',
+    'simple-import-sort/imports': ['error', {
+      groups: [
+        // Nodejs bultins
+        ['^node:'],
+        // React imports
+        ['^react', '^react-dom'],
+        // Next.js and related
+        ['^next', '^next-auth'],
+        // Node.js built-ins and external packages
+        ['^@?\\w'],
+        // Side effect imports
+        ['^\\u0000'],
+        // Aliases (e.g. ~/)
+        ['^~/components'],
+        ['^~/config'],
+        ['^~/domains'],
+        ['^~/hooks'],
+        ['^~/lib'],
+        ['^~/providers'],
+        ['^~/types'],
+        // Relative imports
+        ['^\\.'],
+        // Style imports
+        ['^.+\\.s?css$'],
+      ],
+    }],
+    'simple-import-sort/exports': 'error',
+
     'react/prefer-destructuring-assignment': 'off',
     'react/react-in-jsx-scope': 'off',
     'ts/no-use-before-define': 'off',

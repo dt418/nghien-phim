@@ -1,6 +1,6 @@
 import type { ClassValue } from 'clsx'
-import type { Config } from 'isomorphic-dompurify'
 import { clsx } from 'clsx'
+import type { Config } from 'isomorphic-dompurify'
 import DOMPurify from 'isomorphic-dompurify'
 import { DateTime } from 'luxon'
 import { twMerge } from 'tailwind-merge'

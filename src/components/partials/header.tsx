@@ -1,9 +1,10 @@
-import type { MenuItem } from '~/types/menu'
-import { Menu } from 'lucide-react'
-import Link from 'next/link'
 import * as React from 'react'
-
 import { Suspense } from 'react'
+
+import Link from 'next/link'
+
+import { Menu } from 'lucide-react'
+
 import { Button } from '~/components/ui/button'
 import {
   NavigationMenu,
@@ -21,8 +22,12 @@ import {
   SheetTrigger,
 } from '~/components/ui/sheet'
 import { VisuallyHidden } from '~/components/ui/visually-hidden'
+
 import { menuItems } from '~/config'
+
 import { cn } from '~/lib/utils'
+
+import type { MenuItem } from '~/types/menu'
 
 import SearchBar from '../ui/header/search-bar'
 

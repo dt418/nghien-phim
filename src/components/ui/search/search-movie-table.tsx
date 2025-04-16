@@ -1,12 +1,14 @@
 'use client'
-import type { IMovieItemBase } from '~/types/base-movie-item'
-import type { IMovieSearchItem } from '~/types/search'
-import Image from 'next/image'
-
-import Link from 'next/link'
 import React from 'react'
+
+import Image from 'next/image'
+import Link from 'next/link'
+
 import { isImageUrl } from '~/lib/stringUtils'
 import { formatDate, getFilmFormat } from '~/lib/utils'
+
+import type { MovieItemBase } from '~/types/base-movie-item'
+import type { MovieSearchItem } from '~/types/search'
 
 import { Badge } from '../badge'
 import {
@@ -27,17 +29,17 @@ const TABLE_HEADERS = [
   'Ngày cập nhật',
 ] as const
 
-interface FilmTitleCellProps<T extends IMovieSearchItem | IMovieItemBase> {
+interface FilmTitleCellProps<T extends MovieSearchItem | MovieItemBase> {
   film: T
 }
 
 export interface SearchMovieTableProps<
-  T extends IMovieSearchItem | IMovieItemBase,
+  T extends MovieSearchItem | MovieItemBase,
 > {
   data: T[]
 }
 
-function FilmTitleCell<T extends IMovieSearchItem | IMovieItemBase>({
+function FilmTitleCell<T extends MovieSearchItem | MovieItemBase>({
   film,
 }: FilmTitleCellProps<T>) {
   return (
@@ -63,7 +65,7 @@ function FilmTitleCell<T extends IMovieSearchItem | IMovieItemBase>({
   )
 }
 
-function SearchMovieTable<T extends IMovieSearchItem | IMovieItemBase>({
+function SearchMovieTable<T extends MovieSearchItem | MovieItemBase>({
   data,
 }: Readonly<SearchMovieTableProps<T>>) {
   return (

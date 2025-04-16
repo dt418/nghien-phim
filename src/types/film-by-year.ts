@@ -1,13 +1,13 @@
-import type { IMovieItemBase } from './base-movie-item'
-import type { IResponseBase } from './base-response'
-import type { ICategory } from './category'
+import type { MovieItemBase } from './base-movie-item'
+import type { ResponseBase } from './base-response'
+import type { Category } from './category'
 
-export interface IFilmByYearResponse extends IResponseBase {
-  cat: ICategory
-  items: IMovieItemBase[]
+export interface FilmByYearResponse extends ResponseBase {
+  cat: Category
+  items: MovieItemBase[]
 }
 
-export interface TFilmByYearProps {
+export interface FilmByYearProps {
   params: Promise<{ slug: string }>
   searchParams?: Promise<{ page: string }>
 }

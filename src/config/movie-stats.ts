@@ -1,5 +1,3 @@
-import type { IMovie } from '~/types/movie'
-
 import {
   CalendarDays,
   Check,
@@ -9,7 +7,9 @@ import {
   LibraryBig,
 } from 'lucide-react'
 
-export function getMovieStats(movie: IMovie) {
+import type { Movie } from '~/types/movie'
+
+export function getMovieStats(movie: Movie) {
   return [
     {
       icon: Clock,

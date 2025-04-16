@@ -1,24 +1,24 @@
-import type { IMovieItemBase } from './base-movie-item'
+import type { MovieItemBase } from './base-movie-item'
 
-export interface IMovieResponse {
-  movie: IMovie
+export interface MovieResponse {
+  movie: Movie
   status: boolean
 }
 
-export interface IMovie extends IMovieItemBase {
+export interface Movie extends MovieItemBase {
   id: string
-  episodes: IEpisode[]
-  category: IMovieCategory
+  episodes: Episode[]
+  category: MovieCategory
 }
 
-export interface IMovieCategory {
-  1?: ICategoryItem
-  2?: ICategoryItem
-  3?: ICategoryItem
-  4?: ICategoryItem
+export interface MovieCategory {
+  1?: CategoryItem
+  2?: CategoryItem
+  3?: CategoryItem
+  4?: CategoryItem
 }
 
-export interface ICategoryItem {
+export interface CategoryItem {
   group: Group
   list: List[]
 }
@@ -33,25 +33,25 @@ export interface List {
   name: string
 }
 
-export interface ICountry {
+export interface Country {
   id: string
   name: string
   slug: string
 }
 
-export interface IEpisode {
+export interface Episode {
   server_name: string
-  items: IServerData[]
+  items: ServerData[]
 }
 
-export interface IServerData {
+export interface ServerData {
   name: string
   slug: string
   m3u8: string
   embed: string
 }
 
-export interface IFilmDetailPageProps {
+export interface FilmDetailPageProps {
   params: Promise<{
     slug: string | string[]
   }>

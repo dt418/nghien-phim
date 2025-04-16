@@ -1,15 +1,17 @@
-import type { TMovieItemShortened } from '~/types/movie-list'
+import React from 'react'
+
 import Link from 'next/link'
 
-import React from 'react'
+import type { MovieItemShortened } from '~/types/movie-list'
+
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../tabs'
 
-interface ITopViewProps {
-  topViewData: TMovieItemShortened[]
+interface TopViewProps {
+  topViewData: MovieItemShortened[]
   views: Record<string, number>
 }
 
-export function TopView(props: ITopViewProps) {
+export function TopView(props: TopViewProps) {
   const { topViewData, views } = props
 
   const sortedTopViewDataByViews = [...topViewData].sort(
@@ -17,7 +19,7 @@ export function TopView(props: ITopViewProps) {
   )
 
   const renderTopViewList = (
-    data: TMovieItemShortened[],
+    data: MovieItemShortened[],
     sliceCount?: number,
   ) => {
     const slicedData = sliceCount ? data.slice(0, sliceCount) : data

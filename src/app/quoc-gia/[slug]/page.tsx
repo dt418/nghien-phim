@@ -1,15 +1,19 @@
 import type { Metadata, ResolvingMetadata } from 'next'
-import type { IMovieItemBase } from '~/types/base-movie-item'
-import type { ICategory } from '~/types/category'
-import type { TFilmByCountryProps } from '~/types/film-by-country'
+
 import { AlertCircle } from 'lucide-react'
+
 import { Alert, AlertDescription, AlertTitle } from '~/components/ui/alert'
 import SearchBreadcrumb from '~/components/ui/search/search-breadcrumb'
 import SearchMovieTable from '~/components/ui/search/search-movie-table'
 import { Separator } from '~/components/ui/separator'
+
 import { getFilmByCountry } from '~/lib/api'
 import { APIError } from '~/lib/api/errors'
 import config from '~/lib/config'
+
+import type { MovieItemBase } from '~/types/base-movie-item'
+import type { Category } from '~/types/category'
+import type { FilmByCountryProps } from '~/types/film-by-country'
 
 export const revalidate = 10
 // generate metadata here
@@ -78,8 +82,8 @@ function SearchResults({
   items,
   page,
 }: {
-  items: IMovieItemBase[]
-  category: Pick<ICategory, 'title'>
+  items: MovieItemBase[]
+  category: Pick<Category, 'title'>
   page: number
 }) {
   return (
@@ -103,7 +107,7 @@ function SearchResults({
 }
 
 export default async function FilmByCountryPage(
-  props: Readonly<TFilmByCountryProps>,
+  props: Readonly<FilmByCountryProps>,
 ) {
   try {
     const searchParams = await props.searchParams

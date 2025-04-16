@@ -1,9 +1,13 @@
 'use client'
 
-import type { TMovieItemShortened } from '~/types/movie-list'
-import Autoplay from 'embla-carousel-autoplay'
 import React from 'react'
+
+import Autoplay from 'embla-carousel-autoplay'
+
 import { useMediaQuery } from '~/hooks/use-media'
+
+import type { MovieItemShortened } from '~/types/movie-list'
+
 import {
   Carousel,
   CarouselContent,
@@ -13,11 +17,11 @@ import {
 } from '../carousel'
 import { FilmCard } from './film.card'
 
-interface TFilmCarouselProps {
+interface FilmCarouselProps {
   title?: string
-  items: TMovieItemShortened[] | []
+  items: MovieItemShortened[]
 }
-export function FilmCarousel({ items, title }: TFilmCarouselProps) {
+export function FilmCarousel({ items, title }: FilmCarouselProps) {
   const isAllMobile = useMediaQuery('(max-width: 768px)')
   return (
     <>
