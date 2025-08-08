@@ -83,7 +83,6 @@ export default async function FilmDetail({
     <div className="min-h-screen bg-black/95">
       {/* Add ReportView component to increment view count */}
       <ReportView slug={slug} />
-
       {/* Hero Section */}
       <div className="relative h-[60vh] w-full">
         <Image
@@ -99,7 +98,6 @@ export default async function FilmDetail({
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent" />
       </div>
-
       {/* Content Section */}
       <div className="relative z-10 mx-auto -mt-48 max-w-7xl px-4">
         <div className="grid gap-8 md:grid-cols-[300px,1fr] lg:gap-12">
@@ -155,6 +153,7 @@ export default async function FilmDetail({
               <div
                 className="leading-relaxed text-gray-300"
                 // Using sanitizedHtml to safely render HTML content
+                // eslint-disable-next-line react-dom/no-dangerously-set-innerhtml
                 dangerouslySetInnerHTML={{
                   __html: sanitizedHtml(movie?.description),
                 }}

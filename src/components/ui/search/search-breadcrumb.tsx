@@ -61,12 +61,17 @@ export default function SearchBreadcrumb({
         <BreadcrumbSeparator />
 
         {/* Current page indicator */}
-        <BreadcrumbItem>
-          <BreadcrumbPage>
-            Trang
-            {currentPage}
-          </BreadcrumbPage>
-        </BreadcrumbItem>
+        {currentPage
+          ? (
+              <BreadcrumbItem>
+                <BreadcrumbPage>
+                  Trang
+                  {' '}
+                  {currentPage}
+                </BreadcrumbPage>
+              </BreadcrumbItem>
+            )
+          : null}
       </BreadcrumbList>
     </Breadcrumb>
   )

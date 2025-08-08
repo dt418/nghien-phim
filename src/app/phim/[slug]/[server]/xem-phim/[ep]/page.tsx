@@ -174,6 +174,7 @@ export default async function FilmDetail({
             <h2 className="text-lg font-semibold">Nội dung phim</h2>
             <div
               className="text-sm font-normal"
+              // eslint-disable-next-line react-dom/no-dangerously-set-innerhtml
               dangerouslySetInnerHTML={{
                 __html: sanitizedHtml(movie?.description),
               }}
@@ -190,6 +191,7 @@ export default async function FilmDetail({
         allowFullScreen
         allow="autoplay; fullscreen"
         className="min-h-auto aspect-video min-w-full"
+        sandbox="allow-scripts allow-popups allow-presentation allow-top-navigation-by-user-activation"
       />
       <div className="mt-4 flex flex-col gap-4 md:flex-row">
         <div className="flex w-full flex-col">

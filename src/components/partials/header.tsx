@@ -13,6 +13,7 @@ import {
   NavigationMenuLink,
   NavigationMenuList,
   NavigationMenuTrigger,
+  navigationMenuTriggerStyle,
 } from '~/components/ui/navigation-menu'
 import {
   Sheet,
@@ -40,7 +41,10 @@ import SearchBar from '../ui/header/search-bar'
  */
 function Logo() {
   return (
-    <Link href="/" className="text-gradient text-2xl font-bold uppercase">
+    <Link
+      href="/"
+      className="text-gradient text-2xl font-bold uppercase"
+    >
       <span className="hidden lg:inline">Nghiện Phim</span>
       <span className="inline lg:hidden">NP</span>
     </Link>
@@ -169,9 +173,11 @@ function MobileMenu() {
 function NavigationMenuItems({ item }: { item: MenuItem }) {
   if (!item.children) {
     return (
-      <Link href={item.href} legacyBehavior passHref>
-        <NavigationMenuLink>{item.label}</NavigationMenuLink>
-      </Link>
+      <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
+        <Link href={item.href}>
+          {item.label}
+        </Link>
+      </NavigationMenuLink>
     )
   }
 
@@ -191,7 +197,7 @@ function NavigationMenuItems({ item }: { item: MenuItem }) {
  */
 function Navigation() {
   return (
-    <NavigationMenu className="hidden xl:block">
+    <NavigationMenu className="hidden xl:block" viewport={false}>
       <NavigationMenuList className="flex items-center gap-2">
         {menuItems.map(item => (
           <NavigationMenuItem

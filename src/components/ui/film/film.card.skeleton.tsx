@@ -4,7 +4,7 @@ import { Card, CardContent } from '../card'
 
 export function FilmCardSkeleton() {
   return (
-    <Card className="w-full max-w-sm rounded-lg border shadow-sm">
+    <Card className="w-full rounded-lg border shadow-sm">
       <div className="group relative aspect-[2/3] overflow-hidden rounded-lg">
         <div
           className="w-[400] scale-100 animate-pulse rounded-t-lg bg-slate-200 object-cover transition-all group-hover:scale-105 dark:bg-slate-700"
