@@ -4,10 +4,16 @@ pre-commit:
     lint-staged:
       add: true
       run: pnpm lint-staged
+    lint-fix:
+      stage_fixed: true
+      run: pnpm run lint:fix
+    format:
+      stage_fixed: true
+      run: pnpm run format
     test:
-      run: pnpm test
+      run: pnpm run test
     build:
-      run: pnpm build
+      run: pnpm run build
 
 commit-msg:
   commands:

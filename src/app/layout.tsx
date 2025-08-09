@@ -9,6 +9,7 @@ import config from '~/lib/config'
 import { fontBeVietnamPro } from '~/lib/font'
 import { cn } from '~/lib/utils'
 
+import { QueryProvider } from '~/providers/query-provider'
 import { ThemeProvider } from '~/providers/theme'
 
 import './globals.css'
@@ -34,9 +35,13 @@ export default function RootLayout({ children }: Readonly<PropsWithChildren>) {
           enableColorScheme
           disableTransitionOnChange
         >
-          <Header />
-          {children}
-          <Footer />
+          <QueryProvider>
+            <Header />
+            <main className="min-h-screen">
+              {children}
+            </main>
+            <Footer />
+          </QueryProvider>
         </ThemeProvider>
       </body>
     </html>

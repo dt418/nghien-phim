@@ -53,7 +53,7 @@ function CardDescription({ ref, className, ...props }: React.HTMLAttributes<HTML
 CardDescription.displayName = 'CardDescription'
 
 function CardContent({ ref, className, ...props }: React.HTMLAttributes<HTMLDivElement> & { ref?: React.RefObject<HTMLDivElement | null> }) {
-  return <div ref={ref} className={cn('p-6 pt-0', className)} {...props} />
+  return <div ref={ref} className={cn('', className)} {...props} />
 }
 CardContent.displayName = 'CardContent'
 

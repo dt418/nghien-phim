@@ -122,7 +122,7 @@ export default function SearchBar({
         aria-label="Search input"
         defaultValue={searchParams.get('keyword') ?? ''}
       />
-      <Button type="submit" variant="secondary">
+      <Button type="submit" variant="secondary" className="cursor-pointer">
         Tìm
       </Button>
     </form>
