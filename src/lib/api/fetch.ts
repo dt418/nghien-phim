@@ -61,7 +61,7 @@ export async function fetchWithErrorHandling<T>(
       }
 
       // Handle network/other errors
-      console.error(`Network/Request Error for ${url}:`, error, { attempt })
+      console.error('Network/Request Error for %s:', url, error, { attempt })
       throw new APIError(
         error instanceof Error ? error.message : 'Network error',
         undefined,
