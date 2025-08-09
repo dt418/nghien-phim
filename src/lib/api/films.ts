@@ -70,8 +70,13 @@ export async function getFilms(page: number): Promise<MovieListResponse> {
  * ```
  */
 export async function getFilmBySlug(slug: string | string[]): Promise<MovieResponse> {
+  // SSRF mitigation: Only allow slugs that are alphanumeric, hyphens, or underscores
+  const slugStr = Array.isArray(slug) ? slug.join('-') : slug;
+  if (!/^[a-zA-Z0-9-_]+$/.test(slugStr)) {
+    throw new Error('Invalid slug format');
+  }
   return fetchWithErrorHandling<MovieResponse>(
-    `${API_CONFIG.BASE_URL}${API_CONFIG.FILM_PATH}/${slug}`,
+    `${API_CONFIG.BASE_URL}${API_CONFIG.FILM_PATH}/${slugStr}`,
   )
 }
 
