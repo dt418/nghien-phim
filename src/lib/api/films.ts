@@ -70,8 +70,14 @@ export async function getFilms(page: number): Promise<MovieListResponse> {
  * ```
  */
 export async function getFilmBySlug(slug: string | string[]): Promise<MovieResponse> {
+  const normalizedSlug = Array.isArray(slug) ? slug.join('/') : String(slug)
+  // Encode each path segment defensively
+  const safePath = normalizedSlug
+    .split('/')
+    .map(segment => encodeURIComponent(segment))
+    .join('/')
   return fetchWithErrorHandling<MovieResponse>(
-    `${API_CONFIG.BASE_URL}${API_CONFIG.FILM_PATH}/${slug}`,
+    `${API_CONFIG.BASE_URL}${API_CONFIG.FILM_PATH}/${safePath}`,
   )
 }
 
