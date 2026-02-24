@@ -19,6 +19,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Validate required secrets
+        if: github.actor != 'dependabot[bot]'
         run: |
           MISSING_SECRETS=()
           
@@ -56,20 +57,22 @@ jobs:
         run: |
           docker build . \
             --file Dockerfile \
-            --tag ${{ secrets.DOCKERHUB_USERNAME }}/nghien-phim:$IMAGE_TAG \
-            --tag ${{ secrets.DOCKERHUB_USERNAME }}/nghien-phim:latest \
+            --tag ${{ secrets.DOCKERHUB_USERNAME || 'temporary' }}/nghien-phim:$IMAGE_TAG \
+            --tag ${{ secrets.DOCKERHUB_USERNAME || 'temporary' }}/nghien-phim:latest \
             --build-arg CLOUDINARY_CLOUD_NAME=${{ secrets.CLOUDINARY_CLOUD_NAME }} \
             --build-arg NEXT_PUBLIC_BASE_URL=${{ secrets.NEXT_PUBLIC_BASE_URL }} \
             --build-arg UPSTASH_REDIS_REST_TOKEN=${{ secrets.UPSTASH_REDIS_REST_TOKEN }} \
             --build-arg UPSTASH_REDIS_REST_URL=${{ secrets.UPSTASH_REDIS_REST_URL }}
 
       - name: Log in to Docker Hub
+        if: github.actor != 'dependabot[bot]'
         env:
           DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
           DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
         run: docker login -u "$DOCKERHUB_USERNAME" -p "$DOCKERHUB_TOKEN"
 
       - name: Push image to Docker Hub
+        if: github.actor != 'dependabot[bot]'
         run: |
           docker push ${{ secrets.DOCKERHUB_USERNAME }}/nghien-phim:$IMAGE_TAG
           docker push ${{ secrets.DOCKERHUB_USERNAME }}/nghien-phim:latest
